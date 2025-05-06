@@ -26,7 +26,7 @@ const GetStatus = ({ id, statusId, updateStatus }) => {
               <span class="tooltiptext">{`Mark As ${s.name}`}</span>
             </div>
           )}
-          <div>&nbsp;{idx !== statusList.length - 1 && "|"} &nbsp; </div>
+          <div>&nbsp;{idx !== statusList.length - 1 && "->"} &nbsp; </div>
         </>
       ))}
     </div>
