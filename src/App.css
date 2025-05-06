@@ -1,0 +1,74 @@
+button {
+  padding: 8px;
+  margin: 4px;
+  cursor: pointer;
+}
+
+.formItem {
+  margin: 15px 0px;
+}
+
+input,
+select,
+textarea {
+  padding: 8px;
+}
+.formLabel {
+  display: block;
+  margin-bottom: 2px;
+}
+.formItem > p {
+  display: block;
+  margin: 1px;
+}
+.formValue {
+  display: flex;
+  flex-direction: column;
+  width: 380px;
+}
+
+#formBtnContainer {
+  width: max-content;
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  background-color: rgb(116, 114, 114);
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  width: 120px;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent rgb(116, 114, 114) transparent;
+}
