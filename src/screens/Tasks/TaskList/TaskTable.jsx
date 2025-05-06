@@ -1,21 +1,18 @@
+import { useSelector } from "react-redux";
 import TaskRow from "./TaskRow";
+import strings from "../../../constants/strings";
 
-const TaskTable = ({
-  tasks,
-  setSelectedIdForEdit,
-  setSelectedIdForDelete,
-  updateStatus,
-}) => {
+const TaskTable = ({ updateStatus }) => {
+  const tasks = useSelector((state) => state.taskStore.tasks);
   return (
     <>
       <table>
         <thead>
           <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Due Date</th>
-            <th>Status</th>
-            <th>Actions</th>
+            <th>{strings.title}</th>
+            <th>{strings.dueDate}</th>
+            <th>{strings.status}</th>
+            <th>{strings.actions}</th>
           </tr>
         </thead>
         <tbody>
@@ -24,11 +21,8 @@ const TaskTable = ({
               key={t.id}
               id={t.id}
               title={t.title}
-              description={t.description || "-"}
               dueDate={t.dueDate}
               status={t.status}
-              setSelectedIdForEdit={setSelectedIdForEdit}
-              setSelectedIdForDelete={setSelectedIdForDelete}
               updateStatus={updateStatus}
             />
           ))}

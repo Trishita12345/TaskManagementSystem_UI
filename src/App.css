@@ -1,11 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+* {
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+}
 button {
+  text-transform: capitalize;
+  background-color: black;
+  color: white;
   padding: 8px;
   margin: 4px;
   cursor: pointer;
+  min-width: 80px;
+  border-radius: 6px;
 }
 
 .formItem {
   margin: 15px 0px;
+}
+FontAwesomeIcon {
+  color: "#000000";
 }
 
 input,

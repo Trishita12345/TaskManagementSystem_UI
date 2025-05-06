@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { statusData } from "../../../constants/data";
+import { useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import strings from "../../../constants/strings";
 
-const AddEditTaskForm = ({ data, onSubmit, onPopupClose }) => {
+const AddEditTaskForm = ({ onSubmit, onPopupClose }) => {
   const {
     register,
     handleSubmit,
@@ -13,16 +16,39 @@ const AddEditTaskForm = ({ data, onSubmit, onPopupClose }) => {
 
   const description = watch("description", "");
 
+  const data = useSelector((state) => state.taskStore.taskById);
+  const selectedIdForEdit = useSelector(
+    (state) => state.taskStore.selectedIdForEdit
+  );
+  const statusList = useSelector((state) => state.taskStore.statusList);
+
   useEffect(() => {
     reset(data);
   }, [data]);
-  console.log(errors);
+
   const minDate = new Date();
   const maxDate = new Date("2030-12-31");
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <button onClick={() => onPopupClose(reset)}>Close</button>
+      <div style={{ margin: "6px 10px" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <p className="header">
+            {selectedIdForEdit ? strings.editTask : strings.newTask}
+          </p>
+          <FontAwesomeIcon
+            onClick={(e) => onPopupClose()}
+            icon={faXmark}
+            size="lg"
+            style={{ cursor: "pointer", padding: "4px" }}
+          />
+        </div>
+        <hr />
       </div>
       <form
         onSubmit={handleSubmit((data) => onSubmit(data, reset))}
@@ -93,16 +119,18 @@ const AddEditTaskForm = ({ data, onSubmit, onPopupClose }) => {
           )}
         </div>
 
-        <div className="formItem">
-          <label className="formLabel">Status:</label>
-          <select className="formValue" {...register("status")}>
-            {statusData.map((i, idx) => (
-              <option key={i.id} value={i.id}>
-                {i.name}
-              </option>
-            ))}
-          </select>
-        </div>
+        {selectedIdForEdit && (
+          <div className="formItem">
+            <label className="formLabel">Status:</label>
+            <select className="formValue" {...register("status")}>
+              {statusList.map((i, idx) => (
+                <option key={i.id} value={i.id}>
+                  {i.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
 
         <div id="formBtnContainer">
           <button type="submit">Submit</button>

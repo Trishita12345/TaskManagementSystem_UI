@@ -1,38 +1,52 @@
-import { openPopup } from "../../../components/Popup.jsx";
+import { useDispatch } from "react-redux";
 import GetStatus from "./GetStatus.jsx";
-
-const TaskRow = ({
-  id,
-  title,
-  description,
-  dueDate,
-  status,
-  setSelectedIdForEdit,
+import {
   setSelectedIdForDelete,
-  updateStatus,
-}) => {
-  const handleEdit = () => {
-    setSelectedIdForEdit(id);
+  setSelectedIdForView,
+} from "../../../utils/redux/slices/taskSlice.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { openPopup } from "../../../components/Popup/index.jsx";
+
+const TaskRow = ({ id, title, dueDate, status, updateStatus }) => {
+  const dispatch = useDispatch();
+
+  const handleView = () => {
+    dispatch(setSelectedIdForView(id));
     openPopup();
   };
 
   const handleDelete = () => {
-    setSelectedIdForDelete(id);
+    dispatch(setSelectedIdForDelete(id));
     openPopup();
   };
 
   return (
     <tr key={id}>
-      <td>{title}</td>
-      <td>{description || "-"}</td>
+      <td>
+        <div
+          onClick={handleView}
+          style={{
+            cursor: "pointer",
+            textDecoration: "underline",
+            width: "max-content",
+          }}
+        >
+          {title}
+        </div>
+      </td>
       <td>{dueDate}</td>
       <td>
         <GetStatus id={id} statusId={status} updateStatus={updateStatus} />
       </td>
       <td>
         <div>
-          <button onClick={handleEdit}>Edit</button>
-          <button onClick={handleDelete}>Delete</button>
+          <FontAwesomeIcon
+            onClick={handleDelete}
+            icon={faTrash}
+            size="lg"
+            style={{ cursor: "pointer" }}
+          />
         </div>
       </td>
     </tr>

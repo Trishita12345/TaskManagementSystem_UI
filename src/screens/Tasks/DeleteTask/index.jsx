@@ -1,6 +1,4 @@
-import { closePopup } from "../../../components/Popup.jsx";
-
-const DeleteTask = ({ deleteTaskById }) => {
+const DeleteTask = ({ deleteTaskById, onPopupClose }) => {
   return (
     <>
       <div style={{ textAlign: "center", padding: "12px" }}>
@@ -13,7 +11,7 @@ const DeleteTask = ({ deleteTaskById }) => {
         </p>
         <div id="formBtnContainer">
           <button onClick={deleteTaskById}>Confirm</button>
-          <button onClick={closePopup}>Cancel</button>
+          <button onClick={(e) => onPopupClose()}>Cancel</button>
         </div>
       </div>
     </>
