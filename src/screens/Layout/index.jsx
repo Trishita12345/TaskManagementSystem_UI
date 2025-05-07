@@ -1,20 +1,72 @@
 import "./layout.css";
-import Sidebar, { openSidebar } from "./Sidebar";
+import Sidebar from "./Sidebar";
 import Logo from "./Logo";
+import useScreenSize from "../../utils/customHooks/useScreenSize";
+import { useEffect, useState } from "react";
+import Hamburger from "./Hamburger";
+import { smallDevice } from "../../constants/data";
+import Avatar from "../../components/Avatar";
+import NarrowSideBar from "./NarrowSideBar";
 
 const Layout = ({ children }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { width } = useScreenSize();
+  console.log(width);
+  useEffect(() => {
+    if (width < smallDevice) setIsSidebarOpen(false);
+  }, [width]);
   return (
     <>
       <div
         style={{
+          paddingRight: "14px",
           display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
           boxShadow: "0px 12px 30px 0px rgba(120,120,120,0.1)",
         }}
       >
-        <Logo onHamburgerClick={openSidebar} />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            padding: "10px 6px",
+            height: "40px",
+          }}
+        >
+          <Hamburger setIsSidebarOpen={setIsSidebarOpen} />
+          <div
+            style={{
+              width: isSidebarOpen && width > smallDevice ? `200px` : 0,
+            }}
+          ></div>
+          <Logo />
+        </div>
+        <Avatar text="T" onClick={() => {}} />
       </div>
-      <div style={{ margin: "8px" }}>{children}</div>
-      <Sidebar />
+      <div style={{ display: "flex" }}>
+        <div
+          style={{
+            width: isSidebarOpen && width > smallDevice ? `220px` : "50px",
+          }}
+        ></div>
+        <NarrowSideBar />
+        <div
+          style={{
+            margin: "8px",
+            width:
+              isSidebarOpen && width > smallDevice
+                ? `${width - 220}px`
+                : "100%",
+          }}
+        >
+          {children}
+        </div>
+      </div>
+      <Sidebar
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
     </>
   );
 };

@@ -1,0 +1,16 @@
+#avatar {
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: rgb(0, 0, 0);
+  color: white;
+}
+#avatar-text {
+  font-weight: 500;
+  font-size: 16px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

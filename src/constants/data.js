@@ -1,3 +1,6 @@
+import { routes } from "./routes";
+import strings from "./strings";
+
 export const TaskData = [
   {
     id: 1,
@@ -41,3 +44,5 @@ export const statusData = [
   { id: 2, name: "In Progress" },
   { id: 3, name: "Done" },
 ];
+
+export const smallDevice = 900;

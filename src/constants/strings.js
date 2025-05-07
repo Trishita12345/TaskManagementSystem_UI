@@ -8,6 +8,9 @@ const strings = {
   addNewTask: "Add New Task",
   newTask: "New Task",
   editTask: "Update Task",
+  taskList: "Task List",
+  myBoard: "My Board",
+  dashboard: "Dashboard",
 };
 
 export default strings;
