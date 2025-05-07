@@ -127,7 +127,7 @@ textarea {
 .right-tooltip .right-tooltiptext {
   visibility: hidden;
   width: 120px;
-  background-color: black;
+  background-color: rgb(116, 114, 114);
   color: #fff;
   text-align: center;
   border-radius: 6px;
@@ -146,7 +146,7 @@ textarea {
   margin-top: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: transparent black transparent transparent;
+  border-color: transparent rgb(116, 114, 114) transparent transparent;
 }
 .right-tooltip:hover .right-tooltiptext {
   visibility: visible;

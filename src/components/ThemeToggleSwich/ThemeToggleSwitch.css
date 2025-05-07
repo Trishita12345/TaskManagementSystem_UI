@@ -2,35 +2,38 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 20px 0px;
   cursor: pointer;
 }
 
 .toggle-switch {
-  width: 55px;
-  height: 34px;
-  background: #eee;
+  width: 48px;
+  height: 28px;
+  background: #e5e4e4;
   border-radius: 40px;
   position: relative;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgba(7, 7, 7, 0.15);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 10px;
+  padding: 0 2px;
   transition: background 0.4s;
+}
+.sun {
+  color: var(--primary-bg-color);
 }
 
 .icon {
-  font-size: 18px;
+  font-size: 16px;
   z-index: 1;
 }
 
 .slider {
   position: absolute;
-  top: 2px;
-  left: 4px;
-  width: 30px;
-  height: 30px;
+  top: 3px;
+  left: 2px;
+  width: 22px;
+  height: 22px;
   background: #f1c40f;
   border-radius: 50%;
   transition: transform 0.4s ease;
@@ -38,6 +41,6 @@
 }
 
 .toggle-switch.dark .slider {
-  transform: translateX(40px);
+  transform: translateX(26px);
   background: #444;
 }

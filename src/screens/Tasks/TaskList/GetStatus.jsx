@@ -22,7 +22,7 @@ const GetStatus = ({ id, statusId, updateStatus }) => {
               onClick={() => updateStatus(id, s.id)}
             >
               {s.name}
-              <span class="bottom-tooltiptext">{`Mark As ${s.name}`}</span>
+              <span className="bottom-tooltiptext">{`Mark As ${s.name}`}</span>
             </div>
           )}
           <div>&nbsp;{idx !== statusList.length - 1 && "|"} &nbsp; </div>

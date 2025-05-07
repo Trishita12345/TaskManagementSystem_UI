@@ -12,7 +12,6 @@ import ThemeToggleSwitch from "../../components/ThemeToggleSwich";
 const Layout = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { width } = useScreenSize();
-  console.log(width);
   useEffect(() => {
     if (width < smallDevice) setIsSidebarOpen(false);
   }, [width]);
@@ -29,8 +28,16 @@ const Layout = ({ children }) => {
         }}
       >
         <Logo />
-        <ThemeToggleSwitch />
-        <Avatar text="T" onClick={() => {}} />
+        <div
+          style={{
+            display: "flex",
+            gap: "16px",
+            alignItems: "center",
+          }}
+        >
+          <ThemeToggleSwitch />
+          <Avatar text="T" onClick={() => {}} />
+        </div>
       </div>
       <div style={{ display: "flex" }}>
         <div

@@ -10,7 +10,7 @@ const NarrowSideBarItem = ({ item }) => {
         size="lg"
         style={{ cursor: "pointer", padding: "4px" }}
       />
-      <span class="right-tooltiptext">{item.name}</span>
+      <span className="right-tooltiptext">{item.name}</span>
     </div>
   );
 };
