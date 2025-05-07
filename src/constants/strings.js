@@ -10,19 +10,21 @@ const strings = {
   editTask: "Update Task",
   taskList: "Task List",
   myBoard: "My Board",
-  dashboard: "Dashboard",
+  manageEmployees: "Manage Employees",
   filter: "filter",
   filterTask: "Filter Task",
   search: "Search",
   clearFilter: "Clear Filter",
   submit: "submit",
   reset: "reset",
-  descriptionMaxLengthEror: "Description cannot be more than 200 characters",
+  titleMaxLengthEror: "Title cannot be more than 100 characters",
+  descriptionMaxLengthEror: "Description cannot be more than 400 characters",
   titleRequiredError: "Title is required",
   dateError1: "Date must be between",
   and: "and",
   assignedTo: "Assigned To",
   taskId: "Task Id",
+  assignedToRequiredErrror: "Assignee is Required",
 };
 
 export default strings;

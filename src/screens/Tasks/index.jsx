@@ -71,7 +71,6 @@ const Tasks = () => {
       dispatch(setIsLoading(false));
       onPopupClose();
     }, 1500);
-    console.log("deletedId:", selectedIdForDelete);
   };
 
   const updateStatus = (taskId, statusId) => {

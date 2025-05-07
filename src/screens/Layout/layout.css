@@ -1,12 +1,12 @@
 #sidebar {
   width: 220px;
-  background-color: rgb(247, 244, 244);
+  background-color: var(--sidebar-color);
   position: fixed;
   top: 60px;
   left: 0;
   height: 100%;
   display: block;
-  z-index: 1000;
+  z-index: 99;
   overflow: hidden;
 }
 
@@ -28,14 +28,10 @@
 #hamburger {
   height: 25px;
   width: 18px;
-  background-color: rgb(247, 244, 244);
   cursor: pointer;
   z-index: 10;
 }
-#hamburger:hover {
-  background-color: rgb(216, 215, 213);
-  color: #4d4c4c;
-}
+
 #hamburger-icon {
   height: 25px;
   display: flex;
@@ -48,6 +44,7 @@
   position: fixed;
   top: 70px;
   left: 200px;
+  background-color: var(--primary-bg-color);
   border-radius: 7px 0px 0px 7px;
   border-top: 2px solid rgb(158, 157, 157);
   border-bottom: 2px solid rgb(158, 157, 157);
@@ -56,6 +53,7 @@
 .hamburger-right {
   position: fixed;
   top: 70px;
+  background-color: var(--sidebar-color);
   left: 50px;
   border-radius: 0px 7px 7px 0px;
   border-top: 2px solid rgb(158, 157, 157);
@@ -82,7 +80,8 @@
 
 #sidebar-item:hover {
   cursor: pointer;
-  background-color: white;
+  background-color: var(--primary-bg-color);
+  color: var(--primary-color);
   transform: scale(1.05);
 }
 
@@ -98,7 +97,7 @@
   top: 60px;
   left: 0;
   width: 50px;
-  background-color: rgb(247, 244, 244);
+  background-color: var(--sidebar-color);
   height: 100%;
   /* box-shadow: 19px 12px 31px 1px rgba(120, 120, 120, 0.29);
   -webkit-box-shadow: 19px 12px 31px 1px rgba(120, 120, 120, 0.29);

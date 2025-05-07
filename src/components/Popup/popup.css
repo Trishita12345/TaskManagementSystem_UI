@@ -1,14 +1,12 @@
 #popup {
   display: none;
   position: fixed;
-  background-color: white;
+  background-color: var(--primary-bg-color);
+  color: var(--primary-color);
   padding: 8px;
   z-index: 1000;
   min-height: 20%;
   min-width: 30%;
-  /* left: 50%;
-  top: 40%; 
-  transform: translate(-50%, -50%); */
 }
 
 #popup-items {

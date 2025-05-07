@@ -47,7 +47,11 @@ const ViewTask = ({ onPopupClose }) => {
       </div>
       <hr />
       <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        <div style={{ marginBottom: "8px" }}>
+        <div>
+          <p className="label">{`${strings.title}:`}</p>
+          <p>{data.title}</p>
+        </div>
+        <div style={{ marginBottom: "20px" }}>
           <p className="label">{`${strings.description}:`}</p>
           <p>{data.description}</p>
         </div>

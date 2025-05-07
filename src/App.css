@@ -3,13 +3,34 @@
   font-family: "Montserrat", sans-serif;
   font-size: 14px;
 }
+:root {
+  --primary-bg-color: white;
+  --primary-text-color: black;
+  --secondary-bg-color: black;
+  --secondary-text-color: white;
+  --sidebar-color: rgb(247, 244, 244);
+  --button-hover-color: rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="dark"] {
+  --primary-bg-color: #212121;
+  --primary-text-color: rgb(226, 223, 223);
+  --secondary-bg-color: rgb(226, 223, 223);
+  --secondary-text-color: #212121;
+  --sidebar-color: black;
+  --button-hover-color: rgba(226, 223, 223, 0.651);
+}
+
 body {
   margin: 0;
+  background-color: var(--primary-bg-color);
+  color: var(--primary-text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 button {
   text-transform: capitalize;
-  background-color: black;
-  color: white;
+  background-color: var(--secondary-bg-color);
+  color: var(--secondary-text-color);
   padding: 8px;
   margin: 4px;
   cursor: pointer;
@@ -18,7 +39,8 @@ button {
   border: 0;
 }
 button:hover {
-  background-color: rgba(0, 0, 0, 0.827);
+  background-color: var(--button-hover-color);
+  color: var(--secondary-text-color);
 }
 button:disabled {
   background-color: #ccc;

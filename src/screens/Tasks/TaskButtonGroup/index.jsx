@@ -32,7 +32,6 @@ const TaskButtonGroup = ({ onFilter, onAdd }) => {
       <button onClick={onAdd}>
         <div style={{ display: "flex", alignItems: "center", gap: "2px" }}>
           <FontAwesomeIcon
-            onClick={(e) => onPopupClose()}
             icon={faAdd}
             size="lg"
             style={{ cursor: "pointer", padding: "4px" }}

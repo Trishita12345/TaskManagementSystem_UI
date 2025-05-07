@@ -15,13 +15,12 @@ const FilterTaskForm = ({ onSubmit, onPopupClose }) => {
 
   const taskFilterObj = useSelector((state) => state.taskStore.taskFilterObj);
   const statusList = useSelector((state) => state.taskStore.statusList);
+  const employeeList = useSelector((state) => state.taskStore.employeeList);
 
   useEffect(() => {
     reset(taskFilterObj);
   }, [taskFilterObj]);
 
-  const minDate = new Date();
-  const maxDate = new Date("2030-12-31");
   return (
     <>
       <div style={{ margin: "6px 10px" }}>
@@ -48,31 +47,17 @@ const FilterTaskForm = ({ onSubmit, onPopupClose }) => {
       >
         <div className="formItem">
           <label className="formLabel">{strings.taskId}</label>
-          <input className="formValue" {...register("title")} />
+          <input className="formValue" {...register("id")} />
         </div>
         <div className="formItem">
-          <label className="formLabel">{strings.dueDate}</label>
-          <input
-            type="date"
-            className="formValue"
-            {...register("dueDate", {
-              validate: (value) => {
-                if (value !== "") {
-                  const selectedDate = new Date(value);
-                  if (selectedDate < minDate || selectedDate > maxDate) {
-                    return `${
-                      strings.dateError1
-                    } ${minDate.toLocaleDateString()} 
-                    ${strings.and} ${maxDate.toLocaleDateString()}`;
-                  }
-                }
-                return true;
-              },
-            })}
-          />
-          {errors.dueDate && (
-            <p style={{ color: "red" }}>{errors.dueDate.message}</p>
-          )}
+          <label className="formLabel">{strings.assignedTo}</label>
+          <select className="formValue" {...register("assignedTo")}>
+            {employeeList.map((i, idx) => (
+              <option key={i.id} value={i.id}>
+                {i.name}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="formItem">
           <label className="formLabel">{strings.status}</label>

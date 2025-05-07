@@ -16,7 +16,6 @@ const GetStatus = ({ id, statusId, updateStatus }) => {
               className="bottom-tooltip"
               style={{
                 color: "#1c6fbd",
-                backgroundColor: "#ffffff",
                 cursor: "pointer",
                 textDecoration: "underline",
               }}

@@ -7,6 +7,7 @@ import Hamburger from "./Hamburger";
 import { smallDevice } from "../../constants/data";
 import Avatar from "../../components/Avatar";
 import NarrowSideBar from "./NarrowSideBar";
+import ThemeToggleSwitch from "../../components/ThemeToggleSwich";
 
 const Layout = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -28,6 +29,7 @@ const Layout = ({ children }) => {
         }}
       >
         <Logo />
+        <ThemeToggleSwitch />
         <Avatar text="T" onClick={() => {}} />
       </div>
       <div style={{ display: "flex" }}>

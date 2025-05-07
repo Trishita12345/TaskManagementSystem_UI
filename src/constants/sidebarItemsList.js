@@ -24,9 +24,9 @@ export const sidebarItemsList = [
   },
   {
     id: 3,
-    name: strings.dashboard,
+    name: strings.manageEmployees,
     icon: faGear,
-    route: routes.dashboard,
-    priviledge: priviledges.view_dashboard,
+    route: routes.manageEmployees,
+    priviledge: priviledges.view_manage_employees,
   },
 ];

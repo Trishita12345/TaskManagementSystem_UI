@@ -14,6 +14,7 @@ const AddEditTaskForm = ({ onSubmit, onPopupClose }) => {
     formState: { errors },
   } = useForm();
 
+  const title = watch("title", "");
   const description = watch("description", "");
 
   const data = useSelector((state) => state.taskStore.taskById);
@@ -27,8 +28,6 @@ const AddEditTaskForm = ({ onSubmit, onPopupClose }) => {
     reset(data);
   }, [data]);
 
-  const minDate = new Date();
-  const maxDate = new Date("2030-12-31");
   return (
     <>
       <div style={{ margin: "6px 10px" }}>
@@ -62,13 +61,48 @@ const AddEditTaskForm = ({ onSubmit, onPopupClose }) => {
           </div>
         )}
         <div className="formItem">
+          <label className="formLabel">{strings.title}</label>
+          <textarea
+            className="formValue"
+            rows={2}
+            {...register("title", {
+              required: { value: true, message: strings.titleRequiredError },
+              maxLength: {
+                value: 100,
+                message: strings.titleMaxLengthEror,
+              },
+            })}
+          />
+          <p
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <p style={{ margin: 0, color: "red" }}>
+              {errors.title && errors.title.message}
+            </p>
+            <p
+              style={{
+                fontSize: "0.9em",
+                color: title.length > 100 ? "red" : "gray",
+                margin: 0,
+              }}
+            >
+              {title.length} / {100}
+            </p>
+          </p>
+        </div>
+
+        <div className="formItem">
           <label className="formLabel">{strings.description}</label>
           <textarea
             className="formValue"
             rows={8}
             {...register("description", {
               maxLength: {
-                value: 200,
+                value: 400,
                 message: strings.descriptionMaxLengthEror,
               },
             })}
@@ -86,46 +120,35 @@ const AddEditTaskForm = ({ onSubmit, onPopupClose }) => {
             <p
               style={{
                 fontSize: "0.9em",
-                color: description.length > 200 ? "red" : "gray",
+                color: description.length > 400 ? "red" : "gray",
                 margin: 0,
               }}
             >
-              {description.length} / {200}
+              {description.length} / {400}
             </p>
           </p>
         </div>
 
         <div className="formItem">
-          <label className="formLabel">{strings.dueDate}</label>
-          <input
-            type="date"
+          <label className="formLabel">{strings.assignedTo}</label>
+          <select
             className="formValue"
-            {...register("dueDate", {
-              required: "Date is required",
-              validate: (value) => {
-                const selectedDate = new Date(value);
-                if (selectedDate < minDate || selectedDate > maxDate) {
-                  return `${strings.dateError1} ${minDate.toLocaleDateString()} 
-                    ${strings.and} ${maxDate.toLocaleDateString()}`;
-                }
-                return true;
+            {...register("assignedTo", {
+              required: {
+                value: true,
+                message: strings.assignedToRequiredErrror,
               },
             })}
-          />
-          {errors.dueDate && (
-            <p style={{ color: "red" }}>{errors.dueDate.message}</p>
-          )}
-        </div>
-
-        <div className="formItem">
-          <label className="formLabel">{strings.assignedTo}</label>
-          <select className="formValue" {...register("assignedTo")}>
+          >
             {employeeList.map((i, idx) => (
               <option key={i.id} value={i.id}>
                 {i.name}
               </option>
             ))}
           </select>
+          <p style={{ margin: 0, color: "red" }}>
+            {errors.assignedTo && errors.assignedTo.message}
+          </p>
         </div>
 
         {selectedIdForEdit && (

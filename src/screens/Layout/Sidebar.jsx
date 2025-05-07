@@ -10,6 +10,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
       />
+      <div style={{ marginBottom: "8px" }}></div>
       {sidebarItemsList.map((s) => (
         <SideBarItem key={s.id} item={s} />
       ))}

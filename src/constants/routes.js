@@ -1,5 +1,5 @@
 export const routes = {
-  dashboard: "/dashboard",
+  manageEmployees: "/manage-employees",
   profile: "/profile",
   myBoard: "/my-board",
   tasks: "/tasks",

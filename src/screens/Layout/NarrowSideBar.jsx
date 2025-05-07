@@ -6,6 +6,7 @@ const NarrowSideBar = ({ setIsSidebarOpen }) => {
   return (
     <div id="narrow-sidebar">
       <Hamburger setIsSidebarOpen={setIsSidebarOpen} />
+      <div style={{ marginBottom: "8px" }}></div>
       {sidebarItemsList.map((s) => (
         <NarrowSideBarItem key={s.id} item={s} />
       ))}

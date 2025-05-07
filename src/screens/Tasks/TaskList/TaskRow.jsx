@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { openPopup } from "../../../components/Popup/index.jsx";
 
-const TaskRow = ({ id, dueDate, assignedTo, status, updateStatus }) => {
+const TaskRow = ({ id, title, assignedTo, status, updateStatus }) => {
   const dispatch = useDispatch();
 
   const employeeList = useSelector((state) => state.taskStore.employeeList);
@@ -39,7 +39,7 @@ const TaskRow = ({ id, dueDate, assignedTo, status, updateStatus }) => {
           {id}
         </div>
       </td>
-      <td>{dueDate}</td>
+      <td>{title}</td>
       <td>{employeeList.find((e) => e.id === assignedTo)?.name}</td>
       <td>
         <GetStatus id={id} statusId={status} updateStatus={updateStatus} />
