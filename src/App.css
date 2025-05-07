@@ -3,6 +3,9 @@
   font-family: "Montserrat", sans-serif;
   font-size: 14px;
 }
+body {
+  margin: 0;
+}
 button {
   text-transform: capitalize;
   background-color: black;

@@ -119,7 +119,7 @@ const AddEditTaskForm = ({ onSubmit, onPopupClose }) => {
           )}
         </div>
 
-        {selectedIdForEdit && (
+        {/* {selectedIdForEdit && (
           <div className="formItem">
             <label className="formLabel">Status:</label>
             <select className="formValue" {...register("status")}>
@@ -130,7 +130,7 @@ const AddEditTaskForm = ({ onSubmit, onPopupClose }) => {
               ))}
             </select>
           </div>
-        )}
+        )} */}
 
         <div id="formBtnContainer">
           <button type="submit">Submit</button>
