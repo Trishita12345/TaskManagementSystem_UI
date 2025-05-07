@@ -5,7 +5,7 @@ const NarrowSideBarItem = ({ item }) => {
   return (
     <div id="narrow-sidebar-item" className="right-tooltip">
       <FontAwesomeIcon
-        onClick={(e) => onPopupClose()}
+        onClick={(e) => {}}
         icon={item.icon}
         size="lg"
         style={{ cursor: "pointer", padding: "4px" }}

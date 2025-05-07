@@ -19,29 +19,15 @@ const Layout = ({ children }) => {
     <>
       <div
         style={{
-          paddingRight: "14px",
+          height: "60px",
+          padding: "0px 12px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           boxShadow: "0px 12px 30px 0px rgba(120,120,120,0.1)",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            padding: "10px 6px",
-            height: "40px",
-          }}
-        >
-          <Hamburger setIsSidebarOpen={setIsSidebarOpen} />
-          <div
-            style={{
-              width: isSidebarOpen && width > smallDevice ? `200px` : 0,
-            }}
-          ></div>
-          <Logo />
-        </div>
+        <Logo />
         <Avatar text="T" onClick={() => {}} />
       </div>
       <div style={{ display: "flex" }}>
@@ -50,7 +36,7 @@ const Layout = ({ children }) => {
             width: isSidebarOpen && width > smallDevice ? `220px` : "50px",
           }}
         ></div>
-        <NarrowSideBar />
+        <NarrowSideBar setIsSidebarOpen={setIsSidebarOpen} />
         <div
           style={{
             margin: "8px",
@@ -63,10 +49,19 @@ const Layout = ({ children }) => {
           {children}
         </div>
       </div>
-      <Sidebar
-        isSidebarOpen={isSidebarOpen}
-        setIsSidebarOpen={setIsSidebarOpen}
-      />
+      {width <= smallDevice && isSidebarOpen ? (
+        <div id={"sidebar-overlay"}>
+          <Sidebar
+            isSidebarOpen={isSidebarOpen}
+            setIsSidebarOpen={setIsSidebarOpen}
+          />
+        </div>
+      ) : (
+        <Sidebar
+          isSidebarOpen={isSidebarOpen}
+          setIsSidebarOpen={setIsSidebarOpen}
+        />
+      )}
     </>
   );
 };

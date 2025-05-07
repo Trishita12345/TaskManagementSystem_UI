@@ -15,6 +15,7 @@ import {
 import ViewTask from "./ViewTask/index.jsx";
 import Loader from "../../components/Loader/index.js";
 import { setIsLoading } from "../../utils/redux/slices/commonSlice.js";
+import TaskButtonGroup from "./TaskButtonGroup/index.js";
 
 const Tasks = () => {
   const dispatch = useDispatch();
@@ -109,7 +110,8 @@ const Tasks = () => {
         )}
       </Popup>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <button onClick={openPopup}>Add New Task</button>
+        {/* <button onClick={openPopup}>Add New Task</button> */}
+        <TaskButtonGroup />
       </div>
       <TaskTable updateStatus={updateStatus} />
     </>

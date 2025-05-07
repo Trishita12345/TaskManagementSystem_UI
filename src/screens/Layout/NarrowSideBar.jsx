@@ -1,14 +1,14 @@
 import { sidebarItemsList } from "../../constants/sidebarItemsList";
+import Hamburger from "./Hamburger";
 import NarrowSideBarItem from "./NarrowSideBarItem";
 
-const NarrowSideBar = () => {
+const NarrowSideBar = ({ setIsSidebarOpen }) => {
   return (
     <div id="narrow-sidebar">
-      <div style={{ padding: "10px 0px", height: "40px" }}>
-        {sidebarItemsList.map((s) => (
-          <NarrowSideBarItem key={s.id} item={s} />
-        ))}
-      </div>
+      <Hamburger setIsSidebarOpen={setIsSidebarOpen} />
+      {sidebarItemsList.map((s) => (
+        <NarrowSideBarItem key={s.id} item={s} />
+      ))}
     </div>
   );
 };

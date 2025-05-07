@@ -1,0 +1,27 @@
+.button-group {
+  display: inline-flex;
+}
+
+.button-group button {
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.button-group button:not(:last-child) {
+  border-right: none; /* Remove double borders between buttons */
+}
+
+.button-group button:first-child {
+  border-radius: 4px 0 0 4px;
+}
+
+.button-group button:last-child {
+  border-radius: 0 4px 4px 0;
+}
+
+.button-group button:hover {
+  background-color: #f0f0f0;
+}

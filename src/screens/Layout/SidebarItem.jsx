@@ -6,7 +6,7 @@ const SideBarItem = ({ item }) => {
     <div id="sidebar-item">
       <div id="sidebar-text">
         <FontAwesomeIcon
-          onClick={(e) => onPopupClose()}
+          onClick={(e) => {}}
           icon={item.icon}
           size="lg"
           style={{ cursor: "pointer", padding: "4px" }}
