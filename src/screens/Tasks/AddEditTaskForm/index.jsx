@@ -55,10 +55,10 @@ const AddEditTaskForm = ({ onSubmit, onPopupClose }) => {
         style={{ maxWidth: 400, margin: "auto" }}
       >
         <div className="formItem">
-          <label className="formLabel">Task Title:</label>
+          <label className="formLabel">{strings.taskTitle}</label>
           <input
             className="formValue"
-            {...register("title", { required: "Title is required" })}
+            {...register("title", { required: strings.titleRequiredError })}
           />
           {errors.title && (
             <p style={{ color: "red" }}>{errors.title.message}</p>
@@ -66,13 +66,13 @@ const AddEditTaskForm = ({ onSubmit, onPopupClose }) => {
         </div>
 
         <div className="formItem">
-          <label className="formLabel">Description:</label>
+          <label className="formLabel">{strings.description}</label>
           <textarea
             className="formValue"
             {...register("description", {
               maxLength: {
                 value: 200,
-                message: "Description cannot be more than 200 characters",
+                message: strings.descriptionMaxLengthEror,
               },
             })}
           />
@@ -99,7 +99,7 @@ const AddEditTaskForm = ({ onSubmit, onPopupClose }) => {
         </div>
 
         <div className="formItem">
-          <label className="formLabel">Due date:</label>
+          <label className="formLabel">{strings.dueDate}</label>
           <input
             type="date"
             className="formValue"
@@ -108,7 +108,8 @@ const AddEditTaskForm = ({ onSubmit, onPopupClose }) => {
               validate: (value) => {
                 const selectedDate = new Date(value);
                 if (selectedDate < minDate || selectedDate > maxDate) {
-                  return `Date must be between ${minDate.toLocaleDateString()} and ${maxDate.toLocaleDateString()}`;
+                  return `${strings.dateError1} ${minDate.toLocaleDateString()} 
+                    ${strings.and} ${maxDate.toLocaleDateString()}`;
                 }
                 return true;
               },
@@ -119,9 +120,9 @@ const AddEditTaskForm = ({ onSubmit, onPopupClose }) => {
           )}
         </div>
 
-        {/* {selectedIdForEdit && (
+        {selectedIdForEdit && (
           <div className="formItem">
-            <label className="formLabel">Status:</label>
+            <label className="formLabel">{strings.status}</label>
             <select className="formValue" {...register("status")}>
               {statusList.map((i, idx) => (
                 <option key={i.id} value={i.id}>
@@ -130,12 +131,12 @@ const AddEditTaskForm = ({ onSubmit, onPopupClose }) => {
               ))}
             </select>
           </div>
-        )} */}
+        )}
 
         <div id="formBtnContainer">
-          <button type="submit">Submit</button>
+          <button type="submit">{strings.submit}</button>
           <button type="button" onClick={() => reset()}>
-            Reset
+            {strings.reset}
           </button>
         </div>
       </form>

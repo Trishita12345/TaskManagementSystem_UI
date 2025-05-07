@@ -7,6 +7,7 @@ const initialState = {
   selectedIdForView: null,
   selectedIdForEdit: null,
   selectedIdForDelete: null,
+  taskFilterObj: {},
 };
 
 const taskSlice = createSlice({
@@ -31,6 +32,9 @@ const taskSlice = createSlice({
     setSelectedIdForDelete(state, action) {
       state.selectedIdForDelete = action.payload;
     },
+    setTaskFilterObj(state, action) {
+      state.taskFilterObj = action.payload;
+    },
     setTaskInitState(state) {
       state.taskById = {};
       state.selectedIdForView = null;
@@ -48,5 +52,6 @@ export const {
   setSelectedIdForDelete,
   setSelectedIdForView,
   setTaskInitState,
+  setTaskFilterObj,
 } = taskSlice.actions;
 export default taskSlice.reducer;

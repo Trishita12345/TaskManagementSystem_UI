@@ -11,6 +11,17 @@ const strings = {
   taskList: "Task List",
   myBoard: "My Board",
   dashboard: "Dashboard",
+  filter: "filter",
+  filterTask: "Filter Task",
+  search: "Search",
+  clearFilter: "Clear Filter",
+  submit: "submit",
+  reset: "reset",
+  taskTitle: "Task Title:",
+  descriptionMaxLengthEror: "Description cannot be more than 200 characters",
+  titleRequiredError: "Title is required",
+  dateError1: "Date must be between",
+  and: "and",
 };
 
 export default strings;

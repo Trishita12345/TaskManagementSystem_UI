@@ -16,7 +16,9 @@ button {
   min-width: 80px;
   border-radius: 6px;
 }
-
+button:hover {
+  background-color: rgba(0, 0, 0, 0.827);
+}
 .formItem {
   margin: 15px 0px;
 }

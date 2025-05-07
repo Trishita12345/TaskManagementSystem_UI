@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { statusData, TaskData } from "../../constants/data";
 import TaskTable from "./TaskList/TaskTable";
 import "./Tasks.css";
@@ -11,13 +11,18 @@ import {
   setStatusList,
   setTaskById,
   setTasks,
+  setTaskFilterObj,
 } from "../../utils/redux/slices/taskSlice.js";
 import ViewTask from "./ViewTask/index.jsx";
 import Loader from "../../components/Loader/index.js";
 import { setIsLoading } from "../../utils/redux/slices/commonSlice.js";
-import TaskButtonGroup from "./TaskButtonGroup/index.js";
+import TaskButtonGroup from "./TaskButtonGroup";
+import FilterTaskForm from "./FilterTaskForm/index.jsx";
 
 const Tasks = () => {
+  const [openAddPopUp, setOpenAddPopUp] = useState(false);
+  const [openFilterPopUp, setOpenFilterPopUp] = useState(false);
+
   const dispatch = useDispatch();
 
   const tasks = useSelector((state) => state.taskStore.tasks);
@@ -37,6 +42,8 @@ const Tasks = () => {
   const onPopupClose = (cb = () => {}) => {
     closePopup();
     dispatch(setTaskInitState());
+    setOpenAddPopUp(false);
+    setOpenFilterPopUp(false);
     if (cb) cb();
   };
 
@@ -83,6 +90,24 @@ const Tasks = () => {
     }, 1500);
   };
 
+  const onFilter = () => {
+    openPopup();
+    setOpenFilterPopUp(true);
+  };
+  const onAdd = () => {
+    openPopup();
+    setOpenAddPopUp(true);
+  };
+
+  const handleFilter = (data) => {
+    dispatch(setIsLoading(true));
+    dispatch(setTaskFilterObj(data));
+    setTimeout(() => {
+      dispatch(setIsLoading(false));
+      onPopupClose();
+    }, 1500);
+  };
+
   useEffect(() => {
     getTasks();
     getStatuses();
@@ -98,20 +123,28 @@ const Tasks = () => {
     <>
       {isLoading && <Loader />}
       <Popup>
-        {selectedIdForDelete ? (
+        {selectedIdForDelete && (
           <DeleteTask
             deleteTaskById={deleteTaskById}
             onPopupClose={onPopupClose}
           />
-        ) : selectedIdForView ? (
-          <ViewTask onPopupClose={onPopupClose} />
-        ) : (
+        )}
+        {selectedIdForView && <ViewTask onPopupClose={onPopupClose} />}
+        {(openAddPopUp || selectedIdForEdit) && (
           <AddEditTaskForm onSubmit={onAddEdit} onPopupClose={onPopupClose} />
         )}
+        {openFilterPopUp && (
+          <FilterTaskForm onSubmit={handleFilter} onPopupClose={onPopupClose} />
+        )}
       </Popup>
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        {/* <button onClick={openPopup}>Add New Task</button> */}
-        <TaskButtonGroup />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          margin: "8px 0px",
+        }}
+      >
+        <TaskButtonGroup onFilter={onFilter} onAdd={onAdd} />
       </div>
       <TaskTable updateStatus={updateStatus} />
     </>
