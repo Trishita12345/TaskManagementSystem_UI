@@ -47,7 +47,7 @@ const FilterTaskForm = ({ onSubmit, onPopupClose }) => {
         style={{ maxWidth: 400, margin: "auto" }}
       >
         <div className="formItem">
-          <label className="formLabel">{strings.taskTitle}</label>
+          <label className="formLabel">{strings.taskId}</label>
           <input className="formValue" {...register("title")} />
         </div>
         <div className="formItem">
@@ -89,6 +89,7 @@ const FilterTaskForm = ({ onSubmit, onPopupClose }) => {
           <button
             type="button"
             onClick={() => onSubmit({})}
+            // className={Object.keys(taskFilterObj).length === 0}
             disabled={Object.keys(taskFilterObj).length === 0}
           >
             {strings.clearFilter}

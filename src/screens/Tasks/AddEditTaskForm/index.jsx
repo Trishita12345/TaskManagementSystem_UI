@@ -21,6 +21,7 @@ const AddEditTaskForm = ({ onSubmit, onPopupClose }) => {
     (state) => state.taskStore.selectedIdForEdit
   );
   const statusList = useSelector((state) => state.taskStore.statusList);
+  const employeeList = useSelector((state) => state.taskStore.employeeList);
 
   useEffect(() => {
     reset(data);
@@ -54,21 +55,17 @@ const AddEditTaskForm = ({ onSubmit, onPopupClose }) => {
         onSubmit={handleSubmit((data) => onSubmit(data, reset))}
         style={{ maxWidth: 400, margin: "auto" }}
       >
-        <div className="formItem">
-          <label className="formLabel">{strings.taskTitle}</label>
-          <input
-            className="formValue"
-            {...register("title", { required: strings.titleRequiredError })}
-          />
-          {errors.title && (
-            <p style={{ color: "red" }}>{errors.title.message}</p>
-          )}
-        </div>
-
+        {selectedIdForEdit && (
+          <div className="formItem">
+            <label className="formLabel">{strings.taskId}</label>
+            <input className="formValue" {...register("id")} disabled />
+          </div>
+        )}
         <div className="formItem">
           <label className="formLabel">{strings.description}</label>
           <textarea
             className="formValue"
+            rows={8}
             {...register("description", {
               maxLength: {
                 value: 200,
@@ -118,6 +115,17 @@ const AddEditTaskForm = ({ onSubmit, onPopupClose }) => {
           {errors.dueDate && (
             <p style={{ color: "red" }}>{errors.dueDate.message}</p>
           )}
+        </div>
+
+        <div className="formItem">
+          <label className="formLabel">{strings.assignedTo}</label>
+          <select className="formValue" {...register("assignedTo")}>
+            {employeeList.map((i, idx) => (
+              <option key={i.id} value={i.id}>
+                {i.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         {selectedIdForEdit && (

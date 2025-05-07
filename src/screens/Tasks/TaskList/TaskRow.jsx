@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import GetStatus from "./GetStatus.jsx";
 import {
   setSelectedIdForDelete,
@@ -8,8 +8,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { openPopup } from "../../../components/Popup/index.jsx";
 
-const TaskRow = ({ id, title, dueDate, status, updateStatus }) => {
+const TaskRow = ({ id, dueDate, assignedTo, status, updateStatus }) => {
   const dispatch = useDispatch();
+
+  const employeeList = useSelector((state) => state.taskStore.employeeList);
 
   const handleView = () => {
     dispatch(setSelectedIdForView(id));
@@ -30,12 +32,15 @@ const TaskRow = ({ id, title, dueDate, status, updateStatus }) => {
             cursor: "pointer",
             textDecoration: "underline",
             width: "max-content",
+            color: "#1c6fbd",
+            textDecoration: "underline",
           }}
         >
-          {title}
+          {id}
         </div>
       </td>
       <td>{dueDate}</td>
+      <td>{employeeList.find((e) => e.id === assignedTo)?.name}</td>
       <td>
         <GetStatus id={id} statusId={status} updateStatus={updateStatus} />
       </td>

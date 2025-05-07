@@ -17,11 +17,12 @@ const strings = {
   clearFilter: "Clear Filter",
   submit: "submit",
   reset: "reset",
-  taskTitle: "Task Title:",
   descriptionMaxLengthEror: "Description cannot be more than 200 characters",
   titleRequiredError: "Title is required",
   dateError1: "Date must be between",
   and: "and",
+  assignedTo: "Assigned To",
+  taskId: "Task Id",
 };
 
 export default strings;

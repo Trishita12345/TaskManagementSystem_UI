@@ -9,8 +9,9 @@ const TaskTable = ({ updateStatus }) => {
       <table>
         <thead>
           <tr>
-            <th>{strings.title}</th>
+            <th>{strings.taskId}</th>
             <th>{strings.dueDate}</th>
+            <th>{strings.assignedTo}</th>
             <th>{strings.status}</th>
             <th>{strings.actions}</th>
           </tr>
@@ -20,9 +21,9 @@ const TaskTable = ({ updateStatus }) => {
             <TaskRow
               key={t.id}
               id={t.id}
-              title={t.title}
               dueDate={t.dueDate}
               status={t.status}
+              assignedTo={t.assignedTo}
               updateStatus={updateStatus}
             />
           ))}

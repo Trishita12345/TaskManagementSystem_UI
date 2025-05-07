@@ -18,6 +18,7 @@ const ViewTask = ({ onPopupClose }) => {
   const selectedIdForView = useSelector(
     (state) => state.taskStore.selectedIdForView
   );
+  const employeeList = useSelector((state) => state.taskStore.employeeList);
 
   const handleEdit = () => {
     //TODO: Need to check if the user is premium
@@ -36,7 +37,7 @@ const ViewTask = ({ onPopupClose }) => {
           alignItems: "center",
         }}
       >
-        <p className="header">{data.title}</p>
+        <p className="header">{data.id}</p>
         <FontAwesomeIcon
           onClick={(e) => onPopupClose()}
           icon={faXmark}
@@ -47,8 +48,12 @@ const ViewTask = ({ onPopupClose }) => {
       <hr />
       <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
         <div style={{ marginBottom: "8px" }}>
-          <p className="label">{strings.description}</p>
+          <p className="label">{`${strings.description}:`}</p>
           <p>{data.description}</p>
+        </div>
+        <div style={{ display: "flex", gap: 8 }}>
+          <p className="label">{`${strings.assignedTo}:`}</p>
+          <p>{employeeList.find((e) => e.id === data.assignedTo)?.name}</p>
         </div>
         <div style={{ display: "flex", gap: 8 }}>
           <p className="label">{`${strings.dueDate}:`}</p>

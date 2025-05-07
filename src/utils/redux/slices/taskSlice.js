@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   statusList: [],
+  employeeList: [],
   tasks: [],
   taskById: {},
   selectedIdForView: null,
@@ -16,6 +17,9 @@ const taskSlice = createSlice({
   reducers: {
     setStatusList(state, action) {
       state.statusList = action.payload;
+    },
+    setEmployeeList(state, action) {
+      state.employeeList = action.payload;
     },
     setTasks(state, action) {
       state.tasks = action.payload;
@@ -53,5 +57,6 @@ export const {
   setSelectedIdForView,
   setTaskInitState,
   setTaskFilterObj,
+  setEmployeeList,
 } = taskSlice.actions;
 export default taskSlice.reducer;

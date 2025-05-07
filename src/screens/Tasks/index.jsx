@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { statusData, TaskData } from "../../constants/data";
+import { employeeData, statusData, TaskData } from "../../constants/data";
 import TaskTable from "./TaskList/TaskTable";
 import "./Tasks.css";
 import Popup, { closePopup, openPopup } from "../../components/Popup";
@@ -12,6 +12,7 @@ import {
   setTaskById,
   setTasks,
   setTaskFilterObj,
+  setEmployeeList,
 } from "../../utils/redux/slices/taskSlice.js";
 import ViewTask from "./ViewTask/index.jsx";
 import Loader from "../../components/Loader/index.js";
@@ -49,6 +50,9 @@ const Tasks = () => {
 
   const getStatuses = () => {
     dispatch(setStatusList(statusData));
+  };
+  const getEmployees = () => {
+    dispatch(setEmployeeList(employeeData));
   };
 
   const getTasks = () => {
@@ -101,16 +105,18 @@ const Tasks = () => {
 
   const handleFilter = (data) => {
     dispatch(setIsLoading(true));
-    dispatch(setTaskFilterObj(data));
     setTimeout(() => {
       dispatch(setIsLoading(false));
+      dispatch(setTaskFilterObj(data));
       onPopupClose();
     }, 1500);
   };
 
   useEffect(() => {
+    //TODO: promise.all
     getTasks();
     getStatuses();
+    getEmployees();
   }, []);
 
   useEffect(() => {
