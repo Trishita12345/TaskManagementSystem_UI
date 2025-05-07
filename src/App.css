@@ -51,13 +51,13 @@ textarea {
 }
 
 /* Tooltip container */
-.tooltip {
+.bottom-tooltip {
   position: relative;
   display: inline-block;
 }
 
 /* Tooltip text */
-.tooltip .tooltiptext {
+.bottom-tooltip .bottom-tooltiptext {
   visibility: hidden;
   background-color: rgb(116, 114, 114);
   color: #fff;
@@ -69,16 +69,16 @@ textarea {
   left: 50%;
   margin-left: -60px;
 
-  /* Position the tooltip text - see examples below! */
+  /* Position the bottom-tooltip text - see examples below! */
   position: absolute;
   z-index: 1;
 }
 
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
+/* Show the bottom-tooltip text when you mouse over the bottom-tooltip container */
+.bottom-tooltip:hover .bottom-tooltiptext {
   visibility: visible;
 }
-.tooltip .tooltiptext::after {
+.bottom-tooltip .bottom-tooltiptext::after {
   content: "";
   position: absolute;
   bottom: 100%;
@@ -87,4 +87,36 @@ textarea {
   border-width: 5px;
   border-style: solid;
   border-color: transparent transparent rgb(116, 114, 114) transparent;
+}
+.right-tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.right-tooltip .right-tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 110%;
+}
+
+.right-tooltip .right-tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
+}
+.right-tooltip:hover .right-tooltiptext {
+  visibility: visible;
 }

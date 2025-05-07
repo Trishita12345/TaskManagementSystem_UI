@@ -1,9 +1,6 @@
 #sidebar {
   width: 220px;
   background-color: rgb(247, 244, 244);
-  /* box-shadow: 19px 12px 31px 1px rgba(120, 120, 120, 0.29);
-  -webkit-box-shadow: 19px 12px 31px 1px rgba(120, 120, 120, 0.29);
-  -moz-box-shadow: 19px 12px 31px 1px rgba(120, 120, 120, 0.29); */
   position: fixed;
   top: 0;
   left: 0;
@@ -78,6 +75,17 @@
   top: 40;
   left: 0;
   width: 50px;
-  background-color: red;
+  background-color: rgb(247, 244, 244);
   height: 100%;
+  /* box-shadow: 19px 12px 31px 1px rgba(120, 120, 120, 0.29);
+  -webkit-box-shadow: 19px 12px 31px 1px rgba(120, 120, 120, 0.29);
+  -moz-box-shadow: 19px 12px 31px 1px rgba(120, 120, 120, 0.29); */
+}
+
+#narrow-sidebar-item {
+  margin: 8px 6px;
+}
+
+#narrow-sidebar-item:hover {
+  cursor: pointer;
 }

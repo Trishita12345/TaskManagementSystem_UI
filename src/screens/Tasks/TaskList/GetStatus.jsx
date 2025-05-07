@@ -13,7 +13,7 @@ const GetStatus = ({ id, statusId, updateStatus }) => {
             <Chip text={s.name} color={getStatusColor(statusId)} />
           ) : (
             <div
-              class="tooltip"
+              className="bottom-tooltip"
               style={{
                 color: "#1c6fbd",
                 backgroundColor: "#ffffff",
@@ -23,7 +23,7 @@ const GetStatus = ({ id, statusId, updateStatus }) => {
               onClick={() => updateStatus(id, s.id)}
             >
               {s.name}
-              <span class="tooltiptext">{`Mark As ${s.name}`}</span>
+              <span class="bottom-tooltiptext">{`Mark As ${s.name}`}</span>
             </div>
           )}
           <div>&nbsp;{idx !== statusList.length - 1 && "|"} &nbsp; </div>
