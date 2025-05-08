@@ -74,7 +74,6 @@ const FilterTaskForm = ({ onSubmit, onPopupClose }) => {
           <button
             type="button"
             onClick={() => onSubmit({})}
-            // className={Object.keys(taskFilterObj).length === 0}
             disabled={Object.keys(taskFilterObj).length === 0}
           >
             {strings.clearFilter}

@@ -3,7 +3,6 @@ import Sidebar from "./Sidebar";
 import Logo from "./Logo";
 import useScreenSize from "../../utils/customHooks/useScreenSize";
 import { useEffect, useState } from "react";
-import Hamburger from "./Hamburger";
 import { smallDevice } from "../../constants/data";
 import Avatar from "../../components/Avatar";
 import NarrowSideBar from "./NarrowSideBar";
@@ -17,16 +16,7 @@ const Layout = ({ children }) => {
   }, [width]);
   return (
     <>
-      <div
-        style={{
-          height: "60px",
-          padding: "0px 12px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          boxShadow: "0px 12px 30px 0px rgba(120,120,120,0.1)",
-        }}
-      >
+      <div id="header">
         <Logo />
         <div
           style={{

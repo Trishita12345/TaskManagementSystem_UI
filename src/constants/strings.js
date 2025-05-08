@@ -25,6 +25,12 @@ const strings = {
   assignedTo: "Assigned To",
   taskId: "Task Id",
   assignedToRequiredErrror: "Assignee is Required",
+  logoText: "manageMyTask.com",
+  deleteTaskHeader: "Delete Task ?",
+  deleteTaskSubHeading1: "Are you sure you want to delete this task?",
+  deleteTaskSubHeading2: "This action cannot be undone.",
+  confirmText: "Confirm",
+  cancelText: "Cancel",
 };
 
 export default strings;

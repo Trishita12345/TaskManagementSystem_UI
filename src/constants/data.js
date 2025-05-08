@@ -1,7 +1,8 @@
 export const TaskData = [
   {
     id: "MMT-1001",
-    title: "Task 1",
+    title:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the ",
     description: "This is task no 1",
     status: 1,
     assignedTo: 1,
