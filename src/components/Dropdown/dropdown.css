@@ -1,0 +1,26 @@
+.dropdown-wrapper {
+  position: relative;
+  min-width: 120px;
+}
+
+.dropdown-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-select {
+  width: 100%;
+  padding: 10px;
+  appearance: none; /* Hide native arrow */
+  border: 1px solid #ccc;
+  font-size: 16px;
+  background-color: white;
+}
+
+.dropdown-icon {
+  position: absolute;
+  right: 10px;
+  pointer-events: none;
+  color: #666;
+}

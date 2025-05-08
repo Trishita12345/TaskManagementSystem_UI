@@ -3,7 +3,15 @@ import SideBarItem from "./SidebarItem";
 import { sidebarItemsList } from "../../constants/sidebarItemsList";
 
 const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
-  if (!isSidebarOpen) return null;
+  if (!isSidebarOpen)
+    return (
+      <div id="sidebar-closed">
+        <Hamburger
+          isSidebarOpen={isSidebarOpen}
+          setIsSidebarOpen={setIsSidebarOpen}
+        />
+      </div>
+    );
   return (
     <div id="sidebar">
       <Hamburger

@@ -7,8 +7,8 @@
 }
 
 .toggle-switch {
-  width: 48px;
-  height: 28px;
+  width: 38px;
+  height: 20px;
   background: #e5e4e4;
   border-radius: 40px;
   position: relative;
@@ -16,24 +16,26 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 2px;
+  padding: 0;
   transition: background 0.4s;
 }
 .sun {
   color: var(--primary-bg-color);
 }
+.moon {
+  color: var(--primary-text-color);
+}
 
 .icon {
-  font-size: 16px;
   z-index: 1;
 }
 
 .slider {
   position: absolute;
-  top: 3px;
-  left: 2px;
-  width: 22px;
-  height: 22px;
+  top: 2px;
+  left: 1px;
+  width: 16px;
+  height: 16px;
   background: #f1c40f;
   border-radius: 50%;
   transition: transform 0.4s ease;
@@ -41,6 +43,6 @@
 }
 
 .toggle-switch.dark .slider {
-  transform: translateX(26px);
+  transform: translateX(20px);
   background: #444;
 }

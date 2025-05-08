@@ -13,6 +13,7 @@ const Hamburger = ({ isSidebarOpen, setIsSidebarOpen }) => {
     >
       <div id="hamburger-icon">
         <FontAwesomeIcon
+          size="xs"
           icon={isSidebarOpen ? faChevronLeft : faChevronRight}
         />
       </div>

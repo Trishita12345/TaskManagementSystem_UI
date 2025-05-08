@@ -16,23 +16,10 @@ const Layout = ({ children }) => {
   }, [width]);
   return (
     <>
-      <div id="header">
-        <Logo />
-        <div
-          style={{
-            display: "flex",
-            gap: "16px",
-            alignItems: "center",
-          }}
-        >
-          <ThemeToggleSwitch />
-          <Avatar text="T" onClick={() => {}} />
-        </div>
-      </div>
       <div style={{ display: "flex" }}>
         <div
           style={{
-            width: isSidebarOpen && width > smallDevice ? `220px` : "50px",
+            width: isSidebarOpen && width > smallDevice ? `280px` : "70px",
           }}
         ></div>
         <NarrowSideBar setIsSidebarOpen={setIsSidebarOpen} />
@@ -41,7 +28,7 @@ const Layout = ({ children }) => {
             margin: "8px",
             width:
               isSidebarOpen && width > smallDevice
-                ? `${width - 220}px`
+                ? `${width - 280}px`
                 : "100%",
           }}
         >

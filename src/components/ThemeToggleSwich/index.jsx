@@ -23,10 +23,10 @@ const ThemeToggleSwitch = () => {
     >
       <div className={`toggle-switch ${isDark ? "dark" : "light"}`}>
         <span className="icon sun">
-          <FontAwesomeIcon icon={faSun} />
+          <FontAwesomeIcon icon={faSun} size="2xs" />
         </span>
         <span className="icon moon">
-          <FontAwesomeIcon icon={faMoon} />
+          <FontAwesomeIcon icon={faMoon} size="2xs" />
         </span>
         <div className="slider"></div>
       </div>

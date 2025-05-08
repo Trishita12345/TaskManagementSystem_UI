@@ -8,14 +8,23 @@
 }
 #sidebar {
   width: 220px;
-  background-color: var(--sidebar-color);
+  background-color: var(--secondary-bg-color);
+  border-right: 1px solid var(--secondary-text-color);
   position: fixed;
-  top: 60px;
-  left: 0;
+  top: 0;
+  left: 50px;
   height: 100%;
-  display: block;
-  z-index: 99;
+  z-index: 9;
   overflow: hidden;
+}
+#sidebar-closed {
+  width: 10px;
+  background-color: var(--secondary-bg-color);
+  border-right: 1px solid var(--secondary-text-color);
+  position: fixed;
+  top: 0;
+  left: 50px;
+  height: 100%;
 }
 
 #sidebar-overlay {
@@ -34,39 +43,32 @@
   display: none;
 }
 #hamburger {
-  height: 25px;
-  width: 18px;
+  height: 20px;
+  width: 20px;
   cursor: pointer;
   z-index: 10;
+  border-radius: 50%;
+  background-color: var(--primary-bg-color);
+  border: 1px solid var(--secondary-text-color);
 }
 
 #hamburger-icon {
-  height: 25px;
+  height: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: rgb(158, 157, 157);
+  color: var(--primary-text-color);
 }
 
 .hamburger-left {
   position: fixed;
-  top: 70px;
-  left: 200px;
-  background-color: var(--primary-bg-color);
-  border-radius: 7px 0px 0px 7px;
-  border-top: 2px solid rgb(158, 157, 157);
-  border-bottom: 2px solid rgb(158, 157, 157);
-  border-left: 2px solid rgb(158, 157, 157);
+  top: 25px;
+  left: 260px;
 }
 .hamburger-right {
   position: fixed;
-  top: 70px;
-  background-color: var(--sidebar-color);
-  left: 50px;
-  border-radius: 0px 7px 7px 0px;
-  border-top: 2px solid rgb(158, 157, 157);
-  border-bottom: 2px solid rgb(158, 157, 157);
-  border-right: 2px solid rgb(158, 157, 157);
+  top: 25px;
+  left: 52px;
 }
 
 .icon,
@@ -102,14 +104,12 @@
 
 #narrow-sidebar {
   position: fixed;
-  top: 60px;
+  top: 0;
   left: 0;
   width: 50px;
-  background-color: var(--sidebar-color);
+  background-color: var(--primary-color);
+  color: white;
   height: 100%;
-  /* box-shadow: 19px 12px 31px 1px rgba(120, 120, 120, 0.29);
-  -webkit-box-shadow: 19px 12px 31px 1px rgba(120, 120, 120, 0.29);
-  -moz-box-shadow: 19px 12px 31px 1px rgba(120, 120, 120, 0.29); */
 }
 
 #narrow-sidebar-item {

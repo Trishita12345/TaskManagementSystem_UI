@@ -3,8 +3,8 @@
   width: 32px;
   border-radius: 50%;
   cursor: pointer;
-  background-color: var(--secondary-bg-color);
-  color: var(--secondary-text-color);
+  background-color: white;
+  color: black;
 }
 #avatar-text {
   font-weight: 500;
