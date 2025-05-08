@@ -26,7 +26,7 @@ const Layout = ({ children }) => {
             width:
               isSidebarOpen && width > smallDevice
                 ? `${width - 280}px`
-                : "100%",
+                : `${width - 80}px`,
           }}
         >
           {children}

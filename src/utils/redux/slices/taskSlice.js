@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   statusList: [],
   employeeList: [],
+  tasksWithoutFilter: [],
   tasks: [],
   taskById: {},
   selectedIdForView: null,
@@ -21,6 +22,9 @@ const taskSlice = createSlice({
     },
     setEmployeeList(state, action) {
       state.employeeList = action.payload;
+    },
+    setTasksWithoutFilter(state, action) {
+      state.tasksWithoutFilter = action.payload;
     },
     setTasks(state, action) {
       state.tasks = action.payload;
@@ -49,6 +53,13 @@ const taskSlice = createSlice({
         state.empIdsForFilter = [...state.empIdsForFilter, action.payload];
       }
     },
+    setOnlyCurrentEmpIdForFilter(state, action) {
+      state.empIdsForFilter = [action.payload];
+    },
+    setClearFilter(state, action) {
+      state.taskFilterString = "";
+      state.empIdsForFilter = [];
+    },
     setTaskInitState(state) {
       state.taskById = {};
       state.selectedIdForView = null;
@@ -69,5 +80,8 @@ export const {
   setTaskFilterString,
   setEmployeeList,
   setEmpIdsForFilter,
+  setOnlyCurrentEmpIdForFilter,
+  setClearFilter,
+  setTasksWithoutFilter,
 } = taskSlice.actions;
 export default taskSlice.reducer;

@@ -35,6 +35,8 @@ const strings = {
   notAuthorizedSubHeader: "You don't have permission to access this page",
   backHome: "Go to Home",
   filterInputText: "🔍 Search issues",
+  onlyMyIssues: "Only My Issues",
+  clearAll: "Clear All",
 };
 
 export default strings;

@@ -13,6 +13,9 @@ import {
   setTasks,
   setEmployeeList,
   setEmpIdsForFilter,
+  setOnlyCurrentEmpIdForFilter,
+  setClearFilter,
+  setTasksWithoutFilter,
 } from "../../utils/redux/slices/taskSlice.js";
 import ViewTask from "./ViewTask/index.jsx";
 import Loader from "../../components/Loader/index.js";
@@ -21,14 +24,20 @@ import { priviledges } from "../../constants/priviledges.js";
 import NotAuthorized from "../../components/NotAuthorized/index.jsx";
 import AddTaskButton from "./AddTaskButton/index.jsx";
 import FilterTask from "./FilterTask";
+import useScreenSize from "../../utils/customHooks/useScreenSize.jsx";
 
 const Tasks = () => {
   const [openAddPopUp, setOpenAddPopUp] = useState(false);
 
+  const { width } = useScreenSize();
   const dispatch = useDispatch();
 
+  const empId = useSelector((state) => state.authenticationSlice.empId);
   const userPriviledges = useSelector(
     (state) => state.authenticationSlice.userPriviledges
+  );
+  const tasksWithoutFilter = useSelector(
+    (state) => state.taskSlice.tasksWithoutFilter
   );
   const tasks = useSelector((state) => state.taskSlice.tasks);
   const isLoading = useSelector((state) => state.commonSlice.isLoading);
@@ -62,6 +71,7 @@ const Tasks = () => {
 
   const getTasks = () => {
     dispatch(setTasks(TaskData));
+    dispatch(setTasksWithoutFilter(TaskData));
   };
 
   const getTaskById = (id) => {
@@ -114,8 +124,12 @@ const Tasks = () => {
     dispatch(setEmpIdsForFilter(empId));
   };
 
+  const selectCurrentUserForFilter = () => {
+    dispatch(setOnlyCurrentEmpIdForFilter(empId));
+  };
+
   const onClear = () => {
-    dispatch(setTaskFilterString(""));
+    dispatch(setClearFilter());
   };
 
   useEffect(() => {
@@ -132,10 +146,14 @@ const Tasks = () => {
   }, [selectedIdForEdit, selectedIdForView]);
 
   useEffect(() => {
-    // const tempTasks = [...tasks];
-    // tempTasks.
-    console.log(empIdsForFilter);
-  }, [empIdsForFilter]);
+    let tempTasks;
+    if (empIdsForFilter.length > 0) {
+      tempTasks = tasksWithoutFilter.filter((item) =>
+        empIdsForFilter.includes(item.assignedTo)
+      );
+    } else tempTasks = tasksWithoutFilter;
+    dispatch(setTasks(tempTasks));
+  }, [empIdsForFilter, tasksWithoutFilter]);
 
   if (!userPriviledges.includes(priviledges.view_task))
     return <NotAuthorized />;
@@ -157,7 +175,7 @@ const Tasks = () => {
       <div
         style={{
           display: "flex",
-          alignItems: "center",
+          alignItems: width > 700 ? "center" : "end",
           justifyContent: "space-between",
           marginBottom: "6px",
         }}
@@ -166,6 +184,7 @@ const Tasks = () => {
           handleFilterInputChange={handleFilterInputChange}
           onClear={onClear}
           handleSelectUser={handleSelectUser}
+          selectCurrentUserForFilter={selectCurrentUserForFilter}
         />
         <AddTaskButton onAdd={onAdd} />
       </div>

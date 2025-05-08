@@ -6,8 +6,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ThemeToggleSwitch from "../../components/ThemeToggleSwich";
 import Avatar from "../../components/Avatar";
+import { useSelector } from "react-redux";
+import { getNameInitials } from "../../utils/helperFunctions";
 
 const NarrowSideBar = ({ setIsSidebarOpen }) => {
+  const firstName = useSelector((state) => state.authenticationSlice.firstName);
+  const lastName = useSelector((state) => state.authenticationSlice.lastName);
   return (
     <div id="narrow-sidebar">
       <Hamburger setIsSidebarOpen={setIsSidebarOpen} />
@@ -31,7 +35,10 @@ const NarrowSideBar = ({ setIsSidebarOpen }) => {
         </div>
         <div>
           <div style={{ paddingLeft: "8px", margin: "20px 0px" }}>
-            <Avatar text="TM" onClick={() => {}} />
+            <Avatar
+              text={getNameInitials(firstName, lastName)}
+              onClick={() => {}}
+            />
           </div>
           <FontAwesomeIcon
             onClick={(e) => {}}

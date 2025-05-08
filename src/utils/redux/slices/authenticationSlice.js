@@ -4,6 +4,7 @@ import { priviledges } from "../../../constants/priviledges";
 const initialState = {
   isAuthenticated: true,
   email: "trishita.majumder@gmail.com",
+  empId: 1,
   firstName: "Trishita",
   lastName: "Majumder",
   userPriviledges: [

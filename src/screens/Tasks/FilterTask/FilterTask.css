@@ -10,21 +10,17 @@
   pointer-events: none;
 }
 
-#clearBtn {
-  padding: 0px 10px;
-  font-weight: 600;
-}
 .avatar-group {
   position: relative;
   height: 30px;
-  width: max-content;
-  z-index: -1;
+  /* left: 100px; */
 }
-
+.avatar-wrapper-border {
+  border: 2px solid var(--primary-text-color);
+}
 .avatar-wrapper {
   position: absolute;
   cursor: pointer;
-  border: 2px solid rgb(186, 13, 13);
   border-radius: 50%;
   width: 34px !important;
   height: 34px !important;
@@ -34,7 +30,7 @@
   width: 30px !important;
   height: 30px !important;
   border-radius: 50%;
-  border: 2px solid white;
+  border: 2px solid var(--primary-bg-color);
   object-fit: cover;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s;
