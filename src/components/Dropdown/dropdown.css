@@ -15,7 +15,7 @@
   padding: 10px;
   appearance: none; /* Hide native arrow */
   border: 1px solid #ccc;
-  font-size: 16px;
+  font-size: 13px;
   background-color: var(--primary-color);
   color: white;
 }

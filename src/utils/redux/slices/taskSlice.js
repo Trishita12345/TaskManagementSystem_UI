@@ -9,6 +9,7 @@ const initialState = {
   selectedIdForEdit: null,
   selectedIdForDelete: null,
   taskFilterString: "",
+  empIdsForFilter: [],
 };
 
 const taskSlice = createSlice({
@@ -39,6 +40,15 @@ const taskSlice = createSlice({
     setTaskFilterString(state, action) {
       state.taskFilterString = action.payload;
     },
+    setEmpIdsForFilter(state, action) {
+      if (state.empIdsForFilter.includes(action.payload)) {
+        state.empIdsForFilter = state.empIdsForFilter.filter(
+          (s) => s !== action.payload
+        );
+      } else {
+        state.empIdsForFilter = [...state.empIdsForFilter, action.payload];
+      }
+    },
     setTaskInitState(state) {
       state.taskById = {};
       state.selectedIdForView = null;
@@ -58,5 +68,6 @@ export const {
   setTaskInitState,
   setTaskFilterString,
   setEmployeeList,
+  setEmpIdsForFilter,
 } = taskSlice.actions;
 export default taskSlice.reducer;

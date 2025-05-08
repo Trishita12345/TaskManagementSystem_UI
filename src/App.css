@@ -7,15 +7,15 @@
   --primary-color: #1460b0;
   --primary-bg-color: white;
   --primary-text-color: black;
-  --secondary-bg-color: rgb(247, 244, 244);
-  --secondary-text-color: rgb(211, 208, 208);
+  --secondary-bg-color: rgb(236, 234, 234);
+  --secondary-text-color: rgb(181, 178, 178);
   --popup-bg-color: white;
 }
 
 [data-theme="dark"] {
   --primary-bg-color: #232222;
   --primary-text-color: rgb(255, 255, 255);
-  --secondary-bg-color: #313131;
+  --secondary-bg-color: #504e4e;
   --secondary-text-color: rgb(225, 225, 225);
   --popup-bg-color: #313131;
 }
@@ -92,77 +92,6 @@ textarea {
   margin: auto;
   display: flex;
   align-items: center;
-}
-
-/* Tooltip container */
-.bottom-tooltip {
-  position: relative;
-  display: inline-block;
-}
-
-/* Tooltip text */
-.bottom-tooltip .bottom-tooltiptext {
-  visibility: hidden;
-  background-color: rgb(116, 114, 114);
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-  width: 120px;
-  top: 100%;
-  left: 50%;
-  margin-left: -60px;
-
-  /* Position the bottom-tooltip text - see examples below! */
-  position: absolute;
-  z-index: 1;
-}
-
-/* Show the bottom-tooltip text when you mouse over the bottom-tooltip container */
-.bottom-tooltip:hover .bottom-tooltiptext {
-  visibility: visible;
-}
-.bottom-tooltip .bottom-tooltiptext::after {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent rgb(116, 114, 114) transparent;
-}
-.right-tooltip {
-  position: relative;
-  display: inline-block;
-}
-
-.right-tooltip .right-tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: rgb(116, 114, 114);
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 100;
-  top: -5px;
-  left: 110%;
-}
-
-.right-tooltip .right-tooltiptext::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 100%;
-  margin-top: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent rgb(116, 114, 114) transparent transparent;
-}
-.right-tooltip:hover .right-tooltiptext {
-  visibility: visible;
 }
 
 .custom-dropdown {

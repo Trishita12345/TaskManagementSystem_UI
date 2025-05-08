@@ -12,6 +12,7 @@ import {
   setTaskById,
   setTasks,
   setEmployeeList,
+  setEmpIdsForFilter,
 } from "../../utils/redux/slices/taskSlice.js";
 import ViewTask from "./ViewTask/index.jsx";
 import Loader from "../../components/Loader/index.js";
@@ -31,7 +32,9 @@ const Tasks = () => {
   );
   const tasks = useSelector((state) => state.taskSlice.tasks);
   const isLoading = useSelector((state) => state.commonSlice.isLoading);
-
+  const empIdsForFilter = useSelector(
+    (state) => state.taskSlice.empIdsForFilter
+  );
   const selectedIdForView = useSelector(
     (state) => state.taskSlice.selectedIdForView
   );
@@ -107,6 +110,14 @@ const Tasks = () => {
     }, 500);
   };
 
+  const handleSelectUser = (empId) => {
+    dispatch(setEmpIdsForFilter(empId));
+  };
+
+  const onClear = () => {
+    dispatch(setTaskFilterString(""));
+  };
+
   useEffect(() => {
     //TODO: promise.all
     getTasks();
@@ -119,6 +130,12 @@ const Tasks = () => {
       getTaskById(selectedIdForView || selectedIdForEdit);
     }
   }, [selectedIdForEdit, selectedIdForView]);
+
+  useEffect(() => {
+    // const tempTasks = [...tasks];
+    // tempTasks.
+    console.log(empIdsForFilter);
+  }, [empIdsForFilter]);
 
   if (!userPriviledges.includes(priviledges.view_task))
     return <NotAuthorized />;
@@ -145,7 +162,11 @@ const Tasks = () => {
           marginBottom: "6px",
         }}
       >
-        <FilterTask handleFilterInputChange={handleFilterInputChange} />
+        <FilterTask
+          handleFilterInputChange={handleFilterInputChange}
+          onClear={onClear}
+          handleSelectUser={handleSelectUser}
+        />
         <AddTaskButton onAdd={onAdd} />
       </div>
       <TaskTable updateStatus={updateStatus} />

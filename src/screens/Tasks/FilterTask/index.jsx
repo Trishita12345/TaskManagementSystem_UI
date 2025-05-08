@@ -1,24 +1,22 @@
-import { setTaskFilterString } from "../../../utils/redux/slices/taskSlice";
 import FilterInput from "./FilterInput";
 import "./FilterTask.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import AvatarGroup from "./AvatarGroup";
 
-const FilterTask = ({ handleFilterInputChange }) => {
-  const dispatch = useDispatch();
+const FilterTask = ({ handleFilterInputChange, handleSelectUser, onClear }) => {
   const taskFilterString = useSelector(
     (state) => state.taskSlice.taskFilterString
   );
-  const onClear = () => {
-    dispatch(setTaskFilterString(""));
-  };
+
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
       <FilterInput handleFilterInputChange={handleFilterInputChange} />
-      {taskFilterString !== "" ? (
-        <div onClick={onClear} className="link" id="clearBtn">
-          Clear All
-        </div>
-      ) : null}
+      <AvatarGroup handleSelectUser={handleSelectUser} />
+      {/* {taskFilterString !== "" ? ( */}
+      <div onClick={onClear} className="link" id="clearBtn">
+        Clear All
+      </div>
+      {/* ) : null} */}
     </div>
   );
 };

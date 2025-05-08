@@ -1,12 +1,9 @@
 import "./layout.css";
 import Sidebar from "./Sidebar";
-import Logo from "./Logo";
 import useScreenSize from "../../utils/customHooks/useScreenSize";
 import { useEffect, useState } from "react";
 import { smallDevice } from "../../constants/data";
-import Avatar from "../../components/Avatar";
 import NarrowSideBar from "./NarrowSideBar";
-import ThemeToggleSwitch from "../../components/ThemeToggleSwich";
 
 const Layout = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

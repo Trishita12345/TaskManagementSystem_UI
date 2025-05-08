@@ -14,3 +14,56 @@
   padding: 0px 10px;
   font-weight: 600;
 }
+.avatar-group {
+  position: relative;
+  height: 30px;
+  width: max-content;
+  z-index: -1;
+}
+
+.avatar-wrapper {
+  position: absolute;
+  cursor: pointer;
+  border: 2px solid rgb(186, 13, 13);
+  border-radius: 50%;
+  width: 34px !important;
+  height: 34px !important;
+}
+
+.avatar {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 50%;
+  border: 2px solid white;
+  object-fit: cover;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+  background-color: var(--primary-color) !important;
+  color: white !important;
+}
+
+.avatar-wrapper:hover .avatar {
+  /* transform: scale(1.2); */
+  z-index: 1;
+  cursor: pointer;
+}
+
+.tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: -30px;
+  transform: translateX(-50%);
+  background-color: var(--secondary-bg-color);
+  color: var(--primary-text-color);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.avatar-wrapper:hover .tooltip {
+  opacity: 1;
+}

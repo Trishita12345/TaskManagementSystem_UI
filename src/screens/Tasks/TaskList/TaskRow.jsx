@@ -35,7 +35,7 @@ const TaskRow = ({ id, title, assignedTo, status, updateStatus }) => {
         </div>
       </td>
       <td>{title}</td>
-      <td>{employeeList.find((e) => e.id === assignedTo)?.name}</td>
+      <td>{employeeList.find((e) => e.id === assignedTo)?.emailId}</td>
       <td>
         <GetStatus id={id} statusId={status} updateStatus={updateStatus} />
       </td>

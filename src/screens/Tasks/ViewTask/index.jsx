@@ -57,7 +57,7 @@ const ViewTask = ({ onPopupClose }) => {
         </div>
         <div style={{ display: "flex", gap: 8 }}>
           <p className="label">{`${strings.assignedTo}:`}</p>
-          <p>{employeeList.find((e) => e.id === data.assignedTo)?.name}</p>
+          <p>{employeeList.find((e) => e.id === data.assignedTo)?.emailId}</p>
         </div>
         <div style={{ display: "flex", gap: 8 }}>
           <p className="label">{`${strings.dueDate}:`}</p>

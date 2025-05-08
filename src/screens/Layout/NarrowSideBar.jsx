@@ -31,7 +31,7 @@ const NarrowSideBar = ({ setIsSidebarOpen }) => {
         </div>
         <div>
           <div style={{ paddingLeft: "8px", margin: "20px 0px" }}>
-            <Avatar text="T" onClick={() => {}} />
+            <Avatar text="TM" onClick={() => {}} />
           </div>
           <FontAwesomeIcon
             onClick={(e) => {}}
