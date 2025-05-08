@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import Dropdown from "../../../components/Dropdown";
 
 const GetStatus = ({ id, statusId, updateStatus }) => {
-  const statusList = useSelector((state) => state.taskStore.statusList);
+  const statusList = useSelector((state) => state.taskSlice.statusList);
   const handleChange = (statusId) => {
     updateStatus(id, statusId);
   };

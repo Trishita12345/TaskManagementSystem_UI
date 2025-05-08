@@ -13,12 +13,12 @@ import { getStatusColor } from "../../../utils/helperFunctions.js";
 
 const ViewTask = ({ onPopupClose }) => {
   const dispatch = useDispatch();
-  const statusList = useSelector((state) => state.taskStore.statusList);
-  const data = useSelector((state) => state.taskStore.taskById);
+  const statusList = useSelector((state) => state.taskSlice.statusList);
+  const data = useSelector((state) => state.taskSlice.taskById);
   const selectedIdForView = useSelector(
-    (state) => state.taskStore.selectedIdForView
+    (state) => state.taskSlice.selectedIdForView
   );
-  const employeeList = useSelector((state) => state.taskStore.employeeList);
+  const employeeList = useSelector((state) => state.taskSlice.employeeList);
 
   const handleEdit = () => {
     //TODO: Need to check if the user is premium

@@ -1,0 +1,16 @@
+.custom-input-wrapper {
+  position: relative;
+}
+
+.custom-placeholder {
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  color: var(--secondary-text-color);
+  pointer-events: none;
+}
+
+#clearBtn {
+  padding: 0px 10px;
+  font-weight: 600;
+}

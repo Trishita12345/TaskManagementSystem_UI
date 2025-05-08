@@ -9,15 +9,22 @@
   --primary-text-color: black;
   --secondary-bg-color: rgb(247, 244, 244);
   --secondary-text-color: rgb(211, 208, 208);
+  --popup-bg-color: white;
 }
 
 [data-theme="dark"] {
-  --primary-bg-color: #000000;
+  --primary-bg-color: #232222;
   --primary-text-color: rgb(255, 255, 255);
   --secondary-bg-color: #313131;
   --secondary-text-color: rgb(225, 225, 225);
+  --popup-bg-color: #313131;
 }
-
+input {
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  background-color: var(--primary-bg-color);
+  color: var(--primary-text-color);
+}
 body {
   margin: 0;
   background-color: var(--primary-bg-color);
@@ -179,4 +186,10 @@ textarea {
 
 .custom-dropdown:hover {
   border-color: #888;
+}
+
+.link {
+  cursor: pointer;
+  width: max-content;
+  color: #1c6fbd;
 }

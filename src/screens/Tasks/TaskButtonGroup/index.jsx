@@ -5,7 +5,7 @@ import { faAdd, faCircle, faFilter } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 
 const TaskButtonGroup = ({ onFilter, onAdd }) => {
-  const taskFilterObj = useSelector((state) => state.taskStore.taskFilterObj);
+  const taskFilterObj = useSelector((state) => state.taskSlice.taskFilterObj);
   return (
     <div className="button-group">
       <button onClick={onFilter} style={{ position: "relative" }}>

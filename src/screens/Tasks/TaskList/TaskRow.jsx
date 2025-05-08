@@ -11,7 +11,7 @@ import { openPopup } from "../../../components/Popup/index.jsx";
 const TaskRow = ({ id, title, assignedTo, status, updateStatus }) => {
   const dispatch = useDispatch();
 
-  const employeeList = useSelector((state) => state.taskStore.employeeList);
+  const employeeList = useSelector((state) => state.taskSlice.employeeList);
 
   const handleView = () => {
     dispatch(setSelectedIdForView(id));
@@ -28,13 +28,8 @@ const TaskRow = ({ id, title, assignedTo, status, updateStatus }) => {
       <td>
         <div
           onClick={handleView}
-          style={{
-            cursor: "pointer",
-            textDecoration: "underline",
-            width: "max-content",
-            color: "#1c6fbd",
-            textDecoration: "underline",
-          }}
+          className="link"
+          style={{ textDecoration: "underline" }}
         >
           {id}
         </div>

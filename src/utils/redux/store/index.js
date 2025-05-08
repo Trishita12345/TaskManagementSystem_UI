@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import taskStore from "../slices/taskSlice";
-import commonStore from "../slices/commonSlice";
+import taskSlice from "../slices/taskSlice";
+import commonSlice from "../slices/commonSlice";
+import authenticationSlice from "../slices/authenticationSlice";
 
 const store = configureStore({
   reducer: {
-    taskStore,
-    commonStore,
+    taskSlice,
+    commonSlice,
+    authenticationSlice,
   },
 });
 

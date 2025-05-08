@@ -13,17 +13,10 @@ export const sidebarItemsList = [
     name: strings.myBoard,
     icon: faTableColumns,
     route: routes.myBoard,
-    priviledge: priviledges.view_my_board,
+    priviledge: priviledges.view_task,
   },
   {
     id: 2,
-    name: strings.taskList,
-    icon: faTableList,
-    route: routes.taskList,
-    priviledge: priviledges.view_my_board,
-  },
-  {
-    id: 3,
     name: strings.manageEmployees,
     icon: faGear,
     route: routes.manageEmployees,

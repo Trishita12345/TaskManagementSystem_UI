@@ -17,12 +17,12 @@ const AddEditTaskForm = ({ onSubmit, onPopupClose }) => {
   const title = watch("title", "");
   const description = watch("description", "");
 
-  const data = useSelector((state) => state.taskStore.taskById);
+  const data = useSelector((state) => state.taskSlice.taskById);
   const selectedIdForEdit = useSelector(
-    (state) => state.taskStore.selectedIdForEdit
+    (state) => state.taskSlice.selectedIdForEdit
   );
-  const statusList = useSelector((state) => state.taskStore.statusList);
-  const employeeList = useSelector((state) => state.taskStore.employeeList);
+  const statusList = useSelector((state) => state.taskSlice.statusList);
+  const employeeList = useSelector((state) => state.taskSlice.employeeList);
 
   useEffect(() => {
     reset(data);

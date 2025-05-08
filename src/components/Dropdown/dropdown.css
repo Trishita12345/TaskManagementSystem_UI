@@ -10,17 +10,19 @@
 }
 
 .dropdown-select {
+  border-radius: 4px;
   width: 100%;
   padding: 10px;
   appearance: none; /* Hide native arrow */
   border: 1px solid #ccc;
   font-size: 16px;
-  background-color: white;
+  background-color: var(--primary-color);
+  color: white;
 }
 
 .dropdown-icon {
   position: absolute;
   right: 10px;
   pointer-events: none;
-  color: #666;
+  color: #ffffff;
 }

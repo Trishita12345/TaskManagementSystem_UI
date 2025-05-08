@@ -3,7 +3,7 @@ import TaskRow from "./TaskRow";
 import strings from "../../../constants/strings";
 
 const TaskTable = ({ updateStatus }) => {
-  const tasks = useSelector((state) => state.taskStore.tasks);
+  const tasks = useSelector((state) => state.taskSlice.tasks);
   return (
     <>
       <table>

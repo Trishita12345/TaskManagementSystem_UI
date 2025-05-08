@@ -1,7 +1,7 @@
 #popup {
   display: none;
   position: fixed;
-  background-color: var(--secondary-bg-color);
+  background-color: var(--popup-bg-color);
   color: var(--primary-text-color);
   padding: 8px;
   z-index: 1000;

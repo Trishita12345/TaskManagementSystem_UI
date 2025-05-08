@@ -11,40 +11,42 @@ import {
   setStatusList,
   setTaskById,
   setTasks,
-  setTaskFilterObj,
   setEmployeeList,
 } from "../../utils/redux/slices/taskSlice.js";
 import ViewTask from "./ViewTask/index.jsx";
 import Loader from "../../components/Loader/index.js";
 import { setIsLoading } from "../../utils/redux/slices/commonSlice.js";
-import TaskButtonGroup from "./TaskButtonGroup";
-import FilterTaskForm from "./FilterTaskForm/index.jsx";
+import { priviledges } from "../../constants/priviledges.js";
+import NotAuthorized from "../../components/NotAuthorized/index.jsx";
+import AddTaskButton from "./AddTaskButton/index.jsx";
+import FilterTask from "./FilterTask";
 
 const Tasks = () => {
   const [openAddPopUp, setOpenAddPopUp] = useState(false);
-  const [openFilterPopUp, setOpenFilterPopUp] = useState(false);
 
   const dispatch = useDispatch();
 
-  const tasks = useSelector((state) => state.taskStore.tasks);
-  const isLoading = useSelector((state) => state.commonStore.isLoading);
+  const userPriviledges = useSelector(
+    (state) => state.authenticationSlice.userPriviledges
+  );
+  const tasks = useSelector((state) => state.taskSlice.tasks);
+  const isLoading = useSelector((state) => state.commonSlice.isLoading);
 
   const selectedIdForView = useSelector(
-    (state) => state.taskStore.selectedIdForView
+    (state) => state.taskSlice.selectedIdForView
   );
   const selectedIdForEdit = useSelector(
-    (state) => state.taskStore.selectedIdForEdit
+    (state) => state.taskSlice.selectedIdForEdit
   );
 
   const selectedIdForDelete = useSelector(
-    (state) => state.taskStore.selectedIdForDelete
+    (state) => state.taskSlice.selectedIdForDelete
   );
 
   const onPopupClose = (cb = () => {}) => {
     closePopup();
     dispatch(setTaskInitState());
     setOpenAddPopUp(false);
-    setOpenFilterPopUp(false);
     if (cb) cb();
   };
 
@@ -93,22 +95,16 @@ const Tasks = () => {
     }, 1500);
   };
 
-  const onFilter = () => {
-    openPopup();
-    setOpenFilterPopUp(true);
-  };
   const onAdd = () => {
     openPopup();
     setOpenAddPopUp(true);
   };
 
-  const handleFilter = (data) => {
+  const handleFilterInputChange = (data) => {
     dispatch(setIsLoading(true));
     setTimeout(() => {
       dispatch(setIsLoading(false));
-      dispatch(setTaskFilterObj(data));
-      onPopupClose();
-    }, 1500);
+    }, 500);
   };
 
   useEffect(() => {
@@ -124,6 +120,8 @@ const Tasks = () => {
     }
   }, [selectedIdForEdit, selectedIdForView]);
 
+  if (!userPriviledges.includes(priviledges.view_task))
+    return <NotAuthorized />;
   return (
     <>
       {isLoading && <Loader />}
@@ -138,18 +136,17 @@ const Tasks = () => {
         {(openAddPopUp || selectedIdForEdit) && (
           <AddEditTaskForm onSubmit={onAddEdit} onPopupClose={onPopupClose} />
         )}
-        {openFilterPopUp && (
-          <FilterTaskForm onSubmit={handleFilter} onPopupClose={onPopupClose} />
-        )}
       </Popup>
       <div
         style={{
           display: "flex",
-          justifyContent: "flex-end",
-          margin: "8px 0px",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginBottom: "6px",
         }}
       >
-        <TaskButtonGroup onFilter={onFilter} onAdd={onAdd} />
+        <FilterTask handleFilterInputChange={handleFilterInputChange} />
+        <AddTaskButton onAdd={onAdd} />
       </div>
       <TaskTable updateStatus={updateStatus} />
     </>

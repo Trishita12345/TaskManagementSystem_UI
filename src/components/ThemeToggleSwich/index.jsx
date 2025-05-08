@@ -7,7 +7,7 @@ import { setIsDark } from "../../utils/redux/slices/commonSlice";
 
 const ThemeToggleSwitch = () => {
   const dispatch = useDispatch();
-  const isDark = useSelector((state) => state.commonStore.isDark);
+  const isDark = useSelector((state) => state.commonSlice.isDark);
 
   useEffect(() => {
     document.documentElement.setAttribute(

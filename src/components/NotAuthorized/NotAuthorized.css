@@ -1,0 +1,22 @@
+.not-authorized-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #fdfdfd;
+  color: #333;
+  text-align: center;
+  padding: 20px;
+}
+
+.not-authorized-container h1 {
+  font-size: 40px;
+  margin-bottom: 20px;
+  color: #d9534f;
+}
+
+.not-authorized-container p {
+  font-size: 16px;
+  margin-bottom: 30px;
+}
