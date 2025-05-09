@@ -30,7 +30,7 @@ const FilterTask = ({
       }}
     >
       <FilterInput handleFilterInputChange={handleFilterInputChange} />
-      <div style={{ width: "180px" }}>
+      <div style={{ width: "190px" }}>
         <AvatarGroup handleSelectUser={handleSelectUser} />
       </div>
       <div

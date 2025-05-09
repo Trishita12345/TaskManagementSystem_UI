@@ -5,7 +5,8 @@
 }
 :root {
   --primary-color: #1460b0;
-  --primary-color-opacity: #145fb02b;
+  --primary-color-opacityS: #1460b02b;
+  --primary-color-opacityM: #1460b041;
   --primary-bg-color: white;
   --primary-text-color: black;
   --secondary-bg-color: rgb(236, 234, 234);
@@ -15,7 +16,8 @@
 
 [data-theme="dark"] {
   --primary-bg-color: #232222;
-  --primary-color-opacity: #145fb07b;
+  --primary-color-opacityS: #1460b049;
+  --primary-color-opacityM: #1460b090;
   --primary-text-color: rgb(255, 255, 255);
   --secondary-bg-color: #504e4e;
   --secondary-text-color: rgb(225, 225, 225);

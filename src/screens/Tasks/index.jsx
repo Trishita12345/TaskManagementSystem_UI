@@ -3,8 +3,8 @@ import { employeeData, statusData, TaskData } from "../../constants/data";
 import TaskTable from "./TaskList/TaskTable";
 import "./Tasks.css";
 import Popup, { closePopup, openPopup } from "../../components/Popup";
-import AddEditTaskForm from "./AddEditTaskForm/index.jsx";
-import DeleteTask from "./DeleteTask/index.jsx";
+import AddEditTaskForm from "./AddEditTaskForm";
+import DeleteTask from "./DeleteTask";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setTaskInitState,
@@ -17,12 +17,12 @@ import {
   setClearFilter,
   setTasksWithoutFilter,
 } from "../../utils/redux/slices/taskSlice.js";
-import ViewTask from "./ViewTask/index.jsx";
-import Loader from "../../components/Loader/index.js";
+import ViewTask from "./ViewTask";
+import Loader from "../../components/Loader";
 import { setIsLoading } from "../../utils/redux/slices/commonSlice.js";
 import { priviledges } from "../../constants/priviledges.js";
-import NotAuthorized from "../../components/NotAuthorized/index.jsx";
-import AddTaskButton from "./AddTaskButton/index.jsx";
+import NotAuthorized from "../../components/NotAuthorized";
+import AddTaskButton from "./AddTaskButton";
 import FilterTask from "./FilterTask";
 import useScreenSize from "../../utils/customHooks/useScreenSize.jsx";
 
