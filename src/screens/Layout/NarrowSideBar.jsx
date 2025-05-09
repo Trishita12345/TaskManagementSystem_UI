@@ -10,6 +10,9 @@ import { useSelector } from "react-redux";
 import { getNameInitials } from "../../utils/helperFunctions";
 
 const NarrowSideBar = ({ setIsSidebarOpen }) => {
+  const avatarImage = useSelector(
+    (state) => state.authenticationSlice.avatarImage
+  );
   const firstName = useSelector((state) => state.authenticationSlice.firstName);
   const lastName = useSelector((state) => state.authenticationSlice.lastName);
   return (
@@ -37,6 +40,7 @@ const NarrowSideBar = ({ setIsSidebarOpen }) => {
           <div style={{ paddingLeft: "8px", margin: "20px 0px" }}>
             <Avatar
               text={getNameInitials(firstName, lastName)}
+              avatarImage={avatarImage}
               onClick={() => {}}
             />
           </div>

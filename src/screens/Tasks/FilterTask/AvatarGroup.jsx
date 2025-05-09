@@ -8,12 +8,6 @@ const AvatarGroup = ({ handleSelectUser }) => {
   const empIdsForFilter = useSelector(
     (state) => state.taskSlice.empIdsForFilter
   );
-  const firstName = useSelector((state) => state.authenticationSlice.firstName);
-  const lastName = useSelector((state) => state.authenticationSlice.lastName);
-  const nameInitials = `${firstName.substring(0, 1)}${lastName.substring(
-    0,
-    1
-  )}`;
   return (
     <div className="avatar-group">
       {employeeList.map((emp, index) => (
@@ -31,7 +25,7 @@ const AvatarGroup = ({ handleSelectUser }) => {
         >
           {emp.avatarImage ? (
             <img
-              key={index}
+              key={emp.id}
               src={emp.avatarImage}
               alt={`avatar-${index}`}
               className="avatar"
