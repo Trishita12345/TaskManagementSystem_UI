@@ -20,8 +20,6 @@ const FilterTask = ({
     (state) => state.taskSlice.empIdsForFilter
   );
 
-  console.log("hi", employeeData, empIdsForFilter);
-
   return (
     <div
       style={{
@@ -32,7 +30,7 @@ const FilterTask = ({
       }}
     >
       <FilterInput handleFilterInputChange={handleFilterInputChange} />
-      <div style={{ width: "200px" }}>
+      <div style={{ width: "180px" }}>
         <AvatarGroup handleSelectUser={handleSelectUser} />
       </div>
       <div

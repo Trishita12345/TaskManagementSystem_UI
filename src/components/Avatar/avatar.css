@@ -1,8 +1,7 @@
 #avatar-container {
-  height: 32px;
-  width: 32px;
+  height: 30px;
+  width: 30px;
   border-radius: 50%;
-  cursor: pointer;
   background-color: white;
   color: black;
 }
@@ -13,4 +12,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+#avatar-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
 }

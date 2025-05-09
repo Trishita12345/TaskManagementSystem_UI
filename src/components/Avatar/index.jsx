@@ -15,7 +15,7 @@ const Avatar = ({
       style={style}
     >
       {avatarImage ? (
-        <img src={avatarImage} className="avatar" alt="img" />
+        <img src={avatarImage} id="avatar-img" />
       ) : (
         <div id="avatar-text">{text}</div>
       )}

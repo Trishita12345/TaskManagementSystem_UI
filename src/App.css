@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 * {
   font-family: "Montserrat", sans-serif;
-  font-size: 12px;
+  font-size: 14px;
 }
 :root {
   --primary-color: #1460b0;
@@ -17,7 +17,7 @@
   --primary-text-color: rgb(255, 255, 255);
   --secondary-bg-color: #504e4e;
   --secondary-text-color: rgb(225, 225, 225);
-  --popup-bg-color: #313131;
+  --popup-bg-color: #484747;
 }
 input {
   border-radius: 3px;

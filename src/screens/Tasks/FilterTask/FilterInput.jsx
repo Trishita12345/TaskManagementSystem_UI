@@ -35,6 +35,7 @@ const FilterInput = ({ handleFilterInputChange }) => {
           dispatch(setTaskFilterString(e.target.value));
           debouncedSearch(e);
         }}
+        style={{ width: "170px" }}
         className="input-field"
       />
     </div>
