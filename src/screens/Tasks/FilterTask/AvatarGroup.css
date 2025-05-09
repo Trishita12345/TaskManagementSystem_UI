@@ -72,3 +72,10 @@
   background-color: var(--primary-color) !important;
   color: white !important;
 }
+.popover-checkbox-checked {
+  background-color: var(--primary-color-opacity);
+  color: var(--primary-color);
+}
+.popover-checkbox:hover {
+  background-color: var(--secondary-bg-color);
+}

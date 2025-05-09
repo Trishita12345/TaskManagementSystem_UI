@@ -1,8 +1,14 @@
 import "./Checkbox.css";
 
-const Checkbox = ({ label, handleCheckboxChange, isChecked }) => {
+const Checkbox = ({
+  label,
+  handleCheckboxChange,
+  isChecked,
+  style = {},
+  className = "",
+}) => {
   return (
-    <div className="checkbox-wrapper">
+    <div className={`checkbox-wrapper ${className}`} style={style}>
       <div>
         <input
           style={{ cursor: "pointer" }}
