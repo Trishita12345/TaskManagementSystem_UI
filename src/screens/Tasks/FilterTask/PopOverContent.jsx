@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import Checkbox from "../../../components/Checkbox";
 import { useEffect, useState } from "react";
-import Avatar from "../../../components/Avatar";
+import Avatar from "../../../components/CustomAvatar";
 import { getNameInitials } from "../../../utils/helperFunctions";
 
 const PopOverContent = ({ data, onCheck }) => {
@@ -18,7 +18,6 @@ const PopOverContent = ({ data, onCheck }) => {
       label={
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <Avatar
-            className={"popover-avatar"}
             text={getNameInitials(data.firstName, data.lastName)}
             avatarImage={data.avatarImage}
           />

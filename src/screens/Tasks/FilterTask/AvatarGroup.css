@@ -14,34 +14,10 @@
   height: 34px !important;
 }
 
-.avatar {
-  object-fit: cover;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-  background-color: var(--primary-color) !important;
-  color: white !important;
-  border: 2px solid var(--primary-bg-color);
-}
-
 .avatar-wrapper:hover .avatar {
   /* transform: scale(1.2); */
   z-index: 1;
   cursor: pointer;
-}
-
-.tooltip {
-  position: absolute;
-  left: 50%;
-  bottom: -30px;
-  transform: translateX(-50%);
-  background-color: var(--secondary-bg-color);
-  color: var(--primary-text-color);
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease-in-out;
 }
 
 .avatar-wrapper:hover .tooltip {
@@ -65,12 +41,6 @@
 
 .popover.show {
   display: block;
-}
-.popover-avatar {
-  object-fit: cover;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-  background-color: var(--primary-color) !important;
-  color: white !important;
 }
 .popover-checkbox-checked {
   background-color: var(--primary-color-opacityS);

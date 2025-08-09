@@ -8,7 +8,6 @@ const initialState = {
     type: "",
   },
 };
-console.log("r:", initialState.isDark);
 const commonSlice = createSlice({
   name: "common",
   initialState,

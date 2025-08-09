@@ -1,6 +1,9 @@
 export const routes = {
+  root: "/",
   manageEmployees: "/manage-employees",
   profile: "/profile",
   myBoard: "/my-board",
   tasks: "/tasks",
+  login: "/login",
+  register: "/user-register",
 };

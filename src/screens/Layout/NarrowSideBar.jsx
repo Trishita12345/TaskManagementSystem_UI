@@ -5,7 +5,7 @@ import {
   faCube,
 } from "@fortawesome/free-solid-svg-icons";
 import ThemeToggleSwitch from "../../components/ThemeToggleSwich";
-import Avatar from "../../components/Avatar";
+import Avatar from "../../components/CustomAvatar";
 import { useSelector } from "react-redux";
 import { getNameInitials } from "../../utils/helperFunctions";
 

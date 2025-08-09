@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import Avatar from "../../../components/Avatar";
+import Avatar from "../../../components/CustomAvatar";
 import "./AvatarGroup.css";
 import { getNameInitials } from "../../../utils/helperFunctions";
 import PopOverContent from "./PopOverContent";
+import { Tooltip } from "@mui/material";
 
 const AvatarGroup = ({ handleSelectUser }) => {
   const [togglePopover, setTogglePopover] = useState(false);
@@ -28,8 +29,6 @@ const AvatarGroup = ({ handleSelectUser }) => {
     getStyle();
   }, [employeeList, empIdsForFilter]);
 
-  console.log("className: ", className);
-
   return (
     <div className="avatar-group">
       {employeeList.slice(0, 5).map((emp, index) => (
@@ -46,15 +45,12 @@ const AvatarGroup = ({ handleSelectUser }) => {
           <Avatar
             text={getNameInitials(emp.firstName, emp.lastName)}
             avatarImage={emp.avatarImage}
-            className="avatar"
             onClick={() => handleSelectUser(emp.id)}
           />
-          <div className="tooltip">{`${emp.firstName} ${emp.lastName}`}</div>
+          <Tooltip title={`${emp.firstName} ${emp.lastName}`}></Tooltip>
         </div>
       ))}
-      {/* {employeeList.slice(5, employeeList.length).map((emp, index) => ( */}
       <div
-        // className={`avatar-wrapper`}
         className={`avatar-wrapper ${className}`}
         style={{
           left: `${5 * 30}px`,
@@ -64,7 +60,6 @@ const AvatarGroup = ({ handleSelectUser }) => {
         <div class="popover-container">
           <Avatar
             text={`+${employeeList.length - 5}`}
-            className="avatar"
             onClick={() => setTogglePopover((prev) => !prev)}
           />
           {togglePopover && (
@@ -76,7 +71,6 @@ const AvatarGroup = ({ handleSelectUser }) => {
           )}
         </div>
       </div>
-      {/* ))} */}
     </div>
   );
 };

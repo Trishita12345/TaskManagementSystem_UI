@@ -9,13 +9,6 @@ const ThemeToggleSwitch = () => {
   const dispatch = useDispatch();
   const isDark = useSelector((state) => state.commonSlice.isDark);
 
-  useEffect(() => {
-    document.documentElement.setAttribute(
-      "data-theme",
-      isDark ? "dark" : "light"
-    );
-  }, [isDark]);
-
   return (
     <div
       className="toggle-container"

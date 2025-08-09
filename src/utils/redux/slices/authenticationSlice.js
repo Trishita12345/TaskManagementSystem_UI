@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { priviledges } from "../../../constants/priviledges";
 
 const initialState = {
-  isAuthenticated: true,
+  isAuthenticated: false,
   email: "trishita.majumder@gmail.com",
   empId: 1,
   firstName: "Trishita",
@@ -27,5 +27,6 @@ const authenticationSlice = createSlice({
   reducers: {},
 });
 
-// export const { setIsLoading, setMessage, setIsDark } = authenticationSlice.actions;
 export default authenticationSlice.reducer;
+export const isAuthenticated = (state) =>
+  state.authenticationSlice.isAuthenticated;
