@@ -1,5 +1,11 @@
-import { Box, Button, TextField } from "@mui/material";
-import React from "react";
+import {
+  Box,
+  Button,
+  IconButton,
+  InputAdornment,
+  TextField,
+} from "@mui/material";
+import React, { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import Loader from "../../../components/Loader";
 import axiosInstance from "../../../utils/axios";
@@ -13,6 +19,7 @@ import { setMessage } from "../../../utils/redux/slices/commonSlice";
 import { useNavigate } from "react-router-dom";
 import { routes } from "../../../constants/routes";
 import type { AxiosError } from "axios";
+import { VisibilityOff, Visibility } from "@mui/icons-material";
 
 interface LoginFormInputs {
   email: string;
@@ -28,6 +35,9 @@ const LoginForm: React.FC = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = useState(false);
+
   const onSubmit: SubmitHandler<LoginFormInputs> = async (formData) => {
     try {
       await axiosInstance.post(urls.login, formData);
@@ -63,6 +73,7 @@ const LoginForm: React.FC = () => {
         }}
       >
         <TextField
+          variant="standard"
           className="authFormHandle"
           size="small"
           label="Email Id"
@@ -79,14 +90,31 @@ const LoginForm: React.FC = () => {
         />
 
         <TextField
+          variant="standard"
           className="authFormHandle"
           size="small"
           label="Password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           {...register("password", { required: "Password is required" })}
           error={!!errors.password}
           helperText={errors.password?.message}
           fullWidth
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  edge="end"
+                >
+                  {showPassword ? (
+                    <VisibilityOff fontSize="small" sx={{ mr: "8px" }} />
+                  ) : (
+                    <Visibility fontSize="small" sx={{ mr: "8px" }} />
+                  )}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
 
         <Button

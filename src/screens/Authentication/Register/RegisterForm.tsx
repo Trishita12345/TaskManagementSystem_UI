@@ -1,7 +1,13 @@
-import { Box, Button, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  TextField,
+} from "@mui/material";
 import type { AxiosError } from "axios";
 import React from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import { urls } from "../../../constants/urls";
 import axiosInstance from "../../../utils/axios";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +15,7 @@ import { routes } from "../../../constants/routes";
 import Loader from "../../../components/Loader";
 import { useDispatch } from "react-redux";
 import { setMessage } from "../../../utils/redux/slices/commonSlice";
+import strings from "../../../constants/strings";
 
 interface RegisterFormInputs {
   email: string;
@@ -17,14 +24,22 @@ interface RegisterFormInputs {
   lastname: string;
   confirmPassword: string;
   profileImage: string;
+  agree: boolean;
 }
 
 const RegisterForm: React.FC = () => {
   const {
     register,
     handleSubmit,
+    watch,
+    control,
     formState: { errors, isSubmitting },
-  } = useForm<RegisterFormInputs>({ mode: "onChange" });
+  } = useForm<RegisterFormInputs>({
+    mode: "onChange",
+    defaultValues: { agree: false },
+  });
+
+  const isChecked = watch("agree");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -75,7 +90,7 @@ const RegisterForm: React.FC = () => {
           className="authFormHandle"
           size="small"
           label="First Name"
-          variant="outlined"
+          variant="standard"
           {...register("firstname", {
             required: "First name is required",
             maxLength: {
@@ -91,7 +106,7 @@ const RegisterForm: React.FC = () => {
           className="authFormHandle"
           size="small"
           label="Last Name"
-          variant="outlined"
+          variant="standard"
           {...register("lastname", {
             required: "Last name is required",
             maxLength: {
@@ -104,6 +119,7 @@ const RegisterForm: React.FC = () => {
           fullWidth
         />
         <TextField
+          variant="standard"
           className="authFormHandle"
           size="small"
           label="Email Id"
@@ -120,6 +136,7 @@ const RegisterForm: React.FC = () => {
         />
 
         <TextField
+          variant="standard"
           className="authFormHandle"
           size="small"
           label="Password"
@@ -141,7 +158,7 @@ const RegisterForm: React.FC = () => {
           className="authFormHandle"
           size="small"
           label="Confirm Password"
-          variant="outlined"
+          variant="standard"
           {...register("confirmPassword", {
             required: "confirmPassword is required",
           })}
@@ -153,6 +170,7 @@ const RegisterForm: React.FC = () => {
           fullWidth
         />
         <TextField
+          variant="standard"
           className="authFormHandle"
           size="small"
           label="Profile Image URL"
@@ -161,12 +179,29 @@ const RegisterForm: React.FC = () => {
           helperText={errors.profileImage?.message}
           fullWidth
         />
-
+        <Controller
+          name="agree"
+          control={control}
+          render={({ field }) => (
+            <FormControlLabel
+              sx={{
+                alignItems: "flex-start", // align to top
+                mt: "12px", // remove margin
+                "& .MuiCheckbox-root": {
+                  py: 0, // remove checkbox padding
+                  pt: "2px",
+                },
+              }}
+              control={<Checkbox {...field} checked={field.value} />}
+              label={`I accept the Terms & Conditions and Privacy Policy of ${strings.logoText}`}
+            />
+          )}
+        />
         <Button
           type="submit"
           variant="contained"
           color="primary"
-          disabled={isSubmitting}
+          disabled={!isChecked || isSubmitting}
         >
           {isSubmitting ? "Saving in..." : "Register"}
         </Button>

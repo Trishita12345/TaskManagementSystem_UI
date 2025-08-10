@@ -24,7 +24,7 @@ const strings = {
   assignedTo: "Assigned To",
   taskId: "Issue Id",
   assignedToRequiredErrror: "Assignee is Required",
-  logoText: "Takverse.com",
+  logoText: "Taskverse.com",
   deleteTaskHeader: "Delete Issue ?",
   deleteTaskSubHeading1: "Are you sure you want to delete this Issue?",
   deleteTaskSubHeading2: "This action cannot be undone.",
