@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import strings from "../../../constants/strings";
-import _ from "lodash-es";
 import { debounce } from "lodash-es";
 import { setTaskFilterString } from "../../../utils/redux/slices/taskSlice";
+import TextField from "../../../components/TextInput";
 
 const FilterInput = ({ handleFilterInputChange }) => {
   const dispatch = useDispatch();
@@ -25,21 +25,15 @@ const FilterInput = ({ handleFilterInputChange }) => {
   );
 
   return (
-    <div className="custom-input-wrapper">
-      {taskFilterString === "" && (
-        <div className="custom-placeholder">{strings.filterInputText}</div>
-      )}
-      <input
-        type="text"
-        value={taskFilterString}
-        onChange={(e) => {
-          dispatch(setTaskFilterString(e.target.value));
-          debouncedSearch(e);
-        }}
-        style={{ width: "170px" }}
-        className="input-field"
-      />
-    </div>
+    <TextField
+      placeholder={strings.filterInputText}
+      variant="outlined"
+      value={taskFilterString}
+      onChange={(e) => {
+        dispatch(setTaskFilterString(e.target.value));
+        debouncedSearch(e);
+      }}
+    />
   );
 };
 

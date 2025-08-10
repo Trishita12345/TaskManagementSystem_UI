@@ -8,15 +8,22 @@ import ThemeToggleSwitch from "../../components/ThemeToggleSwich";
 import Avatar from "../../components/CustomAvatar";
 import { useSelector } from "react-redux";
 import { getNameInitials } from "../../utils/helperFunctions";
+import { getTheme } from "../../utils/redux/slices/commonSlice";
 
 const NarrowSideBar = ({ setIsSidebarOpen }) => {
+  const theme = useSelector(getTheme);
   const avatarImage = useSelector(
     (state) => state.authenticationSlice.avatarImage
   );
   const firstName = useSelector((state) => state.authenticationSlice.firstName);
   const lastName = useSelector((state) => state.authenticationSlice.lastName);
   return (
-    <div id="narrow-sidebar">
+    <div
+      id="narrow-sidebar"
+      style={{
+        backgroundColor: theme.primary,
+      }}
+    >
       <Hamburger setIsSidebarOpen={setIsSidebarOpen} />
       <div style={{ marginBottom: "20px" }}></div>
       <div
@@ -37,7 +44,7 @@ const NarrowSideBar = ({ setIsSidebarOpen }) => {
           <ThemeToggleSwitch />
         </div>
         <div>
-          <div style={{ paddingLeft: "8px", margin: "20px 0px" }}>
+          <div style={{ margin: "20px 5px" }}>
             <Avatar
               text={getNameInitials(firstName, lastName)}
               avatarImage={avatarImage}

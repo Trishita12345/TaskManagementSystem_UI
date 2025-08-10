@@ -1,5 +1,4 @@
 #auth-container {
-  background-color: var(--primary-color-opacityM);
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -15,12 +14,21 @@
 
 #left-container {
   border-radius: 4px;
-  background-color: var(--primary-bg-color);
-  color: var(--primary-text-color);
+  padding: 20px;
+}
+
+#left-sub-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #right-container {
   border-radius: 0px 4px 0px 0px;
   height: 100%;
   background-color: var(--primary-color-opacityXS);
+}
+.authFormHandle {
+  width: 320px !important;
 }

@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+import { getTheme } from "../../utils/redux/slices/commonSlice";
 import "./popup.css";
 
 export const openPopup = () => {
@@ -11,9 +13,10 @@ export const closePopup = () => {
 };
 
 const Popup = ({ children }) => {
+  const theme = useSelector(getTheme);
   return (
     <div id="popup-overlay">
-      <div id="popup">
+      <div id="popup" style={{ backgroundColor: theme.secondaryColor2 }}>
         <div id="popup-items">
           <div>{children}</div>
         </div>

@@ -137,6 +137,7 @@ const Tasks = () => {
         />
         <AddTaskButton onAdd={onAdd} />
       </Box>
+      BODY
     </>
   );
 };

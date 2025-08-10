@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import TextField from "../../../../components/TextInput";
 
 // const AddTaskForm = ({ onSubmit, onPopupClose }) => {
 //   const {
@@ -175,7 +176,15 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 // };
 
 const AddTaskForm = () => {
-  return <>AddTaskForm</>;
+  return (
+    <>
+      <TextField
+        placeholder={"placeholder"}
+        value={"value"}
+        onChange={() => {}}
+      />
+    </>
+  );
 };
 
 export default AddTaskForm;

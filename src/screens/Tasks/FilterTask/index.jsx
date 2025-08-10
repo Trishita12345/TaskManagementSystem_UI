@@ -1,10 +1,11 @@
 import FilterInput from "./FilterInput";
-import "./FilterTask.css";
 import { useSelector } from "react-redux";
 import AvatarGroup from "./AvatarGroup";
 import strings from "../../../constants/strings";
 import useScreenSize from "../../../utils/customHooks/useScreenSize";
 import { employeeData } from "../../../constants/data";
+import { Button, Typography } from "@mui/material";
+import { getTheme } from "../../../utils/redux/slices/commonSlice";
 
 const FilterTask = ({
   handleFilterInputChange,
@@ -12,6 +13,7 @@ const FilterTask = ({
   onClear,
   selectCurrentUserForFilter,
 }) => {
+  const theme = useSelector(getTheme);
   const { width } = useScreenSize();
   const taskFilterString = useSelector(
     (state) => state.taskSlice.taskFilterString
@@ -41,14 +43,14 @@ const FilterTask = ({
           fontWeight: 500,
         }}
       >
-        <div onClick={selectCurrentUserForFilter} className="link">
-          {strings.onlyMyIssues}
-        </div>
-        <div>|</div>
+        <Button onClick={selectCurrentUserForFilter}>
+          <Typography>{strings.onlyMyIssues}</Typography>
+        </Button>
+        <Typography color={theme.primary}>|</Typography>
         {taskFilterString !== "" || empIdsForFilter.length > 0 ? (
-          <div onClick={onClear} className="link">
-            {strings.clearAll}
-          </div>
+          <Button onClick={onClear}>
+            <Typography>{strings.clearAll}</Typography>
+          </Button>
         ) : null}
       </div>
     </div>

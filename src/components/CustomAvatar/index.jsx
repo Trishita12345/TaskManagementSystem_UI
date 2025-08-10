@@ -13,7 +13,9 @@ const CustomAvatar = ({
       {avatarImage ? (
         <Avatar alt="" src={avatarImage} />
       ) : (
-        <Avatar sx={{ bgcolor: deepPurple[500] }}>{text}</Avatar>
+        <Avatar sx={{ bgcolor: deepOrange[500], color: "white" }}>
+          {text}
+        </Avatar>
       )}
     </div>
   );

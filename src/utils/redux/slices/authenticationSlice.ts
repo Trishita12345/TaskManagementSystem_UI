@@ -1,6 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { priviledges } from "../../../constants/priviledges";
 
+interface AppState {
+  isAuthenticated: boolean;
+  email: string;
+  empId: number;
+  firstName: string;
+  lastName: string;
+  avatarImage: string;
+  userPriviledges: any[]; // or string[] if not using enum
+}
+
 const initialState = {
   isAuthenticated: false,
   email: "trishita.majumder@gmail.com",
@@ -28,5 +38,5 @@ const authenticationSlice = createSlice({
 });
 
 export default authenticationSlice.reducer;
-export const isAuthenticated = (state) =>
+export const isAuthenticated = (state: { authenticationSlice: AppState }) =>
   state.authenticationSlice.isAuthenticated;

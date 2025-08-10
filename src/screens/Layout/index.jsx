@@ -4,15 +4,19 @@ import useScreenSize from "../../utils/customHooks/useScreenSize";
 import { useEffect, useState } from "react";
 import { smallDevice } from "../../constants/data";
 import NarrowSideBar from "./NarrowSideBar";
+import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
+import { getTheme } from "../../utils/redux/slices/commonSlice";
 
 const Layout = ({ children }) => {
+  const theme = useSelector(getTheme);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { width } = useScreenSize();
   useEffect(() => {
     if (width < smallDevice) setIsSidebarOpen(false);
   }, [width]);
   return (
-    <>
+    <Box sx={{ minHeight: "100vh", backgroundColor: theme.secondaryColor1 }}>
       <div style={{ display: "flex" }}>
         <div
           style={{
@@ -45,7 +49,7 @@ const Layout = ({ children }) => {
           setIsSidebarOpen={setIsSidebarOpen}
         />
       )}
-    </>
+    </Box>
   );
 };
 

@@ -19,12 +19,6 @@
   padding: 0;
   transition: background 0.4s;
 }
-.sun {
-  color: var(--primary-bg-color);
-}
-.moon {
-  color: var(--primary-text-color);
-}
 
 .icon {
   z-index: 1;
