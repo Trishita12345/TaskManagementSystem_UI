@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
-import strings from "../../../constants/strings";
+import strings from "../../../../constants/strings";
 
 const AddTaskButton = ({ onAdd }) => {
   return (

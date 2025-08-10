@@ -7,8 +7,6 @@ const initialState = {
   tasks: [],
   taskById: {},
   selectedIdForView: null,
-  selectedIdForEdit: null,
-  selectedIdForDelete: null,
   taskFilterString: "",
   empIdsForFilter: [],
 };
@@ -35,12 +33,6 @@ const taskSlice = createSlice({
     setSelectedIdForView(state, action) {
       state.selectedIdForView = action.payload;
     },
-    setSelectedIdForEdit(state, action) {
-      state.selectedIdForEdit = action.payload;
-    },
-    setSelectedIdForDelete(state, action) {
-      state.selectedIdForDelete = action.payload;
-    },
     setTaskFilterString(state, action) {
       state.taskFilterString = action.payload;
     },
@@ -63,8 +55,6 @@ const taskSlice = createSlice({
     setTaskInitState(state) {
       state.taskById = {};
       state.selectedIdForView = null;
-      state.selectedIdForEdit = null;
-      state.selectedIdForDelete = null;
     },
   },
 });

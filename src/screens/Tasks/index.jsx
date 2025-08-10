@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { employeeData, statusData, TaskData } from "../../constants/data";
-import TaskTable from "./TaskList/TaskTable";
-import "./Tasks.css";
+
 import Popup, { closePopup, openPopup } from "../../components/Popup";
-import AddEditTaskForm from "./AddEditTaskForm";
-import DeleteTask from "./DeleteTask";
+import AddTaskForm from "./AddTask/AddTaskForm";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setTaskInitState,
@@ -17,18 +15,16 @@ import {
   setClearFilter,
   setTasksWithoutFilter,
 } from "../../utils/redux/slices/taskSlice.js";
-import ViewTask from "./ViewTask";
 import Loader from "../../components/Loader";
 import { setIsLoading } from "../../utils/redux/slices/commonSlice.js";
 import { priviledges } from "../../constants/priviledges.js";
 import NotAuthorized from "../../components/NotAuthorized";
-import AddTaskButton from "./AddTaskButton";
+import AddTaskButton from "./AddTask/AddTaskButton/index.jsx";
 import FilterTask from "./FilterTask";
 import useScreenSize from "../../utils/customHooks/useScreenSize.jsx";
+import { Box } from "@mui/material";
 
 const Tasks = () => {
-  const [openAddPopUp, setOpenAddPopUp] = useState(false);
-
   const { width } = useScreenSize();
   const dispatch = useDispatch();
 
@@ -46,13 +42,6 @@ const Tasks = () => {
   );
   const selectedIdForView = useSelector(
     (state) => state.taskSlice.selectedIdForView
-  );
-  const selectedIdForEdit = useSelector(
-    (state) => state.taskSlice.selectedIdForEdit
-  );
-
-  const selectedIdForDelete = useSelector(
-    (state) => state.taskSlice.selectedIdForDelete
   );
 
   const onPopupClose = (cb = () => {}) => {
@@ -72,31 +61,6 @@ const Tasks = () => {
   const getTasks = () => {
     dispatch(setTasks(TaskData));
     dispatch(setTasksWithoutFilter(TaskData));
-  };
-
-  const getTaskById = (id) => {
-    console.log("editedId:", id);
-    let data = TaskData.find((t) => t.id === id);
-    dispatch(setTaskById(data));
-  };
-
-  const deleteTaskById = () => {
-    dispatch(setIsLoading(true));
-    setTimeout(() => {
-      dispatch(setIsLoading(false));
-      onPopupClose();
-    }, 1500);
-  };
-
-  const updateStatus = (taskId, statusId) => {
-    console.log("taskId: ", taskId, "statusId: ", statusId);
-    let idx = tasks.findIndex((t) => t.id === taskId);
-    const temp = [...tasks];
-    temp[idx] = {
-      ...tasks[idx],
-      status: statusId,
-    };
-    dispatch(setTasks(temp));
   };
 
   const onAddEdit = (data, resetCb) => {
@@ -140,12 +104,6 @@ const Tasks = () => {
   }, []);
 
   useEffect(() => {
-    if (selectedIdForView || selectedIdForEdit) {
-      getTaskById(selectedIdForView || selectedIdForEdit);
-    }
-  }, [selectedIdForEdit, selectedIdForView]);
-
-  useEffect(() => {
     let tempTasks;
     if (empIdsForFilter.length > 0) {
       tempTasks = tasksWithoutFilter.filter((item) =>
@@ -161,19 +119,10 @@ const Tasks = () => {
     <>
       {isLoading && <Loader />}
       <Popup>
-        {selectedIdForDelete && (
-          <DeleteTask
-            deleteTaskById={deleteTaskById}
-            onPopupClose={onPopupClose}
-          />
-        )}
-        {selectedIdForView && <ViewTask onPopupClose={onPopupClose} />}
-        {(openAddPopUp || selectedIdForEdit) && (
-          <AddEditTaskForm onSubmit={onAddEdit} onPopupClose={onPopupClose} />
-        )}
+        <AddTaskForm onSubmit={onAddEdit} onPopupClose={onPopupClose} />
       </Popup>
-      <div
-        style={{
+      <Box
+        sx={{
           display: "flex",
           alignItems: width > 700 ? "center" : "end",
           justifyContent: "space-between",
@@ -187,8 +136,7 @@ const Tasks = () => {
           selectCurrentUserForFilter={selectCurrentUserForFilter}
         />
         <AddTaskButton onAdd={onAdd} />
-      </div>
-      <TaskTable updateStatus={updateStatus} />
+      </Box>
     </>
   );
 };

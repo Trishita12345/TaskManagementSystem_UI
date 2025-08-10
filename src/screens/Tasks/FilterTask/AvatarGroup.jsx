@@ -57,7 +57,7 @@ const AvatarGroup = ({ handleSelectUser }) => {
           zIndex: employeeList.length - 5,
         }}
       >
-        <div class="popover-container">
+        <div className="popover-container">
           <Avatar
             text={`+${employeeList.length - 5}`}
             onClick={() => setTogglePopover((prev) => !prev)}
