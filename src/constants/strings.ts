@@ -32,10 +32,13 @@ const strings = {
   cancelText: "Cancel",
   notAuthorizedHeader: "403 - Not Authorized",
   notAuthorizedSubHeader: "You don't have permission to access this page",
-  backHome: "Go to Home",
+  backHome: "Back to Home",
+  backToLogin: "Back to Login screen",
   filterInputText: "🔍 Search issues",
   onlyMyIssues: "Only My Issues",
   clearAll: "Clear All",
+  somethingWentWrong: "Something went wrong",
+  notAuthorizedError: "You are not authorized to access this feature",
 };
 
 export default strings;

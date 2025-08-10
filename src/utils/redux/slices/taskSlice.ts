@@ -48,7 +48,7 @@ const taskSlice = createSlice({
     setOnlyCurrentEmpIdForFilter(state, action) {
       state.empIdsForFilter = [action.payload];
     },
-    setClearFilter(state, action) {
+    setClearFilter(state) {
       state.taskFilterString = "";
       state.empIdsForFilter = [];
     },
@@ -63,8 +63,6 @@ export const {
   setTasks,
   setStatusList,
   setTaskById,
-  setSelectedIdForEdit,
-  setSelectedIdForDelete,
   setSelectedIdForView,
   setTaskInitState,
   setTaskFilterString,

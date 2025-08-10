@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Avatar from "../../../components/CustomAvatar";
 import "./AvatarGroup.css";
@@ -6,12 +6,14 @@ import { getNameInitials } from "../../../utils/helperFunctions";
 import PopOverContent from "./PopOverContent";
 import { Tooltip } from "@mui/material";
 
-const AvatarGroup = ({ handleSelectUser }) => {
+const AvatarGroup = ({ handleSelectUser }: any) => {
   const [togglePopover, setTogglePopover] = useState(false);
   const [className, setClassName] = useState("");
-  const employeeList = useSelector((state) => state.taskSlice.employeeList);
+  const employeeList = useSelector(
+    (state: any) => state.taskSlice.employeeList
+  );
   const empIdsForFilter = useSelector(
-    (state) => state.taskSlice.empIdsForFilter
+    (state: any) => state.taskSlice.empIdsForFilter
   );
   const getStyle = () => {
     const temp = employeeList.slice(5, employeeList.length);
@@ -31,7 +33,7 @@ const AvatarGroup = ({ handleSelectUser }) => {
 
   return (
     <div className="avatar-group">
-      {employeeList.slice(0, 5).map((emp, index) => (
+      {employeeList.slice(0, 5).map((emp: any, index: number) => (
         <div
           key={emp.id}
           className={`avatar-wrapper ${
@@ -42,12 +44,13 @@ const AvatarGroup = ({ handleSelectUser }) => {
             zIndex: employeeList.length - index,
           }}
         >
-          <Avatar
-            text={getNameInitials(emp.firstName, emp.lastName)}
-            avatarImage={emp.avatarImage}
-            onClick={() => handleSelectUser(emp.id)}
-          />
-          <Tooltip title={`${emp.firstName} ${emp.lastName}`}></Tooltip>
+          <Tooltip title={`${emp.firstName} ${emp.lastName}`}>
+            <Avatar
+              text={getNameInitials(emp.firstName, emp.lastName)}
+              avatarImage={emp.avatarImage}
+              onClick={() => handleSelectUser(emp.id)}
+            />
+          </Tooltip>
         </div>
       ))}
       <div
@@ -64,7 +67,7 @@ const AvatarGroup = ({ handleSelectUser }) => {
           />
           {togglePopover && (
             <div className="popover">
-              {employeeList.slice(5, employeeList.length).map((e) => (
+              {employeeList.slice(5, employeeList.length).map((e: any) => (
                 <PopOverContent data={e} onCheck={handleSelectUser} />
               ))}
             </div>

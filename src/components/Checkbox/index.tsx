@@ -6,7 +6,7 @@ const Checkbox = ({
   isChecked,
   style = {},
   className = "",
-}) => {
+}: any) => {
   return (
     <div className={`checkbox-wrapper ${className}`} style={style}>
       <div>

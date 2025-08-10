@@ -3,7 +3,7 @@ import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import strings from "../../../../constants/strings";
 import { Box, Button } from "@mui/material";
 
-const AddTaskButton = ({ onAdd }) => {
+const AddTaskButton = ({ onAdd }: { onAdd: () => void }) => {
   return (
     <Button variant="contained" onClick={onAdd}>
       <Box sx={{ display: "flex", alignItems: "center", gap: "4px" }}>

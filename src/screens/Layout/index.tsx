@@ -8,7 +8,7 @@ import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { getTheme } from "../../utils/redux/slices/commonSlice";
 
-const Layout = ({ children }) => {
+const Layout = ({ children }: { children: React.ReactNode }) => {
   const theme = useSelector(getTheme);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { width } = useScreenSize();
@@ -23,7 +23,10 @@ const Layout = ({ children }) => {
             width: isSidebarOpen && width > smallDevice ? `280px` : "70px",
           }}
         ></div>
-        <NarrowSideBar setIsSidebarOpen={setIsSidebarOpen} />
+        <NarrowSideBar
+          isSidebarOpen={isSidebarOpen}
+          setIsSidebarOpen={setIsSidebarOpen}
+        />
         <div
           style={{
             margin: "8px",

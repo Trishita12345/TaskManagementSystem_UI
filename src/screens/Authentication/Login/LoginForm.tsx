@@ -1,6 +1,18 @@
 import { Box, Button, TextField } from "@mui/material";
 import React from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import Loader from "../../../components/Loader";
+import axiosInstance from "../../../utils/axios";
+import { urls } from "../../../constants/urls";
+import { useDispatch } from "react-redux";
+import {
+  setIsAuthenticated,
+  setUserDetails,
+} from "../../../utils/redux/slices/authenticationSlice";
+import { setMessage } from "../../../utils/redux/slices/commonSlice";
+import { useNavigate } from "react-router-dom";
+import { routes } from "../../../constants/routes";
+import type { AxiosError } from "axios";
 
 interface LoginFormInputs {
   email: string;
@@ -14,60 +26,79 @@ const LoginForm: React.FC = () => {
     formState: { errors, isSubmitting },
   } = useForm<LoginFormInputs>({ mode: "onChange" });
 
-  const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
-    console.log("Login Data:", data);
-    // Call your login API here
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const onSubmit: SubmitHandler<LoginFormInputs> = async (formData) => {
+    try {
+      await axiosInstance.post(urls.login, formData);
+      const { data } = await axiosInstance(urls.myProfile);
+      dispatch(setIsAuthenticated());
+      dispatch(setUserDetails(data));
+      navigate(routes.myBoard);
+    } catch (e) {
+      const err = e as AxiosError<{ message: string }>;
+      dispatch(
+        setMessage({
+          display: true,
+          severity: "error",
+          message: err.response?.data.message || err,
+        })
+      );
+    }
   };
 
   return (
-    <Box
-      component="form"
-      onSubmit={handleSubmit(onSubmit)}
-      sx={{
-        maxWidth: 350,
-        mx: "auto",
-        display: "flex",
-        flexDirection: "column",
-        gap: 2,
-        mt: 4,
-      }}
-    >
-      <TextField
-        className="authFormHandle"
-        size="small"
-        label="Email Id"
-        {...register("email", {
-          required: "Email is required",
-          pattern: {
-            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-            message: "Invalid email address",
-          },
-        })}
-        error={!!errors.email}
-        helperText={errors.email?.message}
-        fullWidth
-      />
-
-      <TextField
-        className="authFormHandle"
-        size="small"
-        label="Password"
-        type="password"
-        {...register("password", { required: "Password is required" })}
-        error={!!errors.password}
-        helperText={errors.password?.message}
-        fullWidth
-      />
-
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        disabled={isSubmitting}
+    <>
+      {isSubmitting && <Loader />}
+      <Box
+        component="form"
+        onSubmit={handleSubmit(onSubmit)}
+        sx={{
+          maxWidth: 350,
+          mx: "auto",
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          mt: 4,
+        }}
       >
-        {isSubmitting ? "Logging in..." : "Login"}
-      </Button>
-    </Box>
+        <TextField
+          className="authFormHandle"
+          size="small"
+          label="Email Id"
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: "Invalid email address",
+            },
+          })}
+          error={!!errors.email}
+          helperText={errors.email?.message}
+          fullWidth
+        />
+
+        <TextField
+          className="authFormHandle"
+          size="small"
+          label="Password"
+          type="password"
+          {...register("password", { required: "Password is required" })}
+          error={!!errors.password}
+          helperText={errors.password?.message}
+          fullWidth
+        />
+
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Logging in..." : "Login"}
+        </Button>
+      </Box>
+    </>
   );
 };
 export default LoginForm;

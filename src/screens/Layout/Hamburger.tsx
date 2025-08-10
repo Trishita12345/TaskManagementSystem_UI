@@ -6,7 +6,11 @@ import {
 import { getTheme } from "../../utils/redux/slices/commonSlice";
 import { useSelector } from "react-redux";
 
-const Hamburger = ({ isSidebarOpen, setIsSidebarOpen }) => {
+type propType = {
+  isSidebarOpen: boolean;
+  setIsSidebarOpen: any;
+};
+const Hamburger = ({ isSidebarOpen, setIsSidebarOpen }: propType) => {
   const theme = useSelector(getTheme);
   return (
     <div
@@ -16,7 +20,7 @@ const Hamburger = ({ isSidebarOpen, setIsSidebarOpen }) => {
         border: `1px solid ${theme.secondaryColor3}`,
       }}
       className={isSidebarOpen ? "hamburger-left" : "hamburger-right"}
-      onClick={() => setIsSidebarOpen((prev) => !prev)}
+      onClick={() => setIsSidebarOpen((prev: boolean) => !prev)}
     >
       <div id="hamburger-icon">
         <FontAwesomeIcon

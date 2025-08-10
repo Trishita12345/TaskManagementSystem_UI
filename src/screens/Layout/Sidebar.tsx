@@ -5,7 +5,20 @@ import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { getTheme } from "../../utils/redux/slices/commonSlice";
 
-const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
+type propType = {
+  isSidebarOpen: boolean;
+  setIsSidebarOpen: any;
+};
+
+type sidebarItemType = {
+  id: number;
+  name: string;
+  icon: any;
+  route: string;
+  priviledge: string;
+};
+
+const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }: propType) => {
   const theme = useSelector(getTheme);
   if (!isSidebarOpen)
     return (
@@ -34,7 +47,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
         setIsSidebarOpen={setIsSidebarOpen}
       />
       <div style={{ marginBottom: "8px" }}></div>
-      {sidebarItemsList.map((s) => (
+      {sidebarItemsList.map((s: sidebarItemType) => (
         <SideBarItem key={s.id} item={s} />
       ))}
     </Box>

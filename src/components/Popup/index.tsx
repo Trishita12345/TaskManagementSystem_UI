@@ -12,7 +12,7 @@ export const closePopup = () => {
   document.getElementById("popup-overlay").style.display = "none";
 };
 
-const Popup = ({ children }) => {
+const Popup = ({ children }: any) => {
   const theme = useSelector(getTheme);
   return (
     <div id="popup-overlay">

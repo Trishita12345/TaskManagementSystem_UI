@@ -1,16 +1,18 @@
-import React, { useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import strings from "../../../constants/strings";
 import { debounce } from "lodash-es";
 import { setTaskFilterString } from "../../../utils/redux/slices/taskSlice";
-import TextField from "../../../components/TextInput";
+import { TextField } from "@mui/material";
 
-const FilterInput = ({ handleFilterInputChange }) => {
+const FilterInput = ({
+  handleFilterInputChange,
+}: {
+  handleFilterInputChange: (val: string) => {};
+}) => {
   const dispatch = useDispatch();
   const debouncedSearch = useMemo(
-    () => debounce((e) => handleFilterInputChange(e.target.value), 500),
+    () => debounce((e: any) => handleFilterInputChange(e.target.value), 500),
     []
   );
 
@@ -21,7 +23,7 @@ const FilterInput = ({ handleFilterInputChange }) => {
   }, [debouncedSearch]);
 
   const taskFilterString = useSelector(
-    (state) => state.taskSlice.taskFilterString
+    (state: any) => state.taskSlice.taskFilterString
   );
 
   return (
@@ -29,7 +31,7 @@ const FilterInput = ({ handleFilterInputChange }) => {
       placeholder={strings.filterInputText}
       variant="outlined"
       value={taskFilterString}
-      onChange={(e) => {
+      onChange={(e: any) => {
         dispatch(setTaskFilterString(e.target.value));
         debouncedSearch(e);
       }}

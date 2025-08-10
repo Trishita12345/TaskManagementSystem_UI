@@ -1,11 +1,13 @@
+import type { AlertColor } from "@mui/material";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface AppState {
   isLoading: boolean;
   isDark: boolean;
   message: {
+    display: boolean;
+    severity: AlertColor;
     message: string;
-    type: string;
   };
   theme: any;
   // {
@@ -21,8 +23,9 @@ const initialState = {
   isLoading: false,
   isDark: localStorage.getItem("isDark") === "true" ? true : false,
   message: {
+    display: false,
+    severity: "success",
     message: "",
-    type: "",
   },
   theme: localStorage.getItem("theme")
     ? JSON.parse(localStorage.getItem("theme") as string)
@@ -85,3 +88,6 @@ export const isDark = (state: { commonSlice: AppState }) =>
   state.commonSlice.isDark;
 export const getTheme = (state: { commonSlice: AppState }) =>
   state.commonSlice.theme;
+
+export const notificationMessage = (state: { commonSlice: AppState }) =>
+  state.commonSlice.message;

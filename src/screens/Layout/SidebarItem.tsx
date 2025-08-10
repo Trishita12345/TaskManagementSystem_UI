@@ -3,13 +3,22 @@ import { useSelector } from "react-redux";
 import { getTheme } from "../../utils/redux/slices/commonSlice";
 import { useLocation } from "react-router-dom";
 import { Box } from "@mui/material";
+import { userDetails } from "../../utils/redux/slices/authenticationSlice";
 
-const SideBarItem = ({ item }) => {
+type propType = {
+  item: {
+    id: number;
+    name: string;
+    icon: any;
+    route: string;
+    priviledge: string;
+  };
+};
+
+const SideBarItem = ({ item }: propType) => {
   let location = useLocation();
   const theme = useSelector(getTheme);
-  const userPriviledges = useSelector(
-    (state) => state.authenticationSlice.userPriviledges
-  );
+  const { permissions } = useSelector(userDetails);
   const sx =
     location.pathname === item.route
       ? {
@@ -18,7 +27,7 @@ const SideBarItem = ({ item }) => {
       : {};
   return (
     <>
-      {userPriviledges.includes(item.priviledge) ? (
+      {permissions.includes(item.priviledge) ? (
         <Box id="sidebar-item" sx={sx}>
           <div
             id="sidebar-text"
@@ -27,7 +36,7 @@ const SideBarItem = ({ item }) => {
             }}
           >
             <FontAwesomeIcon
-              onClick={(e) => {}}
+              onClick={() => {}}
               icon={item.icon}
               size="lg"
               style={{ cursor: "pointer", padding: "4px" }}

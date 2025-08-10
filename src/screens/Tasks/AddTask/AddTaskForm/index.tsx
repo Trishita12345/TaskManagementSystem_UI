@@ -1,8 +1,3 @@
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import TextField from "../../../../components/TextInput";
 
 // const AddTaskForm = ({ onSubmit, onPopupClose }) => {
@@ -175,7 +170,11 @@ import TextField from "../../../../components/TextInput";
 //   );
 // };
 
-const AddTaskForm = () => {
+type propType = {
+  onSubmit: (data: any, resetCb: any) => void;
+  onPopupClose: () => void;
+};
+const AddTaskForm = ({ onSubmit, onPopupClose }: propType) => {
   return (
     <>
       <TextField

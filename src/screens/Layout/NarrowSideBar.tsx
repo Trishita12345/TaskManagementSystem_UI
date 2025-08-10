@@ -4,19 +4,29 @@ import {
   faArrowRightFromBracket,
   faCube,
 } from "@fortawesome/free-solid-svg-icons";
-import ThemeToggleSwitch from "../../components/ThemeToggleSwich";
-import Avatar from "../../components/CustomAvatar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getNameInitials } from "../../utils/helperFunctions";
 import { getTheme } from "../../utils/redux/slices/commonSlice";
+import {
+  setIsAuthenticated,
+  userDetails,
+} from "../../utils/redux/slices/authenticationSlice";
+import ThemeToggleSwitch from "../../components/ThemeToggleSwich";
+import CustomAvatar from "../../components/CustomAvatar";
+import { logoutUser } from "../../utils/authHelperFunctions";
 
-const NarrowSideBar = ({ setIsSidebarOpen }) => {
+type propType = {
+  isSidebarOpen: boolean;
+  setIsSidebarOpen: any;
+};
+const NarrowSideBar = ({ isSidebarOpen, setIsSidebarOpen }: propType) => {
   const theme = useSelector(getTheme);
-  const avatarImage = useSelector(
-    (state) => state.authenticationSlice.avatarImage
-  );
-  const firstName = useSelector((state) => state.authenticationSlice.firstName);
-  const lastName = useSelector((state) => state.authenticationSlice.lastName);
+  const dispatch = useDispatch();
+  const { firstname, lastname, profileImage } = useSelector(userDetails);
+  const handleLogout = () => {
+    logoutUser();
+    dispatch(setIsAuthenticated());
+  };
   return (
     <div
       id="narrow-sidebar"
@@ -24,7 +34,10 @@ const NarrowSideBar = ({ setIsSidebarOpen }) => {
         backgroundColor: theme.primary,
       }}
     >
-      <Hamburger setIsSidebarOpen={setIsSidebarOpen} />
+      <Hamburger
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
       <div style={{ marginBottom: "20px" }}></div>
       <div
         style={{
@@ -36,7 +49,6 @@ const NarrowSideBar = ({ setIsSidebarOpen }) => {
       >
         <div>
           <FontAwesomeIcon
-            onClick={(e) => {}}
             icon={faCube}
             size="xl"
             style={{ cursor: "pointer", paddingLeft: "12px" }}
@@ -45,14 +57,14 @@ const NarrowSideBar = ({ setIsSidebarOpen }) => {
         </div>
         <div>
           <div style={{ margin: "20px 5px" }}>
-            <Avatar
-              text={getNameInitials(firstName, lastName)}
-              avatarImage={avatarImage}
+            <CustomAvatar
+              text={getNameInitials(firstname, lastname)}
+              avatarImage={profileImage}
               onClick={() => {}}
             />
           </div>
           <FontAwesomeIcon
-            onClick={(e) => {}}
+            onClick={handleLogout}
             icon={faArrowRightFromBracket}
             size="xl"
             style={{ cursor: "pointer", paddingLeft: "12px" }}

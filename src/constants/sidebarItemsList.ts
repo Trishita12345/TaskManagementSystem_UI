@@ -1,11 +1,7 @@
 import { priviledges } from "./priviledges";
 import { routes } from "./routes";
 import strings from "./strings";
-import {
-  faGear,
-  faTableColumns,
-  faTableList,
-} from "@fortawesome/free-solid-svg-icons";
+import { faGear, faTableColumns } from "@fortawesome/free-solid-svg-icons";
 
 export const sidebarItemsList = [
   {

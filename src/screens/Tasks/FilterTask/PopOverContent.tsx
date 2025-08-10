@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import Avatar from "../../../components/CustomAvatar";
 import { getNameInitials } from "../../../utils/helperFunctions";
 
-const PopOverContent = ({ data, onCheck }) => {
+const PopOverContent = ({ data, onCheck }: any) => {
   const [isChecked, setIsChecked] = useState(false);
   const empIdsForFilter = useSelector(
-    (state) => state.taskSlice.empIdsForFilter
+    (state: any) => state.taskSlice.empIdsForFilter
   );
   useEffect(() => {
     setIsChecked(empIdsForFilter.includes(data.id) ? true : false);

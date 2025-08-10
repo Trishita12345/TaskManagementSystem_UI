@@ -11,6 +11,7 @@ import Login from "../screens/Authentication/Login";
 import { isAuthenticated } from "../utils/redux/slices/authenticationSlice";
 import { routes } from "../constants/routes";
 import Register from "../screens/Authentication/Register";
+import Notification from "../components/Notification";
 
 const Root = () => {
   let location = useLocation();
@@ -20,7 +21,7 @@ const Root = () => {
 };
 
 const AuthenticatedScreens = ({ children }: { children: React.ReactNode }) => {
-  const isLoggedIn = !useSelector(isAuthenticated);
+  const isLoggedIn = useSelector(isAuthenticated);
 
   if (isLoggedIn) {
     return <Layout>{children}</Layout>;
@@ -30,19 +31,22 @@ const AuthenticatedScreens = ({ children }: { children: React.ReactNode }) => {
 };
 const Routes = () => {
   return (
-    <Switch>
-      <Route path={routes.root} element={<Root />} />
-      <Route path={routes.login} element={<Login />} />
-      <Route path={routes.register} element={<Register />} />
-      <Route
-        path={routes.myBoard}
-        element={
-          <AuthenticatedScreens>
-            <Tasks />
-          </AuthenticatedScreens>
-        }
-      />
-    </Switch>
+    <>
+      <Notification />
+      <Switch>
+        <Route path={routes.root} element={<Root />} />
+        <Route path={routes.login} element={<Login />} />
+        <Route path={routes.register} element={<Register />} />
+        <Route
+          path={routes.myBoard}
+          element={
+            <AuthenticatedScreens>
+              <Tasks />
+            </AuthenticatedScreens>
+          }
+        />
+      </Switch>
+    </>
   );
 };
 

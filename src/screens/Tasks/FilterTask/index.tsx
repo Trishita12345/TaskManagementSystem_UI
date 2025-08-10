@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import AvatarGroup from "./AvatarGroup";
 import strings from "../../../constants/strings";
 import useScreenSize from "../../../utils/customHooks/useScreenSize";
-import { employeeData } from "../../../constants/data";
 import { Button, Typography } from "@mui/material";
 import { getTheme } from "../../../utils/redux/slices/commonSlice";
 
@@ -12,14 +11,14 @@ const FilterTask = ({
   handleSelectUser,
   onClear,
   selectCurrentUserForFilter,
-}) => {
+}: any) => {
   const theme = useSelector(getTheme);
   const { width } = useScreenSize();
   const taskFilterString = useSelector(
-    (state) => state.taskSlice.taskFilterString
+    (state: any) => state.taskSlice.taskFilterString
   );
   const empIdsForFilter = useSelector(
-    (state) => state.taskSlice.empIdsForFilter
+    (state: any) => state.taskSlice.empIdsForFilter
   );
 
   return (

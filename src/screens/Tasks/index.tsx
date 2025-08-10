@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
-import { employeeData, statusData, TaskData } from "../../constants/data";
+import { useEffect } from "react";
+import { employeeData, statusData, TaskData } from "../../constants/data.js";
 
-import Popup, { closePopup, openPopup } from "../../components/Popup";
+import Popup, { closePopup, openPopup } from "../../components/Popup/index.js";
 import AddTaskForm from "./AddTask/AddTaskForm";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setTaskInitState,
   setStatusList,
-  setTaskById,
   setTasks,
   setEmployeeList,
   setEmpIdsForFilter,
@@ -15,39 +14,35 @@ import {
   setClearFilter,
   setTasksWithoutFilter,
 } from "../../utils/redux/slices/taskSlice.js";
-import Loader from "../../components/Loader";
+import Loader from "../../components/Loader/index.js";
 import { setIsLoading } from "../../utils/redux/slices/commonSlice.js";
 import { priviledges } from "../../constants/priviledges.js";
 import NotAuthorized from "../../components/NotAuthorized";
-import AddTaskButton from "./AddTask/AddTaskButton/index.jsx";
-import FilterTask from "./FilterTask";
-import useScreenSize from "../../utils/customHooks/useScreenSize.jsx";
+import AddTaskButton from "./AddTask/AddTaskButton";
+import FilterTask from "./FilterTask/index.js";
+import useScreenSize from "../../utils/customHooks/useScreenSize.js";
 import { Box } from "@mui/material";
+import { userDetails } from "../../utils/redux/slices/authenticationSlice.js";
 
 const Tasks = () => {
   const { width } = useScreenSize();
   const dispatch = useDispatch();
-
-  const empId = useSelector((state) => state.authenticationSlice.empId);
-  const userPriviledges = useSelector(
-    (state) => state.authenticationSlice.userPriviledges
-  );
+  const { permissions, empId } = useSelector(userDetails);
   const tasksWithoutFilter = useSelector(
-    (state) => state.taskSlice.tasksWithoutFilter
+    (state: any) => state.taskSlice.tasksWithoutFilter
   );
-  const tasks = useSelector((state) => state.taskSlice.tasks);
-  const isLoading = useSelector((state) => state.commonSlice.isLoading);
+  // const tasks = useSelector((state: any) => state.taskSlice.tasks);
+  const isLoading = useSelector((state: any) => state.commonSlice.isLoading);
   const empIdsForFilter = useSelector(
-    (state) => state.taskSlice.empIdsForFilter
+    (state: any) => state.taskSlice.empIdsForFilter
   );
-  const selectedIdForView = useSelector(
-    (state) => state.taskSlice.selectedIdForView
-  );
+  // const selectedIdForView = useSelector(
+  //   (state: any) => state.taskSlice.selectedIdForView
+  // );
 
   const onPopupClose = (cb = () => {}) => {
     closePopup();
     dispatch(setTaskInitState());
-    setOpenAddPopUp(false);
     if (cb) cb();
   };
 
@@ -63,7 +58,7 @@ const Tasks = () => {
     dispatch(setTasksWithoutFilter(TaskData));
   };
 
-  const onAddEdit = (data, resetCb) => {
+  const onAddEdit = (data: any, resetCb: any) => {
     console.log("Form Data:", data);
     dispatch(setIsLoading(true));
     setTimeout(() => {
@@ -74,17 +69,16 @@ const Tasks = () => {
 
   const onAdd = () => {
     openPopup();
-    setOpenAddPopUp(true);
   };
 
-  const handleFilterInputChange = (data) => {
+  const handleFilterInputChange = (data: any) => {
     dispatch(setIsLoading(true));
     setTimeout(() => {
       dispatch(setIsLoading(false));
     }, 500);
   };
 
-  const handleSelectUser = (empId) => {
+  const handleSelectUser = (empId: string) => {
     dispatch(setEmpIdsForFilter(empId));
   };
 
@@ -106,15 +100,14 @@ const Tasks = () => {
   useEffect(() => {
     let tempTasks;
     if (empIdsForFilter.length > 0) {
-      tempTasks = tasksWithoutFilter.filter((item) =>
+      tempTasks = tasksWithoutFilter.filter((item: any) =>
         empIdsForFilter.includes(item.assignedTo)
       );
     } else tempTasks = tasksWithoutFilter;
     dispatch(setTasks(tempTasks));
   }, [empIdsForFilter, tasksWithoutFilter]);
 
-  if (!userPriviledges.includes(priviledges.view_task))
-    return <NotAuthorized />;
+  if (!permissions.includes(priviledges.view_task)) return <NotAuthorized />;
   return (
     <>
       {isLoading && <Loader />}
