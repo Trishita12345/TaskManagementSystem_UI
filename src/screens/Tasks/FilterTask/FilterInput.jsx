@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import strings from "../../../constants/strings";
-import _ from "lodash";
+import _ from "lodash-es";
+import { debounce } from "lodash-es";
 import { setTaskFilterString } from "../../../utils/redux/slices/taskSlice";
 
 const FilterInput = ({ handleFilterInputChange }) => {
   const dispatch = useDispatch();
   const debouncedSearch = useMemo(
-    () => _.debounce((e) => handleFilterInputChange(e.target.value), 500),
+    () => debounce((e) => handleFilterInputChange(e.target.value), 500),
     []
   );
 

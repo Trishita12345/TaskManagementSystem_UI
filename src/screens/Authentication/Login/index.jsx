@@ -1,6 +1,6 @@
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import LoginForm from "./LoginFom";
+import LoginForm from "./LoginFom.jsx";
 import "../authenticationLayout.css";
 
 function Login() {
