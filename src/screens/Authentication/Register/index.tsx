@@ -21,10 +21,10 @@ const Register = () => {
         <Typography color={"grey"} pt={"8px"} textAlign={"center"}>
           Already have have an account?
           <Button
-            sx={{ textTransform: "capitalize" }}
+            className="link-button"
             onClick={() => navigate(routes.login)}
           >
-            Sign in now
+            Login
           </Button>
         </Typography>
       </Box>

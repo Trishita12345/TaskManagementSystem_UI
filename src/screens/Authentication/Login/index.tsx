@@ -20,10 +20,10 @@ const Login = () => {
         <Typography color={"grey"} pt={"8px"} textAlign={"center"}>
           Don't have an account?
           <Button
-            sx={{ textTransform: "capitalize" }}
+            className="link-button"
             onClick={() => navigate(routes.register)}
           >
-            Sign up now
+            Register now
           </Button>
         </Typography>
       </Box>
