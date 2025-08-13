@@ -16,6 +16,7 @@ import Loader from "../../../components/Loader";
 import { useDispatch } from "react-redux";
 import { setMessage } from "../../../utils/redux/slices/commonSlice";
 import strings from "../../../constants/strings";
+import { getErrorMessage } from "../../../utils/helperFunctions";
 
 interface RegisterFormInputs {
   email: string;
@@ -64,7 +65,7 @@ const RegisterForm: React.FC = () => {
         setMessage({
           display: true,
           severity: "error",
-          message: err.response?.data.message || err,
+          message: getErrorMessage(err),
         })
       );
       setTimeout(() => navigate(routes.login), 1000);

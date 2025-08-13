@@ -28,8 +28,6 @@ axiosInstance.interceptors.response.use(
       (error.response.status === 503 || error.response.status === 502)
     ) {
       window.location.href = "#/errorPage";
-    } else if (error.response && error.response.status === 500) {
-      throw new Error(strings.somethingWentWrong);
     } else if (error.response && error?.response?.status === 403) {
       throw new Error(strings.notAuthorizedError);
     } else {

@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import { routes } from "../../../constants/routes";
 import type { AxiosError } from "axios";
 import { VisibilityOff, Visibility } from "@mui/icons-material";
+import { getErrorMessage } from "../../../utils/helperFunctions";
 
 interface LoginFormInputs {
   email: string;
@@ -51,7 +52,7 @@ const LoginForm: React.FC = () => {
         setMessage({
           display: true,
           severity: "error",
-          message: err.response?.data.message || err.message || err,
+          message: getErrorMessage(err),
         })
       );
     }

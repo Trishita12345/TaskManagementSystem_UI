@@ -12,6 +12,7 @@ import CustomAvatar from "../../components/CustomAvatar";
 import { logoutUser } from "../../utils/authHelperFunctions";
 import LogoIcon from "../../components/Logo/LogoIcon";
 import { Box } from "@mui/material";
+import { Logout } from "@mui/icons-material";
 
 const NarrowSideBar = () => {
   const theme = useSelector(getTheme);
@@ -32,28 +33,25 @@ const NarrowSideBar = () => {
           justifyContent: "space-between",
         }}
       >
-        <Box>
-          <Box pl={1.25} mb={2} sx={{ cursor: "pointer" }}>
+        <Box pl={1.2} mb={2} sx={{ cursor: "pointer" }}>
+          <Box mb={2}>
             <LogoIcon color={"white"} size={"25px"} />
           </Box>
-          <ThemeToggleSwitch />
         </Box>
-        <Box px={"6px"} sx={{ cursor: "pointer" }}>
+        <Box
+          sx={{ cursor: "pointer" }}
+          display={"flex"}
+          flexDirection={"column"}
+          alignItems={"center"}
+          gap={2}
+        >
           <CustomAvatar
             text={getNameInitials(firstname, lastname)}
             avatarImage={profileImage}
             onClick={() => {}}
           />
-          <FontAwesomeIcon
-            onClick={handleLogout}
-            icon={faArrowRightFromBracket}
-            size="xl"
-            style={{
-              cursor: "pointer",
-              paddingLeft: "8px",
-              marginTop: "18px ",
-            }}
-          />
+          <ThemeToggleSwitch />
+          <Logout onClick={handleLogout} />
         </Box>
       </Box>
     </Box>

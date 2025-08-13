@@ -29,6 +29,9 @@ export const fetchFromStorage = (key: string, session?: boolean) => {
   }
 };
 
+export const getErrorMessage = (err: any) =>
+  err.response?.data.message || err?.message || err;
+
 export const removeFromStorage = (key: string, session?: boolean) => {
   if (session) {
     sessionStorage.removeItem(key);

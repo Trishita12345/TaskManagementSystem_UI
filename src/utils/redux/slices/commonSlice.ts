@@ -23,13 +23,14 @@ const initialState = {
   theme: localStorage.getItem("theme")
     ? JSON.parse(localStorage.getItem("theme") as string)
     : {
-        primary: "#7E56DA",
+        primary: "#0c57c7",
         primaryTextColor: "#ffffff",
         secondaryColor1: "#ffffff",
         secondaryColor2: "#f7f9fcff",
         secondaryColor3: "#d3d8deff",
         inputBgColor: "#ffffff",
         secondaryContrast: "#000000ff",
+        opacity: "20",
       },
 };
 const commonSlice = createSlice({
@@ -48,24 +49,26 @@ const commonSlice = createSlice({
       if (action.payload) {
         //dark mode
         theme = {
-          primary: "#7E56DA",
+          primary: "#0c57c7",
           primaryTextColor: "#ffffff",
           secondaryColor1: "#2b2b2bff",
           secondaryColor2: "#5e5d5dff",
           secondaryColor3: "#a5a3a3ff",
           inputBgColor: "#a5a3a3ff",
           secondaryContrast: "#ffffff",
+          opacity: "90",
         };
       } else {
         //light mode
         theme = {
-          primary: "#7E56DA",
+          primary: "#0c57c7",
           primaryTextColor: "#ffffff",
           secondaryColor1: "#ffffff",
           secondaryColor2: "#f7f9fcff",
           secondaryColor3: "#d3d8deff",
           inputBgColor: "#ffffff",
           secondaryContrast: "#000000ff",
+          opacity: "20",
         };
       }
       state.theme = theme;

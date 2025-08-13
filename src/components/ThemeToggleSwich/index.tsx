@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { isDark, setIsDark } from "../../utils/redux/slices/commonSlice";
 import { styled } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
+import { Box, Button } from "@mui/material";
+import { Bedtime, WbSunny } from "@mui/icons-material";
 
 const ThemeToggleSwitch = () => {
   const dispatch = useDispatch();
@@ -64,10 +66,15 @@ const ThemeToggleSwitch = () => {
   }));
 
   return (
-    <MaterialUISwitch
-      checked={isDarkMode}
-      onClick={() => dispatch(setIsDark(!isDarkMode))}
-    />
+    // <MaterialUISwitch
+    //   checked={isDarkMode}
+    //   onClick={() => dispatch(setIsDark(!isDarkMode))}
+    // />
+    // <Button>
+    <Box onClick={() => dispatch(setIsDark(!isDarkMode))}>
+      {!isDarkMode ? <WbSunny /> : <Bedtime />}
+    </Box>
+    // </Button>
   );
 };
 

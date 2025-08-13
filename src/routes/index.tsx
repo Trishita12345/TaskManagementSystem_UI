@@ -4,7 +4,6 @@ import {
   Route,
   Routes as Switch,
   useLocation,
-  useNavigate,
 } from "react-router-dom";
 import Tasks from "../screens/Tasks";
 import Layout from "../screens/Layout";

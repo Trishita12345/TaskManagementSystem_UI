@@ -1,4 +1,4 @@
-import { Visibility, DeleteOutlineOutlined } from "@mui/icons-material";
+import { Visibility, DeleteOutlineOutlined, Add } from "@mui/icons-material";
 import {
   Container,
   Grid,
@@ -13,31 +13,41 @@ import {
   Stack,
   TableSortLabel,
   TableBody,
-  IconButton,
   Box,
+  TablePagination,
+  TextField,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import strings from "../../constants/strings";
 import { useDispatch, useSelector } from "react-redux";
 import { userDetails } from "../../utils/redux/slices/authenticationSlice";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import axiosInstance from "../../utils/axios";
 import type { AxiosError } from "axios";
 import {
+  getTheme,
   loading,
   setIsLoading,
   setMessage,
 } from "../../utils/redux/slices/commonSlice";
 import Loader from "../Loader";
-import { createPageUrl } from "../../utils/helperFunctions";
+import { createPageUrl, getErrorMessage } from "../../utils/helperFunctions";
+import { debounce } from "lodash-es";
 
+interface tableColumnProps {
+  field: string;
+  headerName: string;
+  textAlign?: "left" | "right";
+  localField?: string;
+  sortable?: boolean;
+}
 interface pageConfigProps {
   title: string;
   listPageUrl: string;
   addPrivilege: string;
   addButtonRoute: string;
   addButtonText: string;
-  tableColumn: any[];
+  tableColumn: tableColumnProps[];
   hideActionText?: boolean;
   viewPriviledge: string;
   detailsRoute: string;
@@ -54,6 +64,7 @@ interface bodyProps {
 }
 
 const ListPage = ({ pageConfig }: ListPageProps) => {
+  const theme = useSelector(getTheme);
   const { permissions } = useSelector(userDetails);
   const isLoading = useSelector(loading);
   const [pageResponse, setPageResponse] = useState<any>({});
@@ -76,14 +87,24 @@ const ListPage = ({ pageConfig }: ListPageProps) => {
     setSize(value);
   };
 
-  const handleSort = async (field: any, direction: any) => {
+  const handleSort = async (field: any) => {
+    let { direction } = sortBy;
     setSortBy({
       sortBy: field,
-      direction: direction,
+      direction: !direction,
     });
   };
 
-  const getList = async (query: string, body: bodyProps) => {
+  const getList = async (query: string) => {
+    let body: bodyProps = {
+      page: page,
+      size: size,
+      direction: sortBy.direction ? "desc" : "asc",
+    } as any;
+
+    if (sortBy.sortBy !== "") {
+      body = { ...body, sortBy: sortBy.sortBy };
+    }
     try {
       const url = createPageUrl(query, pageConfig.listPageUrl);
       dispatch(setIsLoading(true));
@@ -95,7 +116,7 @@ const ListPage = ({ pageConfig }: ListPageProps) => {
         setMessage({
           display: true,
           severity: "error",
-          message: err.response?.data.message || err,
+          message: getErrorMessage(err),
         })
       );
     } finally {
@@ -103,18 +124,19 @@ const ListPage = ({ pageConfig }: ListPageProps) => {
     }
   };
   useEffect(() => {
-    let body = {
-      page: page,
-      size: size,
-      direction: sortBy.direction ? "desc" : "asc",
-    } as any;
+    getList(query);
+  }, [page, size, sortBy]);
 
-    if (sortBy.sortBy !== "") {
-      body = { ...body, sortBy: sortBy.sortBy };
-    }
-    getList(query, body);
-  }, [query, page, size, sortBy]);
+  const debouncedSearch = useMemo(
+    () => debounce((value: string) => getList(value), 500),
+    []
+  );
 
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel(); // clean up on unmount
+    };
+  }, [debouncedSearch]);
   return (
     <>
       {isLoading && <Loader />}
@@ -122,14 +144,31 @@ const ListPage = ({ pageConfig }: ListPageProps) => {
         maxWidth={false}
         sx={{
           "&.MuiContainer-root": {
-            pl: 0,
+            pl: 1,
             pr: 0,
           },
         }}
       >
-        <Grid container spacing={1} alignItems="center">
+        <Typography variant="h5" mt={2} mb={1} fontWeight={600}>
+          {pageConfig.title}
+        </Typography>
+        <Grid
+          container
+          alignItems="center"
+          justifyContent={"space-between"}
+          mb={1}
+        >
           <Grid item>
-            <Typography>{pageConfig.title}</Typography>
+            <TextField
+              size="small"
+              placeholder={strings.filterInputText}
+              variant="outlined"
+              value={query}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setQuery(e.target.value);
+                debouncedSearch(e.target.value);
+              }}
+            />
           </Grid>
           <Grid item>
             {permissions?.includes(pageConfig.addPrivilege) && (
@@ -137,6 +176,7 @@ const ListPage = ({ pageConfig }: ListPageProps) => {
                 variant="contained"
                 onClick={() => navigate(pageConfig.addButtonRoute)}
                 sx={{ color: "#ffffff", width: "auto" }}
+                startIcon={<Add />}
               >
                 {pageConfig.addButtonText}
               </Button>
@@ -146,34 +186,28 @@ const ListPage = ({ pageConfig }: ListPageProps) => {
         {pageResponse?.content && (
           <>
             {pageResponse?.content?.length > 0 && (
-              <Paper
-                sx={{ width: "100%", overflow: "hidden", borderRadius: 0 }}
-              >
-                <TableContainer
-                  sx={{
-                    borderRadius: 0,
-                  }}
-                  component={Paper}
-                >
+              <>
+                <TableContainer component={Paper}>
                   <Table stickyHeader>
                     <TableHead
                       sx={{
                         ".MuiTableCell-root": {
-                          //   backgroundColor: theme.palette.secondary.main,
-                          //   color: theme.palette.secondary.contrastText,
-                          //   border: `1px solid ${theme.palette.secondary.main}`,
+                          backgroundColor: `${theme.primary}${theme.opacity}`,
                           height: "58px",
                           borderRadius: 0,
-                          //   ".MuiTableSortLabel-root:active, .MuiTableSortLabel-root:hover, .MuiTableSortLabel-root:focus":
-                          //     {
-                          //       color: theme.palette.secondary.contrastText,
-                          //     },
                         },
                       }}
                     >
                       <TableRow>
                         {pageConfig.tableColumn.map((column: any) => (
-                          <TableCell key={column.field}>
+                          <TableCell
+                            key={column.field}
+                            sx={{
+                              ".MuiTableSortLabel-icon": {
+                                color: `${theme.primary}!important`,
+                              },
+                            }}
+                          >
                             <Stack
                               direction={
                                 column.textAlign === "right"
@@ -190,17 +224,12 @@ const ListPage = ({ pageConfig }: ListPageProps) => {
                               >
                                 <TableSortLabel
                                   hideSortIcon={!column?.sortable}
-                                  //   active={
-                                  //     pageConfig?.sortValue?.sortBy === column?.field
-                                  //   }
+                                  active={sortBy.sortBy === column?.field}
                                   direction={sortBy.direction ? "desc" : "asc"}
                                   onClick={() =>
-                                    column?.sortable
-                                      ? handleSort(
-                                          column.localField || column.field,
-                                          sortBy.direction
-                                        )
-                                      : {}
+                                    handleSort(
+                                      column.localField || column.field
+                                    )
                                   }
                                 >
                                   <Stack
@@ -239,34 +268,17 @@ const ListPage = ({ pageConfig }: ListPageProps) => {
                         pageResponse?.content?.map((item: any) => {
                           return (
                             <TableRow key={item.id}>
-                              {pageConfig.tableColumn.map((row: any) => {
-                                return (
-                                  <>
-                                    {row.image ? (
-                                      <TableCell padding="checkbox">
-                                        {row.image && (
-                                          <img
-                                            src={item[row["field"]]}
-                                            alt=""
-                                            height="30px"
-                                            width="30px"
-                                          />
-                                        )}
-                                      </TableCell>
-                                    ) : (
-                                      <TableCell
-                                        sx={{
-                                          textAlign: "left",
-                                          whiteSpace: "nowrap",
-                                        }}
-                                        key={row.field}
-                                      >
-                                        {item[row["field"]]}
-                                      </TableCell>
-                                    )}
-                                  </>
-                                );
-                              })}
+                              {pageConfig.tableColumn.map((row: any) => (
+                                <TableCell
+                                  sx={{
+                                    textAlign: "left",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                  key={row.field}
+                                >
+                                  {item[row["field"]]}
+                                </TableCell>
+                              ))}
                               {!pageConfig.hideActionText && (
                                 <TableCell
                                   className="last-row"
@@ -320,22 +332,15 @@ const ListPage = ({ pageConfig }: ListPageProps) => {
                     </TableBody>
                   </Table>
                 </TableContainer>
-                <Grid
-                  container
-                  alignItems={"center"}
-                  justifyContent={"space-between"}
-                  pr={2}
-                >
-                  {/* <TablePaginationActions
-                count={pageResponse.totalElements}
-                rowsPerPage={size}
-                page={page}
-                onRowsPerPageChange={pageSizeChange}
-                onPageChange={handleChangePage}
-              /> */}
-                  {<Typography>Current Page: {page + 1}</Typography>}
-                </Grid>
-              </Paper>
+                <TablePagination
+                  component="div"
+                  count={pageResponse.numberOfElements}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  rowsPerPage={size}
+                  onRowsPerPageChange={pageSizeChange}
+                />
+              </>
             )}
             {pageResponse?.content?.length == 0 && (
               <Typography

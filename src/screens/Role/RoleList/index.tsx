@@ -5,18 +5,26 @@ import strings from "../../../constants/strings";
 import { urls } from "../../../constants/urls";
 
 const RoleList = () => {
+  const tableColumn = [
+    {
+      field: "name",
+      headerName: "Role Name",
+      sortable: true,
+    },
+  ];
   const pageConfig = {
     title: strings.role,
     listPageUrl: urls.rolesPage,
     addPrivilege: priviledges.add_roles,
     addButtonRoute: routes.addrole,
     addButtonText: strings.createRole,
-    tableColumn: [],
+    tableColumn: tableColumn,
     hideActionText: false,
     viewPriviledge: priviledges.view_roles,
     detailsRoute: routes.role,
-    deletePrivilege: priviledges.delete_roles,
+    deletePrivilege: "",
   };
+
   return <ListPage pageConfig={pageConfig} />;
 };
 

@@ -23,13 +23,7 @@ const Notification: FC = () => {
     if (reason === "clickaway") {
       return;
     }
-    dispatch(
-      setMessage({
-        display: false,
-        severity: "success",
-        message: "",
-      })
-    );
+    dispatch(setMessage({ ...message, display: false }));
   };
 
   return (
