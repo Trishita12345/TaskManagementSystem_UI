@@ -1,7 +1,12 @@
 import { priviledges } from "./priviledges";
 import { routes } from "./routes";
 import strings from "./strings";
-import { faGear, faTableColumns } from "@fortawesome/free-solid-svg-icons";
+import {
+  faGear,
+  faTableColumns,
+  faUser,
+  faDiagramProject,
+} from "@fortawesome/free-solid-svg-icons";
 
 export const sidebarItemsList = [
   {
@@ -13,9 +18,23 @@ export const sidebarItemsList = [
   },
   {
     id: 2,
-    name: strings.manageEmployees,
+    name: strings.projectSetting,
     icon: faGear,
+    route: routes.projectSettings,
+    priviledge: priviledges.view_project,
+  },
+  {
+    id: 3,
+    name: strings.manageEmployees,
+    icon: faUser,
     route: routes.manageEmployees,
-    priviledge: priviledges.view_manage_employees,
+    priviledge: priviledges.view_employees,
+  },
+  {
+    id: 1,
+    name: strings.role,
+    icon: faDiagramProject,
+    route: routes.roleList,
+    priviledge: priviledges.view_roles,
   },
 ];

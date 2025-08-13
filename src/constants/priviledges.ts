@@ -1,5 +1,4 @@
 export const priviledges = {
-  view_manage_employees: "VIEW_MANAGE_EMPLOYEES",
   view_task: "VIEW_TASKS",
   add_task: "ADD_TASKS",
   edit_task: "EDIT_TASKS",
@@ -8,4 +7,10 @@ export const priviledges = {
   add_project: "ADD_PROJECTS",
   edit_project: "EDIT_PROJECTS",
   delete_project: "DELETE_PROJECTS",
+  view_roles: "VIEW_ROLES",
+  add_roles: "ADD_ROLES",
+  edit_roles: "EDIT_ROLES",
+  delete_roles: "DELETE_ROLES",
+  view_employees: "VIEW_EMPLOYEES",
+  assign_role: "ASSIGN_ROLE",
 };

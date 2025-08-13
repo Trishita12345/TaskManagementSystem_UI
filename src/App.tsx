@@ -2,7 +2,7 @@ import "./App.css";
 import { useSelector } from "react-redux";
 import Routes from "./routes/index.js";
 import { BrowserRouter as Router } from "react-router-dom";
-import { createTheme, ThemeProvider } from "@mui/material";
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { getTheme, isDark } from "./utils/redux/slices/commonSlice.js";
 
 function App() {
@@ -21,6 +21,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline /> {/* resets styles for consistency */}
       <Router>
         <Routes />
       </Router>

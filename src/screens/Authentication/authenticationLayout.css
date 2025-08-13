@@ -1,34 +1,9 @@
 #auth-container {
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#auth-sub-container {
-  width: 90%;
-  height: 90%;
-  border-radius: 4px;
-  background-color: white;
-}
-
-#left-container {
-  border-radius: 4px;
-  padding: 20px;
 }
 
 #left-sub-container {
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#right-container {
-  border-radius: 0px 4px 0px 0px;
-  height: 100%;
-  background-color: var(--primary-color-opacityXS);
-}
-.authFormHandle {
-  width: 320px !important;
+  padding: 0 50px;
+  padding-top: 50px;
 }

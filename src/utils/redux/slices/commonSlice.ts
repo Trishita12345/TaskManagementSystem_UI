@@ -10,13 +10,6 @@ interface AppState {
     message: string;
   };
   theme: any;
-  // {
-  //   primary: string;
-  //   primaryTextColor: string;
-  //   secondary: string;
-  //   secondaryTextColor: string;
-  //   logoBackgroundColor: string;
-  // };
 }
 
 const initialState = {
@@ -30,10 +23,10 @@ const initialState = {
   theme: localStorage.getItem("theme")
     ? JSON.parse(localStorage.getItem("theme") as string)
     : {
-        primary: "#7b23ff",
+        primary: "#7E56DA",
         primaryTextColor: "#ffffff",
         secondaryColor1: "#ffffff",
-        secondaryColor2: "#e8edf2ff",
+        secondaryColor2: "#f7f9fcff",
         secondaryColor3: "#d3d8deff",
         inputBgColor: "#ffffff",
         secondaryContrast: "#000000ff",
@@ -55,7 +48,7 @@ const commonSlice = createSlice({
       if (action.payload) {
         //dark mode
         theme = {
-          primary: "#7b23ff",
+          primary: "#7E56DA",
           primaryTextColor: "#ffffff",
           secondaryColor1: "#2b2b2bff",
           secondaryColor2: "#5e5d5dff",
@@ -66,10 +59,10 @@ const commonSlice = createSlice({
       } else {
         //light mode
         theme = {
-          primary: "#7b23ff",
+          primary: "#7E56DA",
           primaryTextColor: "#ffffff",
           secondaryColor1: "#ffffff",
-          secondaryColor2: "#e8edf2ff",
+          secondaryColor2: "#f7f9fcff",
           secondaryColor3: "#d3d8deff",
           inputBgColor: "#ffffff",
           secondaryContrast: "#000000ff",
@@ -91,3 +84,5 @@ export const getTheme = (state: { commonSlice: AppState }) =>
 
 export const notificationMessage = (state: { commonSlice: AppState }) =>
   state.commonSlice.message;
+export const loading = (state: { commonSlice: AppState }) =>
+  state.commonSlice.isLoading;

@@ -39,6 +39,12 @@ const strings = {
   clearAll: "Clear All",
   somethingWentWrong: "Something went wrong",
   notAuthorizedError: "You are not authorized to access this feature",
+  action_text: "Actions",
+  no_data_available: "No Data Available",
+  projectSetting: "Project Settings",
+  page_not_found_desc_text: "Sorry, The page you're looking for doesn't exist",
+  role: "Roles",
+  createRole: "create role",
 };
 
 export default strings;

@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector } from "react-redux";
 import { getTheme } from "../../utils/redux/slices/commonSlice";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
 import { userDetails } from "../../utils/redux/slices/authenticationSlice";
 
@@ -17,6 +17,7 @@ type propType = {
 
 const SideBarItem = ({ item }: propType) => {
   let location = useLocation();
+  let navigate = useNavigate();
   const theme = useSelector(getTheme);
   const { permissions } = useSelector(userDetails);
   const sx =
@@ -28,7 +29,7 @@ const SideBarItem = ({ item }: propType) => {
   return (
     <>
       {permissions.includes(item.priviledge) ? (
-        <Box id="sidebar-item" sx={sx}>
+        <Box id="sidebar-item" sx={sx} onClick={() => navigate(item.route)}>
           <div
             id="sidebar-text"
             style={{
@@ -36,7 +37,6 @@ const SideBarItem = ({ item }: propType) => {
             }}
           >
             <FontAwesomeIcon
-              onClick={() => {}}
               icon={item.icon}
               size="lg"
               style={{ cursor: "pointer", padding: "4px" }}

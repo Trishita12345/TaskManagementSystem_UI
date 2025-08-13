@@ -4,6 +4,7 @@ import {
   Route,
   Routes as Switch,
   useLocation,
+  useNavigate,
 } from "react-router-dom";
 import Tasks from "../screens/Tasks";
 import Layout from "../screens/Layout";
@@ -12,10 +13,12 @@ import { isAuthenticated } from "../utils/redux/slices/authenticationSlice";
 import { routes } from "../constants/routes";
 import Register from "../screens/Authentication/Register";
 import Notification from "../components/Notification";
+import PageNotFound from "../components/PageNotFound";
+import RoleList from "../screens/Role/RoleList";
 
 const Root = () => {
   let location = useLocation();
-  const isLoggedIn = !useSelector(isAuthenticated);
+  const isLoggedIn = useSelector(isAuthenticated);
   const { from } = location.state || { from: { pathname: routes.myBoard } };
   return isLoggedIn ? <Navigate to={from} /> : <Navigate to={routes.login} />;
 };
@@ -45,6 +48,15 @@ const Routes = () => {
             </AuthenticatedScreens>
           }
         />
+        <Route
+          path={routes.roleList}
+          element={
+            <AuthenticatedScreens>
+              <RoleList />
+            </AuthenticatedScreens>
+          }
+        />
+        <Route path="*" element={<PageNotFound />} />
       </Switch>
     </>
   );

@@ -78,11 +78,9 @@ const RegisterForm: React.FC = () => {
         component="form"
         onSubmit={handleSubmit(onSubmit)}
         sx={{
-          maxWidth: 350,
-          mx: "auto",
           display: "flex",
           flexDirection: "column",
-          gap: 2,
+          gap: 1,
           mt: 4,
         }}
       >
@@ -90,7 +88,7 @@ const RegisterForm: React.FC = () => {
           className="authFormHandle"
           size="small"
           label="First Name"
-          variant="standard"
+          variant="outlined"
           {...register("firstname", {
             required: "First name is required",
             maxLength: {
@@ -106,7 +104,7 @@ const RegisterForm: React.FC = () => {
           className="authFormHandle"
           size="small"
           label="Last Name"
-          variant="standard"
+          variant="outlined"
           {...register("lastname", {
             required: "Last name is required",
             maxLength: {
@@ -119,7 +117,7 @@ const RegisterForm: React.FC = () => {
           fullWidth
         />
         <TextField
-          variant="standard"
+          variant="outlined"
           className="authFormHandle"
           size="small"
           label="Email Id"
@@ -136,7 +134,7 @@ const RegisterForm: React.FC = () => {
         />
 
         <TextField
-          variant="standard"
+          variant="outlined"
           className="authFormHandle"
           size="small"
           label="Password"
@@ -158,7 +156,7 @@ const RegisterForm: React.FC = () => {
           className="authFormHandle"
           size="small"
           label="Confirm Password"
-          variant="standard"
+          variant="outlined"
           {...register("confirmPassword", {
             required: "confirmPassword is required",
           })}
@@ -170,7 +168,7 @@ const RegisterForm: React.FC = () => {
           fullWidth
         />
         <TextField
-          variant="standard"
+          variant="outlined"
           className="authFormHandle"
           size="small"
           label="Profile Image URL"
@@ -186,7 +184,7 @@ const RegisterForm: React.FC = () => {
             <FormControlLabel
               sx={{
                 alignItems: "flex-start", // align to top
-                mt: "12px", // remove margin
+                // mt: "12px", // remove margin
                 "& .MuiCheckbox-root": {
                   py: 0, // remove checkbox padding
                   pt: "2px",
@@ -198,6 +196,7 @@ const RegisterForm: React.FC = () => {
           )}
         />
         <Button
+          sx={{ mt: "32px" }}
           type="submit"
           variant="contained"
           color="primary"

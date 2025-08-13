@@ -38,8 +38,9 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }: propType) => {
   return (
     <Box
       id="sidebar"
-      style={{
+      sx={{
         backgroundColor: theme.secondaryColor2,
+        borderRight: `1px solid ${theme.secondaryColor3}`,
       }}
     >
       <Hamburger

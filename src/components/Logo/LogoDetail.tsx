@@ -1,11 +1,10 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCube } from "@fortawesome/free-solid-svg-icons";
 import strings from "../../constants/strings";
+import LogoIcon from "./LogoIcon";
 
 const Logo = ({ color }: { color?: string }) => {
   return (
     <div id="logo" style={{ color: color || "black" }}>
-      <FontAwesomeIcon icon={faCube} size="lg" className="icon" />
+      <LogoIcon color={color} size={"25px"} />
       <div id="logoText" style={{ fontWeight: 400 }}>
         {strings.logoText}
       </div>

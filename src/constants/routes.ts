@@ -6,4 +6,8 @@ export const routes = {
   tasks: "/tasks",
   login: "/login",
   register: "/user-register",
+  projectSettings: "/project",
+  roleList: "/roles",
+  addrole: "/add-roles",
+  role: "/role",
 };

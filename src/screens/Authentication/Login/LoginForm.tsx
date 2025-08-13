@@ -51,7 +51,7 @@ const LoginForm: React.FC = () => {
         setMessage({
           display: true,
           severity: "error",
-          message: err.response?.data.message || err,
+          message: err.response?.data.message || err.message || err,
         })
       );
     }
@@ -64,16 +64,15 @@ const LoginForm: React.FC = () => {
         component="form"
         onSubmit={handleSubmit(onSubmit)}
         sx={{
-          maxWidth: 350,
-          mx: "auto",
+          width: "100%",
           display: "flex",
           flexDirection: "column",
           gap: 2,
-          mt: 4,
+          mt: 8,
         }}
       >
         <TextField
-          variant="standard"
+          variant="outlined"
           className="authFormHandle"
           size="small"
           label="Email Id"
@@ -90,7 +89,7 @@ const LoginForm: React.FC = () => {
         />
 
         <TextField
-          variant="standard"
+          variant="outlined"
           className="authFormHandle"
           size="small"
           label="Password"
@@ -118,6 +117,7 @@ const LoginForm: React.FC = () => {
         />
 
         <Button
+          sx={{ mt: "16px" }}
           type="submit"
           variant="contained"
           color="primary"

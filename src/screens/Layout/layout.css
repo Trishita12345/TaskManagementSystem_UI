@@ -64,17 +64,6 @@
   left: 52px;
 }
 
-.icon,
-#logoText {
-  padding: 4px;
-  font-size: 16px;
-}
-#logo {
-  display: flex;
-  gap: 2;
-  cursor: pointer;
-  align-items: center;
-}
 #sidebar-item {
   padding: 8px 12px;
   width: 275px;
@@ -100,12 +89,4 @@
   width: 50px;
   color: white;
   height: 100%;
-}
-
-#narrow-sidebar-item {
-  margin: 8px 12px;
-}
-
-#narrow-sidebar-item:hover {
-  cursor: pointer;
 }
