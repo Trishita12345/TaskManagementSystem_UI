@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchFromStorage, saveToStorage } from "../../helperFunctions";
+import {
+  fetchFromStorage,
+  saveToStorage,
+} from "../../helperFunctions/storageHelperFunctions";
 import Cookies from "js-cookie";
 
 interface AppState {

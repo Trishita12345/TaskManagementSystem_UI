@@ -8,6 +8,5 @@ export const routes = {
   register: "/user-register",
   projectSettings: "/project",
   roleList: "/roles",
-  addrole: "/add-roles",
   role: "/role",
 };

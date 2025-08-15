@@ -1,7 +1,7 @@
 import Axios from "axios";
 import strings from "../../constants/strings";
 import { urls } from "../../constants/urls";
-import { refreshToken } from "../authHelperFunctions";
+import { refreshToken } from "../helperFunctions/authHelperFunctions";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 

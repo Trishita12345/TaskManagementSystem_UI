@@ -5,15 +5,15 @@ import {
   Routes as Switch,
   useLocation,
 } from "react-router-dom";
-import Tasks from "../screens/Tasks";
-import Layout from "../screens/Layout";
-import Login from "../screens/Authentication/Login";
+import Tasks from "../pages/Tasks";
+import Login from "../pages/Authentication/Login";
 import { isAuthenticated } from "../utils/redux/slices/authenticationSlice";
 import { routes } from "../constants/routes";
-import Register from "../screens/Authentication/Register";
+import Register from "../pages/Authentication/Register";
 import Notification from "../components/Notification";
-import PageNotFound from "../components/PageNotFound";
-import RoleList from "../screens/Role/RoleList";
+import PageNotFound from "../pages/PageNotFound";
+import RoleList from "../pages/Role/RoleList";
+import AuthenticatedLayout from "../components/AuthenticatedLayout";
 
 const Root = () => {
   let location = useLocation();
@@ -26,7 +26,7 @@ const AuthenticatedScreens = ({ children }: { children: React.ReactNode }) => {
   const isLoggedIn = useSelector(isAuthenticated);
 
   if (isLoggedIn) {
-    return <Layout>{children}</Layout>;
+    return <AuthenticatedLayout>{children}</AuthenticatedLayout>;
   } else {
     return <Navigate to={routes.login} />;
   }
