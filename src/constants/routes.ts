@@ -9,4 +9,5 @@ export const routes = {
   projectSettings: "/project",
   roleList: "/roles",
   role: "/role",
+  employee: "/employee",
 };

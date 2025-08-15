@@ -15,6 +15,7 @@ import PageNotFound from "../pages/PageNotFound";
 import RoleList from "../pages/Role/RoleList";
 import AuthenticatedLayout from "../components/AuthenticatedLayout";
 import RoleDetails from "../pages/Role/RoleDetails";
+import ManageEmployeesList from "../pages/ManageEmployees/ManageEmployeesList";
 
 const Root = () => {
   let location = useLocation();
@@ -72,6 +73,15 @@ const Routes = () => {
             </AuthenticatedScreens>
           }
         />
+        <Route
+          path={routes.manageEmployees}
+          element={
+            <AuthenticatedScreens>
+              <ManageEmployeesList />
+            </AuthenticatedScreens>
+          }
+        />
+        manageEmployees
         <Route path="*" element={<PageNotFound />} />
       </Switch>
     </>

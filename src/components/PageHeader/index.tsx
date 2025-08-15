@@ -8,7 +8,12 @@ interface propType {
   showDivider?: boolean;
   setIsEditMode?: any;
 }
-const PageHeader = ({ showBackIcon, showDivider, setIsEditMode }: propType) => {
+const PageHeader = ({
+  label,
+  showBackIcon,
+  showDivider,
+  setIsEditMode,
+}: propType) => {
   const navigate = useNavigate();
   return (
     <>
@@ -20,7 +25,7 @@ const PageHeader = ({ showBackIcon, showDivider, setIsEditMode }: propType) => {
       >
         <Box display={"flex"} alignItems={"center"} gap={1}>
           <Typography variant="h5" fontWeight={600} letterSpacing={0.7}>
-            Role Details
+            {label}
           </Typography>
           {setIsEditMode && (
             <IconButton

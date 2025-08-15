@@ -8,4 +8,5 @@ export const urls = {
   getAllPermissions: "/authenticated/admin/get-permissions",
   getRoleDetailsById: (id: string) => `/authenticated/admin/get-role/${id}`,
   updateRole: (id: string) => `/authenticated/admin/update-role/${id}`,
+  getEmployessPage: "/authenticated/admin/get-employees/page",
 };

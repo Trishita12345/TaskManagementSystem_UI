@@ -19,7 +19,7 @@ export interface pageConfigProps {
 }
 export interface ListPageProps {
   pageConfig: pageConfigProps;
-  addConfig: addConfigProps;
+  addConfig?: addConfigProps;
 }
 export interface addConfigProps {
   addModalOpen: boolean;

@@ -1,8 +1,7 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getTheme, setMessage } from "../../../utils/redux/slices/commonSlice";
-import PageHeader from "../../../components/PageHeader";
+import { setMessage } from "../../../utils/redux/slices/commonSlice";
 import { useEffect, useState } from "react";
 import {
   fetchAllPermissions,
@@ -19,11 +18,11 @@ import PermissionsComponent from "../PermissionsComponent/PermissionsComponent";
 import { userDetails } from "../../../utils/redux/slices/authenticationSlice";
 import { priviledges } from "../../../constants/priviledges";
 import type { AddEditRoleFormInputs } from "../../../constants/types";
+import ViewDetailsPage from "../../../components/ViewDetailsPage";
 
 const RoleDetails = () => {
-  const theme = useSelector(getTheme);
   const { permissions, role } = useSelector(userDetails);
-  const { height, width } = useScreenSize();
+  const { width } = useScreenSize();
   const { id } = useParams();
   const dispatch = useDispatch();
   const [roleDetails, setRoleDetails] = useState<AddEditRoleFormInputs>({
@@ -102,27 +101,13 @@ const RoleDetails = () => {
     }
   };
   return (
-    <Box m={1.5} height={`${height - 85}px`} sx={{ overflow: "scroll" }}>
-      <PageHeader
-        label={"Role Details"}
-        showBackIcon
-        showDivider
-        setIsEditMode={
-          isEditPermission && !isEditMode ? setIsEditMode : undefined
-        }
-      />
-      {!isEditPermission && (
-        <Typography color={"red"} pt={1}>
-          {!permissions.includes(priviledges.edit_roles) ? (
-            <i>
-              *You donot have permission to update the role. Please conatct with
-              admin for more details.*
-            </i>
-          ) : (
-            <i>*You cannot update your own role*</i>
-          )}
-        </Typography>
-      )}
+    <ViewDetailsPage
+      isEditPermission={isEditPermission}
+      isEditMode={isEditMode}
+      setIsEditMode={setIsEditMode}
+      handleCancel={handleCancel}
+      updateRole={updateRole}
+    >
       <TextField
         disabled={!(isEditMode && isEditPermission)}
         sx={{ width: width > 750 ? "40%" : "100%", mt: "24px", mb: "12px" }}
@@ -139,33 +124,7 @@ const RoleDetails = () => {
         selectedPermissions={selectedPermissions}
         setSelectedPermissions={setSelectedPermissions}
       />
-      {isEditMode && isEditPermission && (
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-            position: "fixed",
-            bottom: 0,
-            left: -2,
-            paddingX: "16px",
-            height: "55px",
-            justifyContent: "end",
-            backgroundColor: theme.secondaryColor2,
-            boxShadow: `0px -11px 14px 1px ${theme.secondaryColor2}20`,
-            borderTop: `1px solid ${theme.secondaryColor3}`,
-            width: "100%",
-          }}
-        >
-          <Button variant="outlined" onClick={handleCancel}>
-            Cancel
-          </Button>
-          <Button variant="contained" onClick={updateRole}>
-            Update
-          </Button>
-        </Box>
-      )}
-    </Box>
+    </ViewDetailsPage>
   );
 };
 

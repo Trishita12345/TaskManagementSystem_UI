@@ -31,7 +31,7 @@ import { getPaginatedList } from "../../utils/services/getListService";
 import PageHeader from "../PageHeader";
 
 const ListPage = ({ pageConfig, addConfig }: ListPageProps) => {
-  const { AddComponent } = addConfig;
+  const AddComponent = addConfig?.AddComponent;
   const { permissions } = useSelector(userDetails);
   const isLoading = useSelector(loading);
   const [pageResponse, setPageResponse] = useState<any>({});
@@ -142,7 +142,7 @@ const ListPage = ({ pageConfig, addConfig }: ListPageProps) => {
             {permissions?.includes(pageConfig.addPrivilege) && (
               <Button
                 variant="contained"
-                onClick={() => addConfig.setAddModalOpen(true)}
+                onClick={() => addConfig && addConfig.setAddModalOpen(true)}
                 sx={{ color: "#ffffff", width: "auto" }}
                 startIcon={<Add />}
               >
@@ -164,7 +164,7 @@ const ListPage = ({ pageConfig, addConfig }: ListPageProps) => {
             pageSizeChange={pageSizeChange}
           />
         )}
-        {addConfig.addModalOpen && (
+        {addConfig && addConfig.addModalOpen && (
           <Modal open={addConfig.addModalOpen}>
             <Box
               sx={{

@@ -25,7 +25,7 @@ const AuthenticatedLayout = ({ children }: { children: React.ReactNode }) => {
       <div style={{ display: "flex" }}>
         <div
           style={{
-            width: isSidebarOpen && width > smallDevice ? `280px` : "70px",
+            width: isSidebarOpen && width > smallDevice ? `310px` : "70px",
           }}
         ></div>
         <NarrowSideBar />
@@ -34,7 +34,7 @@ const AuthenticatedLayout = ({ children }: { children: React.ReactNode }) => {
             margin: "8px",
             width:
               isSidebarOpen && width > smallDevice
-                ? `${width - 280}px`
+                ? `${width - 310}px`
                 : `${width - 80}px`,
           }}
         >
