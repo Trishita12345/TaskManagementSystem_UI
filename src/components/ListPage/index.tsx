@@ -30,6 +30,7 @@ import ListTableBody from "./ListTableBody";
 import { getPaginatedList } from "../../utils/services/getListService";
 
 const ListPage = ({ pageConfig, addConfig }: ListPageProps) => {
+  const { AddComponent } = addConfig;
   const { permissions } = useSelector(userDetails);
   const isLoading = useSelector(loading);
   const [pageResponse, setPageResponse] = useState<any>({});
@@ -58,8 +59,7 @@ const ListPage = ({ pageConfig, addConfig }: ListPageProps) => {
       direction: !direction,
     });
   };
-
-  const getList = async (query: string) => {
+  const getList = async (queryVal: string) => {
     let body: pageBodyProps = {
       page: page,
       size: size,
@@ -72,7 +72,7 @@ const ListPage = ({ pageConfig, addConfig }: ListPageProps) => {
     try {
       dispatch(setIsLoading(true));
       const { data } = await getPaginatedList(
-        query,
+        queryVal || query,
         pageConfig.listPageUrl,
         body
       );
@@ -174,10 +174,13 @@ const ListPage = ({ pageConfig, addConfig }: ListPageProps) => {
                 width: 400,
                 bgcolor: "background.paper",
                 boxShadow: 24,
-                p: 4,
+                p: "24px 20px",
               }}
             >
-              {addConfig.addComponent}
+              <AddComponent
+                setAddModalOpen={addConfig.setAddModalOpen}
+                onSuccess={getList}
+              />
             </Box>
           </Modal>
         )}

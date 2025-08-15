@@ -197,7 +197,7 @@ const RegisterForm: React.FC = () => {
           color="primary"
           disabled={!isChecked || isSubmitting}
         >
-          {isSubmitting ? "Saving in..." : "Register"}
+          {"Register"}
         </Button>
       </Box>
     </>

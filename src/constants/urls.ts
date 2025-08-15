@@ -4,4 +4,5 @@ export const urls = {
   refreshToken: "/refresh-token",
   register: "/auth/user-register",
   rolesPage: "/authenticated/admin/get-roles/page",
+  addRole: "/authenticated/admin/add-role",
 };

@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import type React from "react";
 
 export interface tableColumnProps {
@@ -26,7 +27,7 @@ export interface ListPageProps {
 export interface addConfigProps {
   addModalOpen: boolean;
   setAddModalOpen: (val: boolean) => void;
-  addComponent: React.ReactElement;
+  AddComponent: any;
 }
 export interface pageBodyProps {
   page: number;
@@ -60,4 +61,10 @@ export interface RegisterFormProps {
 export interface LoginFormInputs {
   email: string;
   password: string;
+}
+export interface AddRoleFormInputs {
+  name: string;
+}
+export interface AddEditRoleFormInputs extends AddRoleFormInputs {
+  permissions: string[];
 }

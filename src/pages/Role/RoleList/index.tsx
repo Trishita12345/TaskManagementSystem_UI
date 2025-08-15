@@ -30,9 +30,10 @@ const RoleList = () => {
   const addConfig = {
     addModalOpen: addModalOpen,
     setAddModalOpen: setAddModalOpen,
-    addComponent: <AddRole setAddModalOpen={setAddModalOpen} />,
+    AddComponent: AddRole,
   };
 
+  console.log("render");
   return <ListPage pageConfig={pageConfig} addConfig={addConfig} />;
 };
 

@@ -3,7 +3,7 @@ import strings from "../../constants/strings";
 import { urls } from "../../constants/urls";
 import { refreshToken } from "../helperFunctions/authHelperFunctions";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const axiosInstance = Axios.create({
   baseURL: API_BASE_URL,

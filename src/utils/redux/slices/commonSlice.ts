@@ -7,7 +7,7 @@ interface AppState {
   message: {
     display: boolean;
     severity: AlertColor;
-    message: string;
+    message: React.ReactNode;
   };
   theme: any;
 }
