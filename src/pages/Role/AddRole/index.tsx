@@ -6,7 +6,6 @@ import Loader from "../../../components/Loader";
 import { getErrorMessage } from "../../../utils/helperFunctions/commonHelperFunctions";
 import { setMessage } from "../../../utils/redux/slices/commonSlice";
 import type { AddRoleFormInputs } from "../../../constants/types";
-import { ClearOutlined } from "@mui/icons-material";
 import { addRole } from "../../../utils/services/roleService";
 import { routes } from "../../../constants/routes";
 import { Link } from "react-router-dom";
@@ -33,6 +32,7 @@ const AddRole = ({ setAddModalOpen, onSuccess }: AddProps) => {
         setMessage({
           display: true,
           severity: "success",
+          duration: 5000,
           message: (
             <Typography>
               Role Added Successfully.{" "}
@@ -61,70 +61,58 @@ const AddRole = ({ setAddModalOpen, onSuccess }: AddProps) => {
   };
 
   return (
-    <Box>
+    <>
+      {isSubmitting && <Loader />}
       <Box
-        display={"flex"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
+        component="form"
+        onSubmit={handleSubmit(onSubmit)}
+        sx={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          mt: 4,
+        }}
       >
-        <Typography variant="h5" fontWeight={600}>
-          Create Role
-        </Typography>
-        <ClearOutlined />
-      </Box>
-      <>
-        {isSubmitting && <Loader />}
-        <Box
-          component="form"
-          onSubmit={handleSubmit(onSubmit)}
-          sx={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            gap: 2,
-            mt: 4,
-          }}
-        >
-          <TextField
-            variant="outlined"
-            className="authFormHandle"
-            size="small"
-            label="Role Name"
-            {...register("name", {
-              required: "Role name is required",
-            })}
-            error={!!errors.name}
-            helperText={errors.name?.message}
-            fullWidth
-          />
-          <Grid container sx={{ mt: "16px" }} spacing={1}>
-            <Grid item xs={12} md={6}>
-              <Button
-                fullWidth
-                type="button"
-                variant="outlined"
-                color="primary"
-                disabled={isSubmitting}
-                onClick={() => reset()}
-              >
-                Reset
-              </Button>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Button
-                fullWidth
-                type="submit"
-                variant="contained"
-                color="primary"
-                disabled={isSubmitting}
-              >
-                Add
-              </Button>
-            </Grid>
+        <TextField
+          variant="outlined"
+          className="authFormHandle"
+          size="small"
+          label="Role Name"
+          {...register("name", {
+            required: "Role name is required",
+          })}
+          error={!!errors.name}
+          helperText={errors.name?.message}
+          fullWidth
+        />
+        <Grid container sx={{ mt: "16px" }} spacing={1}>
+          <Grid item xs={12} md={6}>
+            <Button
+              fullWidth
+              type="button"
+              variant="outlined"
+              color="primary"
+              disabled={isSubmitting}
+              onClick={() => reset()}
+            >
+              Reset
+            </Button>
           </Grid>
-        </Box>
-      </>
-    </Box>
+          <Grid item xs={12} md={6}>
+            <Button
+              fullWidth
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={isSubmitting}
+            >
+              Add
+            </Button>
+          </Grid>
+        </Grid>
+      </Box>
+    </>
   );
 };
 

@@ -25,11 +25,12 @@ const RoleList = () => {
     viewPriviledge: priviledges.view_roles,
     detailsRoute: routes.role,
     deletePrivilege: "",
-    keyElement: "roleId",
+    idColumn: "roleId",
   };
   const addConfig = {
     addModalOpen: addModalOpen,
     setAddModalOpen: setAddModalOpen,
+    headerText: "Create Role",
     AddComponent: AddRole,
   };
 

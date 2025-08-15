@@ -8,6 +8,7 @@ interface AppState {
     display: boolean;
     severity: AlertColor;
     message: React.ReactNode;
+    duration?: number;
   };
   theme: any;
 }

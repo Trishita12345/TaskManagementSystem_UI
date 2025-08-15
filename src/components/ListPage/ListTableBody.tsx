@@ -112,7 +112,7 @@ const ListTableBody = ({
                 {pageResponse?.content?.length > 0 &&
                   pageResponse?.content?.map((item: any) => {
                     return (
-                      <TableRow key={item[pageConfig.keyElement]}>
+                      <TableRow key={item[pageConfig.idColumn]}>
                         {pageConfig.tableColumn.map((row: any) => (
                           <TableCell
                             sx={{
@@ -146,7 +146,11 @@ const ListTableBody = ({
                               ) && (
                                 <Box
                                   onClick={() =>
-                                    navigate(pageConfig.detailsRoute)
+                                    navigate(
+                                      `${pageConfig.detailsRoute}/${
+                                        item[pageConfig.idColumn]
+                                      }`
+                                    )
                                   }
                                 >
                                   <Visibility
@@ -158,10 +162,7 @@ const ListTableBody = ({
                               {usePermissions?.includes(
                                 pageConfig.deletePrivilege
                               ) && (
-                                <Box
-                                  sx={{ p: 0, pr: 2 }}
-                                  onClick={() => delete item.id}
-                                >
+                                <Box sx={{ p: 0, pr: 2 }} onClick={() => {}}>
                                   <DeleteOutlineOutlined
                                     fontSize="small"
                                     color="primary"

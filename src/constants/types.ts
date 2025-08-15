@@ -1,6 +1,3 @@
-import type { JSX } from "react";
-import type React from "react";
-
 export interface tableColumnProps {
   field: string;
   headerName: string;
@@ -18,7 +15,7 @@ export interface pageConfigProps {
   viewPriviledge: string;
   detailsRoute: string;
   deletePrivilege: string;
-  keyElement: string;
+  idColumn: string;
 }
 export interface ListPageProps {
   pageConfig: pageConfigProps;
@@ -28,6 +25,7 @@ export interface addConfigProps {
   addModalOpen: boolean;
   setAddModalOpen: (val: boolean) => void;
   AddComponent: any;
+  headerText: string;
 }
 export interface pageBodyProps {
   page: number;

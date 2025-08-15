@@ -33,7 +33,7 @@ const Notification: FC = () => {
         horizontal: "center",
       }}
       open={message.display}
-      autoHideDuration={2000}
+      autoHideDuration={message.duration || 2000}
       onClose={handleClose}
       onClick={handleClose}
       sx={{ whiteSpace: "break-spaces" }}

@@ -1,4 +1,4 @@
-import { Add } from "@mui/icons-material";
+import { Add, ClearOutlined } from "@mui/icons-material";
 import {
   Container,
   Grid,
@@ -177,6 +177,19 @@ const ListPage = ({ pageConfig, addConfig }: ListPageProps) => {
                 p: "24px 20px",
               }}
             >
+              <Box
+                display={"flex"}
+                justifyContent={"space-between"}
+                alignItems={"center"}
+              >
+                <Typography variant="h5" fontWeight={600}>
+                  {addConfig.headerText}
+                </Typography>
+                <ClearOutlined
+                  onClick={() => addConfig.setAddModalOpen(false)}
+                  sx={{ cursor: "pointer" }}
+                />
+              </Box>
               <AddComponent
                 setAddModalOpen={addConfig.setAddModalOpen}
                 onSuccess={getList}
