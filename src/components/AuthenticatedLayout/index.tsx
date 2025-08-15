@@ -1,19 +1,24 @@
 import "./authenticatedLayout.css";
 import Sidebar from "./Sidebar";
 import useScreenSize from "../../utils/customHooks/useScreenSize";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { smallDevice } from "../../constants/data";
 import NarrowSideBar from "./NarrowSideBar";
 import { Box } from "@mui/material";
-import { useSelector } from "react-redux";
-import { getTheme } from "../../utils/redux/slices/commonSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getTheme,
+  setIsSidebarOpen,
+  sidebarOpen,
+} from "../../utils/redux/slices/commonSlice";
 
 const AuthenticatedLayout = ({ children }: { children: React.ReactNode }) => {
+  const dispatch = useDispatch();
+  const isSidebarOpen = useSelector(sidebarOpen);
   const theme = useSelector(getTheme);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { width } = useScreenSize();
   useEffect(() => {
-    if (width < smallDevice) setIsSidebarOpen(false);
+    if (width < smallDevice) dispatch(setIsSidebarOpen(false));
   }, [width]);
   return (
     <Box sx={{ minHeight: "100vh", backgroundColor: theme.secondaryColor1 }}>
@@ -38,16 +43,10 @@ const AuthenticatedLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
       {width <= smallDevice && isSidebarOpen ? (
         <div id={"sidebar-overlay"}>
-          <Sidebar
-            isSidebarOpen={isSidebarOpen}
-            setIsSidebarOpen={setIsSidebarOpen}
-          />
+          <Sidebar />
         </div>
       ) : (
-        <Sidebar
-          isSidebarOpen={isSidebarOpen}
-          setIsSidebarOpen={setIsSidebarOpen}
-        />
+        <Sidebar />
       )}
     </Box>
   );

@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 interface AppState {
   isLoading: boolean;
   isDark: boolean;
+  isSidebarOpen: boolean;
   message: {
     display: boolean;
     severity: AlertColor;
@@ -16,6 +17,7 @@ interface AppState {
 const initialState = {
   isLoading: false,
   isDark: localStorage.getItem("isDark") === "true" ? true : false,
+  isSidebarOpen: true,
   message: {
     display: false,
     severity: "success",
@@ -40,6 +42,9 @@ const commonSlice = createSlice({
   reducers: {
     setIsLoading(state, action) {
       state.isLoading = action.payload;
+    },
+    setIsSidebarOpen(state, action) {
+      state.isSidebarOpen = action.payload;
     },
     setMessage(state, action) {
       state.message = action.payload;
@@ -79,7 +84,8 @@ const commonSlice = createSlice({
   },
 });
 
-export const { setIsLoading, setMessage, setIsDark } = commonSlice.actions;
+export const { setIsLoading, setMessage, setIsDark, setIsSidebarOpen } =
+  commonSlice.actions;
 export default commonSlice.reducer;
 export const isDark = (state: { commonSlice: AppState }) =>
   state.commonSlice.isDark;
@@ -90,3 +96,6 @@ export const notificationMessage = (state: { commonSlice: AppState }) =>
   state.commonSlice.message;
 export const loading = (state: { commonSlice: AppState }) =>
   state.commonSlice.isLoading;
+
+export const sidebarOpen = (state: { commonSlice: AppState }) =>
+  state.commonSlice.isSidebarOpen;

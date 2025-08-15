@@ -66,3 +66,13 @@ export interface AddRoleFormInputs {
 export interface AddEditRoleFormInputs extends AddRoleFormInputs {
   permissions: string[];
 }
+export interface dropdownDataProps {
+  label: string;
+  value: string;
+}
+export interface PermissionsComponentProps {
+  permissionsList: dropdownDataProps[];
+  selectedPermissions: string[];
+  setSelectedPermissions: (permissionId: string[]) => void;
+  isDisabled: boolean;
+}

@@ -28,6 +28,7 @@ import type {
 } from "../../constants/types";
 import ListTableBody from "./ListTableBody";
 import { getPaginatedList } from "../../utils/services/getListService";
+import PageHeader from "../PageHeader";
 
 const ListPage = ({ pageConfig, addConfig }: ListPageProps) => {
   const { AddComponent } = addConfig;
@@ -116,9 +117,9 @@ const ListPage = ({ pageConfig, addConfig }: ListPageProps) => {
           },
         }}
       >
-        <Typography variant="h5" mt={2} mb={1} fontWeight={600}>
-          {pageConfig.title}
-        </Typography>
+        <Box mt={2} mb={1}>
+          <PageHeader label={pageConfig.title} />
+        </Box>
         <Grid
           container
           alignItems="center"

@@ -14,6 +14,7 @@ import Notification from "../components/Notification";
 import PageNotFound from "../pages/PageNotFound";
 import RoleList from "../pages/Role/RoleList";
 import AuthenticatedLayout from "../components/AuthenticatedLayout";
+import RoleDetails from "../pages/Role/RoleDetails";
 
 const Root = () => {
   let location = useLocation();
@@ -52,6 +53,22 @@ const Routes = () => {
           element={
             <AuthenticatedScreens>
               <RoleList />
+            </AuthenticatedScreens>
+          }
+        />
+        <Route
+          path={routes.roleList}
+          element={
+            <AuthenticatedScreens>
+              <RoleList />
+            </AuthenticatedScreens>
+          }
+        />
+        <Route
+          path={`${routes.role}/:id`}
+          element={
+            <AuthenticatedScreens>
+              <RoleDetails />
             </AuthenticatedScreens>
           }
         />

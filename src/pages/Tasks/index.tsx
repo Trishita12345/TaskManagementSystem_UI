@@ -103,7 +103,7 @@ const Tasks = () => {
     dispatch(setTasks(tempTasks));
   }, [empIdsForFilter, tasksWithoutFilter]);
 
-  if (!permissions.includes(priviledges.view_task)) return <NotAuthorized />;
+  if (!permissions.includes("VIEW_ROLES")) return <NotAuthorized />;
   return (
     <>
       {isLoading && <Loader />}

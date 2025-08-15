@@ -3,14 +3,16 @@ import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { getTheme } from "../../utils/redux/slices/commonSlice";
-import { useSelector } from "react-redux";
+import {
+  getTheme,
+  setIsSidebarOpen,
+  sidebarOpen,
+} from "../../utils/redux/slices/commonSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-type propType = {
-  isSidebarOpen: boolean;
-  setIsSidebarOpen: any;
-};
-const Hamburger = ({ isSidebarOpen, setIsSidebarOpen }: propType) => {
+const Hamburger = () => {
+  const dispatch = useDispatch();
+  const isSidebarOpen = useSelector(sidebarOpen);
   const theme = useSelector(getTheme);
   return (
     <div
@@ -20,7 +22,7 @@ const Hamburger = ({ isSidebarOpen, setIsSidebarOpen }: propType) => {
         border: `1px solid ${theme.secondaryColor3}`,
       }}
       className={isSidebarOpen ? "hamburger-left" : "hamburger-right"}
-      onClick={() => setIsSidebarOpen((prev: boolean) => !prev)}
+      onClick={() => dispatch(setIsSidebarOpen(!isSidebarOpen))}
     >
       <div id="hamburger-icon">
         <FontAwesomeIcon

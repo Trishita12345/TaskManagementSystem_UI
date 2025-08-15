@@ -156,6 +156,7 @@ const ListTableBody = ({
                                   <Visibility
                                     fontSize="small"
                                     color="primary"
+                                    sx={{ cursor: "pointer" }}
                                   />
                                 </Box>
                               )}
@@ -166,6 +167,7 @@ const ListTableBody = ({
                                   <DeleteOutlineOutlined
                                     fontSize="small"
                                     color="primary"
+                                    sx={{ cursor: "pointer" }}
                                   />
                                 </Box>
                               )}

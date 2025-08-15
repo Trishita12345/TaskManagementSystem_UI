@@ -34,7 +34,6 @@ const RoleList = () => {
     AddComponent: AddRole,
   };
 
-  console.log("render");
   return <ListPage pageConfig={pageConfig} addConfig={addConfig} />;
 };
 

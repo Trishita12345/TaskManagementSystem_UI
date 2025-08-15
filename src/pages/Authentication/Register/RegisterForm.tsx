@@ -44,7 +44,7 @@ const RegisterForm: React.FC = () => {
         throw "Password and Confirm Password does not match";
       }
       const { confirmPassword, ...rest } = formData;
-      registerUser(rest);
+      await registerUser(rest);
       dispatch(
         setMessage({
           display: true,
@@ -62,7 +62,6 @@ const RegisterForm: React.FC = () => {
           message: getErrorMessage(err),
         })
       );
-      setTimeout(() => navigate(routes.login), 1000);
     }
   };
 

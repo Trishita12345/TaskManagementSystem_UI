@@ -3,12 +3,7 @@ import SideBarItem from "./SidebarItem";
 import { sidebarItemsList } from "../../constants/sidebarItemsList";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
-import { getTheme } from "../../utils/redux/slices/commonSlice";
-
-type propType = {
-  isSidebarOpen: boolean;
-  setIsSidebarOpen: any;
-};
+import { getTheme, sidebarOpen } from "../../utils/redux/slices/commonSlice";
 
 type sidebarItemType = {
   id: number;
@@ -18,7 +13,8 @@ type sidebarItemType = {
   priviledge: string;
 };
 
-const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }: propType) => {
+const Sidebar = () => {
+  const isSidebarOpen = useSelector(sidebarOpen);
   const theme = useSelector(getTheme);
   if (!isSidebarOpen)
     return (
@@ -29,10 +25,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }: propType) => {
           borderRight: `1px solid ${theme.secondaryColor3}`,
         }}
       >
-        <Hamburger
-          isSidebarOpen={isSidebarOpen}
-          setIsSidebarOpen={setIsSidebarOpen}
-        />
+        <Hamburger />
       </div>
     );
   return (
@@ -43,10 +36,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }: propType) => {
         borderRight: `1px solid ${theme.secondaryColor3}`,
       }}
     >
-      <Hamburger
-        isSidebarOpen={isSidebarOpen}
-        setIsSidebarOpen={setIsSidebarOpen}
-      />
+      <Hamburger />
       <div style={{ marginBottom: "8px" }}></div>
       {sidebarItemsList.map((s: sidebarItemType) => (
         <SideBarItem key={s.id} item={s} />

@@ -41,7 +41,7 @@ const AddRole = ({ setAddModalOpen, onSuccess }: AddProps) => {
                   Click here
                 </Typography>
               </Link>{" "}
-              to add permissions in this role.
+              {`to add permissions in ${data.name} role.`}
             </Typography>
           ),
         })

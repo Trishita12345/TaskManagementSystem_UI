@@ -13,7 +13,7 @@ interface AppState {
     lastname: string;
     email: string;
     profileImage: string;
-    role: string;
+    role: { roleId: string; name: string };
     permissions: string[];
   };
 }
