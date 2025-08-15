@@ -17,7 +17,10 @@ import strings from "../../constants/strings";
 import { useSelector } from "react-redux";
 import { getTheme } from "../../utils/redux/slices/commonSlice";
 import { useNavigate } from "react-router-dom";
-import type { ListTableBodyProps } from "../../constants/types";
+import type {
+  ListTableBodyProps,
+  tableColumnProps,
+} from "../../constants/types";
 
 const ListTableBody = ({
   pageResponse,
@@ -113,7 +116,7 @@ const ListTableBody = ({
                   pageResponse?.content?.map((item: any) => {
                     return (
                       <TableRow key={item[pageConfig.idColumn]}>
-                        {pageConfig.tableColumn.map((row: any) => (
+                        {pageConfig.tableColumn.map((row: tableColumnProps) => (
                           <TableCell
                             sx={{
                               textAlign: "left",
@@ -121,7 +124,11 @@ const ListTableBody = ({
                             }}
                             key={row.field}
                           >
-                            {item[row["field"]]}
+                            {row.component ? (
+                              <row.component row={row} item={item} />
+                            ) : (
+                              <Typography>{item[row["field"]]}</Typography>
+                            )}
                           </TableCell>
                         ))}
                         {!pageConfig.hideActionText && (

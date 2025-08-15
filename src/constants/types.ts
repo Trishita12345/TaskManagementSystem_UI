@@ -4,6 +4,7 @@ export interface tableColumnProps {
   textAlign?: "left" | "right";
   localField?: string;
   sortable?: boolean;
+  component?: any;
 }
 export interface pageConfigProps {
   title: string;

@@ -14,6 +14,7 @@ import { userDetails } from "../../utils/redux/slices/authenticationSlice";
 import { useEffect, useMemo, useState } from "react";
 import type { AxiosError } from "axios";
 import {
+  getTheme,
   loading,
   setIsLoading,
   setMessage,
@@ -31,6 +32,7 @@ import { getPaginatedList } from "../../utils/services/getListService";
 import PageHeader from "../PageHeader";
 
 const ListPage = ({ pageConfig, addConfig }: ListPageProps) => {
+  const theme = useSelector(getTheme);
   const AddComponent = addConfig?.AddComponent;
   const { permissions } = useSelector(userDetails);
   const isLoading = useSelector(loading);
@@ -173,7 +175,7 @@ const ListPage = ({ pageConfig, addConfig }: ListPageProps) => {
                 left: "50%",
                 transform: "translate(-50%, -50%)",
                 width: 400,
-                bgcolor: "background.paper",
+                bgcolor: theme.secondaryColor2,
                 boxShadow: 24,
                 p: "24px 20px",
               }}

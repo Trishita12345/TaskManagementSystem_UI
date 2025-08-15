@@ -12,5 +12,5 @@ export const priviledges = {
   edit_roles: "EDIT_ROLES",
   delete_roles: "DELETE_ROLES",
   view_employees: "VIEW_EMPLOYEES",
-  assign_role: "ASSIGN_ROLE",
+  assign_role: "ASSIGN_ROLE_EMPLOYEES",
 };
