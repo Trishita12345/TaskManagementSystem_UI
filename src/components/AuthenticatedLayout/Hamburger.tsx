@@ -10,7 +10,7 @@ import {
 } from "../../utils/redux/slices/commonSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-const Hamburger = () => {
+const Hamburger = ({ disabled }: { disabled?: boolean }) => {
   const dispatch = useDispatch();
   const isSidebarOpen = useSelector(sidebarOpen);
   const theme = useSelector(getTheme);
@@ -20,9 +20,12 @@ const Hamburger = () => {
       style={{
         backgroundColor: theme.secondaryColor2,
         border: `1px solid ${theme.secondaryColor3}`,
+        cursor: disabled ? "default" : "pointer",
       }}
       className={isSidebarOpen ? "hamburger-left" : "hamburger-right"}
-      onClick={() => dispatch(setIsSidebarOpen(!isSidebarOpen))}
+      onClick={() => {
+        if (!disabled) dispatch(setIsSidebarOpen(!isSidebarOpen));
+      }}
     >
       <div id="hamburger-icon">
         <FontAwesomeIcon

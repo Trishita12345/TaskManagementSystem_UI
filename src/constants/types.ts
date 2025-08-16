@@ -78,3 +78,30 @@ export interface PermissionsComponentProps {
   setSelectedPermissions: (permissionId: string[]) => void;
   isDisabled: boolean;
 }
+
+export type EmployeeSummaryType = {
+  employeeId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  profileImage: string;
+  role: {
+    roleId: string;
+    roleName: string;
+  };
+};
+
+export type ProjectDetailsType = {
+  projectId: string;
+  name: string;
+  details: string;
+
+  createdAt: string;
+  updatedAt: string;
+
+  manager: EmployeeSummaryType;
+  createdBy: EmployeeSummaryType;
+  updatedBy: EmployeeSummaryType;
+
+  employees: EmployeeSummaryType[];
+};

@@ -41,7 +41,6 @@
 #hamburger {
   height: 20px;
   width: 20px;
-  cursor: pointer;
   z-index: 10;
   border-radius: 50%;
 }

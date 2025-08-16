@@ -4,6 +4,8 @@ import { sidebarItemsList } from "../../constants/sidebarItemsList";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { getTheme, sidebarOpen } from "../../utils/redux/slices/commonSlice";
+import ProjectCard from "./ProjectCard";
+import { selectedProjectDetails } from "../../utils/redux/slices/authenticationSlice";
 
 type sidebarItemType = {
   id: number;
@@ -14,6 +16,7 @@ type sidebarItemType = {
 };
 
 const Sidebar = () => {
+  const selectedProject = useSelector(selectedProjectDetails);
   const isSidebarOpen = useSelector(sidebarOpen);
   const theme = useSelector(getTheme);
   if (!isSidebarOpen)
@@ -25,7 +28,7 @@ const Sidebar = () => {
           borderRight: `1px solid ${theme.secondaryColor3}`,
         }}
       >
-        <Hamburger />
+        <Hamburger disabled={selectedProject.projectId ? false : true} />
       </div>
     );
   return (
@@ -36,11 +39,13 @@ const Sidebar = () => {
         borderRight: `1px solid ${theme.secondaryColor3}`,
       }}
     >
-      <Hamburger />
-      <div style={{ marginBottom: "8px" }}></div>
-      {sidebarItemsList.map((s: sidebarItemType) => (
-        <SideBarItem key={s.id} item={s} />
-      ))}
+      <Hamburger disabled={selectedProject.projectId ? false : true} />
+      <Box mt={1}>
+        <ProjectCard />
+        {sidebarItemsList.map((s: sidebarItemType) => (
+          <SideBarItem key={s.id} item={s} />
+        ))}
+      </Box>
     </Box>
   );
 };

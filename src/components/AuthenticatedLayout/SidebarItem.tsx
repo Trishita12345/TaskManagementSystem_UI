@@ -39,7 +39,11 @@ const SideBarItem = ({ item }: propType) => {
             <FontAwesomeIcon
               icon={item.icon}
               size="lg"
-              style={{ cursor: "pointer", padding: "4px" }}
+              style={{
+                cursor: "pointer",
+                paddingLeft: "12px",
+                paddingRight: "4px",
+              }}
             />
             {item.name}
           </div>

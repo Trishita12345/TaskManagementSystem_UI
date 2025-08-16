@@ -4,9 +4,11 @@ import {
   saveToStorage,
 } from "../../helperFunctions/storageHelperFunctions";
 import Cookies from "js-cookie";
+import type { ProjectDetailsType } from "../../../constants/types";
 
 interface AppState {
   isAuthenticated: boolean;
+  selectedProject: ProjectDetailsType;
   userDetails: {
     empId: string;
     firstname: string;
@@ -21,6 +23,9 @@ interface AppState {
 const initialState = {
   isAuthenticated: Cookies.get("access") ? true : false,
   userDetails: JSON.parse(fetchFromStorage("userDetails") ?? "{}"),
+  selectedProject: JSON.parse(
+    fetchFromStorage("selectedProject") ?? "{}" //"projectId": "1"
+  ),
 };
 const authenticationSlice = createSlice({
   name: "common",
@@ -37,13 +42,20 @@ const authenticationSlice = createSlice({
       state.userDetails = action.payload;
       saveToStorage("userDetails", JSON.stringify(action.payload));
     },
+    setSelectedProject(state, action) {
+      state.selectedProject = action.payload;
+      saveToStorage("selectedProject", JSON.stringify(action.payload));
+    },
   },
 });
 
-export const { setIsAuthenticated, setUserDetails } =
+export const { setIsAuthenticated, setUserDetails, setSelectedProject } =
   authenticationSlice.actions;
 export default authenticationSlice.reducer;
 export const isAuthenticated = (state: { authenticationSlice: AppState }) =>
   state.authenticationSlice.isAuthenticated;
 export const userDetails = (state: { authenticationSlice: AppState }) =>
   state.authenticationSlice.userDetails;
+export const selectedProjectDetails = (state: {
+  authenticationSlice: AppState;
+}) => state.authenticationSlice.selectedProject;

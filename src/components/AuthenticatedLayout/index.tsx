@@ -11,15 +11,23 @@ import {
   setIsSidebarOpen,
   sidebarOpen,
 } from "../../utils/redux/slices/commonSlice";
+import { selectedProjectDetails } from "../../utils/redux/slices/authenticationSlice";
 
 const AuthenticatedLayout = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useDispatch();
+  const selectedProject = useSelector(selectedProjectDetails);
   const isSidebarOpen = useSelector(sidebarOpen);
   const theme = useSelector(getTheme);
   const { width } = useScreenSize();
   useEffect(() => {
     if (width < smallDevice) dispatch(setIsSidebarOpen(false));
   }, [width]);
+
+  useEffect(() => {
+    if (!selectedProject.projectId) {
+      dispatch(setIsSidebarOpen(false));
+    }
+  }, [selectedProject]);
   return (
     <Box sx={{ minHeight: "100vh", backgroundColor: theme.secondaryColor1 }}>
       <div style={{ display: "flex" }}>

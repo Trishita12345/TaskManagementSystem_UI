@@ -1,6 +1,6 @@
-import ListPage from "../../../components/ListPage";
-import strings from "../../../constants/strings";
-import { urls } from "../../../constants/urls";
+import ListPage from "../../components/ListPage";
+import strings from "../../constants/strings";
+import { urls } from "../../constants/urls";
 import AssignRole from "./AssignRole";
 
 const ManageEmployeesList = () => {

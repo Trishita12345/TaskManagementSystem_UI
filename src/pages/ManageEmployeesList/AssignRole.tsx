@@ -5,24 +5,21 @@ import {
   type SelectChangeEvent,
   Typography,
 } from "@mui/material";
-import { priviledges } from "../../../constants/priviledges";
+import { priviledges } from "../../constants/priviledges";
 import type {
   dropdownDataProps,
   tableColumnProps,
-} from "../../../constants/types";
+} from "../../constants/types";
 import {
   fetchRoleOptions,
   updateRoleByEmployeeId,
-} from "../../../utils/services/roleService";
-import { userDetails } from "../../../utils/redux/slices/authenticationSlice";
+} from "../../utils/services/roleService";
+import { userDetails } from "../../utils/redux/slices/authenticationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import type { AxiosError } from "axios";
 import { useState, useEffect } from "react";
-import { getErrorMessage } from "../../../utils/helperFunctions/commonHelperFunctions";
-import {
-  setIsLoading,
-  setMessage,
-} from "../../../utils/redux/slices/commonSlice";
+import { getErrorMessage } from "../../utils/helperFunctions/commonHelperFunctions";
+import { setIsLoading, setMessage } from "../../utils/redux/slices/commonSlice";
 
 const AssignRole = ({
   item,

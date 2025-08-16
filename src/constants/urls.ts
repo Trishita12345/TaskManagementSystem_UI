@@ -14,4 +14,5 @@ export const urls = {
   getRoleOptions: "/authenticated/admin/get-roles",
   updateRoleByEmpId: (employeeId: string, roleId: string) =>
     `/authenticated/admin/update-role/${employeeId}/${roleId}`,
+  getProjectsPage: "/authenticated/projects/page",
 };

@@ -15,7 +15,10 @@ import PageNotFound from "../pages/PageNotFound";
 import RoleList from "../pages/Role/RoleList";
 import AuthenticatedLayout from "../components/AuthenticatedLayout";
 import RoleDetails from "../pages/Role/RoleDetails";
-import ManageEmployeesList from "../pages/ManageEmployees/ManageEmployeesList";
+import ManageEmployeesList from "../pages/ManageEmployeesList";
+import ProjectList from "../pages/Projects/ProjectList";
+import AddProject from "../pages/Projects/AddEditProject/AddProject";
+import ViewEditProject from "../pages/Projects/AddEditProject/ViewEditProject";
 
 const Root = () => {
   let location = useLocation();
@@ -81,7 +84,31 @@ const Routes = () => {
             </AuthenticatedScreens>
           }
         />
-        manageEmployees
+        <Route
+          path={routes.projectList}
+          element={
+            <AuthenticatedScreens>
+              <ProjectList />
+            </AuthenticatedScreens>
+          }
+        />
+        <Route
+          path={routes.addProject}
+          element={
+            <AuthenticatedScreens>
+              <AddProject />
+            </AuthenticatedScreens>
+          }
+        />
+        <Route
+          path={routes.viewEditProject}
+          element={
+            <AuthenticatedScreens>
+              <ViewEditProject />
+            </AuthenticatedScreens>
+          }
+        />
+
         <Route path="*" element={<PageNotFound />} />
       </Switch>
     </>

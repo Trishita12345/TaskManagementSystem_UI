@@ -122,50 +122,64 @@ const ListPage = ({ pageConfig, addConfig }: ListPageProps) => {
         <Box mt={2} mb={1}>
           <PageHeader label={pageConfig.title} />
         </Box>
-        <Grid
-          container
-          alignItems="center"
-          justifyContent={"space-between"}
-          mb={1}
-        >
-          <Grid item>
-            <TextField
-              size="small"
-              placeholder={strings.filterInputText}
-              variant="outlined"
-              value={query}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setQuery(e.target.value);
-                debouncedSearch(e.target.value);
-              }}
+        {pageResponse?.content?.length > 0 ? (
+          <>
+            <Grid
+              container
+              alignItems="center"
+              justifyContent={"space-between"}
+              mb={1}
+            >
+              <Grid item>
+                <TextField
+                  size="small"
+                  placeholder={strings.filterInputText}
+                  variant="outlined"
+                  value={query}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setQuery(e.target.value);
+                    debouncedSearch(e.target.value);
+                  }}
+                />
+              </Grid>
+              <Grid item>
+                {permissions?.includes(pageConfig.addPrivilege) && (
+                  <Button
+                    variant="contained"
+                    onClick={() => addConfig && addConfig.setAddModalOpen(true)}
+                    sx={{ color: "#ffffff", width: "auto" }}
+                    startIcon={<Add />}
+                  >
+                    {pageConfig.addButtonText}
+                  </Button>
+                )}
+              </Grid>
+            </Grid>
+
+            <ListTableBody
+              pageResponse={pageResponse}
+              pageConfig={pageConfig}
+              usePermissions={permissions}
+              sortBy={sortBy}
+              handleSort={handleSort}
+              page={page}
+              handleChangePage={handleChangePage}
+              size={size}
+              pageSizeChange={pageSizeChange}
+              getList={getList}
             />
-          </Grid>
-          <Grid item>
-            {permissions?.includes(pageConfig.addPrivilege) && (
-              <Button
-                variant="contained"
-                onClick={() => addConfig && addConfig.setAddModalOpen(true)}
-                sx={{ color: "#ffffff", width: "auto" }}
-                startIcon={<Add />}
-              >
-                {pageConfig.addButtonText}
-              </Button>
-            )}
-          </Grid>
-        </Grid>
-        {pageResponse?.content && (
-          <ListTableBody
-            pageResponse={pageResponse}
-            pageConfig={pageConfig}
-            usePermissions={permissions}
-            sortBy={sortBy}
-            handleSort={handleSort}
-            page={page}
-            handleChangePage={handleChangePage}
-            size={size}
-            pageSizeChange={pageSizeChange}
-            getList={getList}
-          />
+          </>
+        ) : (
+          <Typography
+            sx={{
+              p: 2,
+              mt: 5,
+              borderRadius: 1,
+            }}
+            variant="h6"
+          >
+            {strings.no_data_available}
+          </Typography>
         )}
         {addConfig && addConfig.addModalOpen && (
           <Modal open={addConfig.addModalOpen}>

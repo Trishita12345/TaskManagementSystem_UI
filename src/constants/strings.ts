@@ -34,7 +34,7 @@ const strings = {
   notAuthorizedSubHeader: "You don't have permission to access this page",
   backHome: "Back to Home",
   backToLogin: "Back to Login screen",
-  filterInputText: "🔍 Search",
+  filterInputText: "🔍 Search anything...",
   onlyMyIssues: "Only My Issues",
   clearAll: "Clear All",
   somethingWentWrong: "Something went wrong",

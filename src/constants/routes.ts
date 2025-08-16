@@ -10,4 +10,7 @@ export const routes = {
   roleList: "/roles",
   role: "/role",
   employee: "/employee",
+  addProject: "/project/add",
+  viewEditProject: "/project",
+  projectList: "/projects",
 };
