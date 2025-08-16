@@ -31,7 +31,7 @@ export const sidebarItemsList = [
     priviledge: priviledges.view_employees,
   },
   {
-    id: 1,
+    id: 4,
     name: strings.role,
     icon: faDiagramProject,
     route: routes.roleList,

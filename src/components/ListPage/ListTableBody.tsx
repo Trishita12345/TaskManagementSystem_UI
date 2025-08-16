@@ -32,6 +32,7 @@ const ListTableBody = ({
   handleChangePage,
   size,
   pageSizeChange,
+  getList,
 }: ListTableBodyProps) => {
   const theme = useSelector(getTheme);
   const navigate = useNavigate();
@@ -125,7 +126,11 @@ const ListTableBody = ({
                             key={row.field}
                           >
                             {row.component ? (
-                              <row.component row={row} item={item} />
+                              <row.component
+                                row={row}
+                                item={item}
+                                getList={getList}
+                              />
                             ) : (
                               <Typography>{item[row["field"]]}</Typography>
                             )}

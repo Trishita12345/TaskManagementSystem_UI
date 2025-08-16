@@ -48,6 +48,7 @@ export interface ListTableBodyProps {
   handleChangePage: (_event: unknown, newPage: number) => void;
   size: number;
   pageSizeChange: (event: any) => void;
+  getList: (query: string) => void;
 }
 export interface RegisterFormProps {
   email: string;

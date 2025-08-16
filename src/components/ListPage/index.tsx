@@ -164,6 +164,7 @@ const ListPage = ({ pageConfig, addConfig }: ListPageProps) => {
             handleChangePage={handleChangePage}
             size={size}
             pageSizeChange={pageSizeChange}
+            getList={getList}
           />
         )}
         {addConfig && addConfig.addModalOpen && (

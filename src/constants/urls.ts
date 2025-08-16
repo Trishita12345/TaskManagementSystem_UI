@@ -1,3 +1,5 @@
+import { updateRoleById } from "../utils/services/roleService";
+
 export const urls = {
   login: "/generate-token",
   myProfile: "/auth/my-profile",
@@ -9,4 +11,7 @@ export const urls = {
   getRoleDetailsById: (id: string) => `/authenticated/admin/get-role/${id}`,
   updateRole: (id: string) => `/authenticated/admin/update-role/${id}`,
   getEmployessPage: "/authenticated/admin/get-employees/page",
+  getRoleOptions: "/authenticated/admin/get-roles",
+  updateRoleByEmpId: (employeeId: string, roleId: string) =>
+    `/authenticated/admin/update-role/${employeeId}/${roleId}`,
 };

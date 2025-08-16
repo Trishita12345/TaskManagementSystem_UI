@@ -17,3 +17,11 @@ export const fetchRoleDetails = (id: string) => {
 export const updateRoleById = (id: string, body: AddEditRoleFormInputs) => {
   return axiosInstance.put(urls.updateRole(id), body);
 };
+
+export const fetchRoleOptions = () => {
+  return axiosInstance(urls.getRoleOptions);
+};
+
+export const updateRoleByEmployeeId = (empId: string, roleId: string) => {
+  return axiosInstance.patch(urls.updateRoleByEmpId(empId, roleId));
+};
