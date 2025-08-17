@@ -11,10 +11,17 @@ import {
   setIsSidebarOpen,
   sidebarOpen,
 } from "../../utils/redux/slices/commonSlice";
-import { selectedProjectDetails } from "../../utils/redux/slices/authenticationSlice";
+import {
+  selectedProjectDetails,
+  setSelectedProject,
+} from "../../utils/redux/slices/authenticationSlice";
+import { routes } from "../../constants/routes";
+import { useNavigate } from "react-router-dom";
+import { fetchSelectedProject } from "../../utils/services/projectService";
 
 const AuthenticatedLayout = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const selectedProject = useSelector(selectedProjectDetails);
   const isSidebarOpen = useSelector(sidebarOpen);
   const theme = useSelector(getTheme);
@@ -23,10 +30,25 @@ const AuthenticatedLayout = ({ children }: { children: React.ReactNode }) => {
     if (width < smallDevice) dispatch(setIsSidebarOpen(false));
   }, [width]);
 
-  useEffect(() => {
+  const getSelectedProject = async () => {
     if (!selectedProject.projectId) {
-      dispatch(setIsSidebarOpen(false));
+      try {
+        const { data } = await fetchSelectedProject();
+        if (data.content.length > 0) {
+          dispatch(setSelectedProject(data.content[0]));
+        }
+      } catch (e) {
+      } finally {
+        navigate(routes.projectList);
+      }
     }
+  };
+  useEffect(() => {
+    getSelectedProject();
+  }, []);
+
+  useEffect(() => {
+    if (!selectedProject.projectId) dispatch(setIsSidebarOpen(false));
   }, [selectedProject]);
   return (
     <Box sx={{ minHeight: "100vh", backgroundColor: theme.secondaryColor1 }}>

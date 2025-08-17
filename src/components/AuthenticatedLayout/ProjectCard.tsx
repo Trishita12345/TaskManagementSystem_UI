@@ -1,33 +1,9 @@
-import React, { useEffect } from "react";
 import { Avatar, Box, Typography } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectedProjectDetails,
-  setSelectedProject,
-} from "../../utils/redux/slices/authenticationSlice";
-import { fetchSelectedProject } from "../../utils/services/projectService";
-import { useNavigate } from "react-router-dom";
-import { routes } from "../../constants/routes";
+import { useSelector } from "react-redux";
+import { selectedProjectDetails } from "../../utils/redux/slices/authenticationSlice";
 
 export default function ProjectCard() {
   const selectedProject = useSelector(selectedProjectDetails);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const getSelectedProject = async () => {
-    if (!selectedProject.projectId) {
-      // const { data } = await fetchSelectedProject();
-      // if (data.content.length > 0) {
-      //   dispatch(setSelectedProject(data.content[0]));
-      //   navigate(routes.projectList);
-      // } else {
-      //   navigate(routes.addProject);
-      // }
-      navigate(routes.projectList);
-    }
-  };
-  useEffect(() => {
-    getSelectedProject();
-  }, []);
   return (
     <>
       {selectedProject.projectId ? (

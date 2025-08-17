@@ -32,6 +32,7 @@ const RoleList = () => {
     setAddModalOpen: setAddModalOpen,
     headerText: "Create Role",
     AddComponent: AddRole,
+    handleAddBtnClick: () => setAddModalOpen(true),
   };
 
   return <ListPage pageConfig={pageConfig} addConfig={addConfig} />;

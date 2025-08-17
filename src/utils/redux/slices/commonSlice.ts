@@ -1,5 +1,6 @@
 import type { AlertColor } from "@mui/material";
 import { createSlice } from "@reduxjs/toolkit";
+import type { themeType } from "../../../constants/types";
 
 interface AppState {
   isLoading: boolean;
@@ -11,7 +12,7 @@ interface AppState {
     message: React.ReactNode;
     duration?: number;
   };
-  theme: any;
+  theme: themeType;
 }
 
 const initialState = {

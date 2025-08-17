@@ -3,6 +3,7 @@ import "./NotAuthorized.css";
 import strings from "../../constants/strings";
 import { Button } from "@mui/material";
 import { routes } from "../../constants/routes";
+import { logoutUser } from "../../utils/helperFunctions/authHelperFunctions";
 
 const NotAuthorized = () => {
   const navigate = useNavigate();
@@ -11,7 +12,13 @@ const NotAuthorized = () => {
     <div className="not-authorized-container">
       <h1>{strings.notAuthorizedHeader}</h1>
       <p>{strings.notAuthorizedSubHeader}</p>
-      <Button variant="contained" onClick={() => navigate(routes.login)}>
+      <Button
+        variant="contained"
+        onClick={() => {
+          logoutUser();
+          navigate(routes.login);
+        }}
+      >
         {strings.backToLogin}
       </Button>
     </div>

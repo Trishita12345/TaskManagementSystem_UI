@@ -17,7 +17,6 @@ import AuthenticatedLayout from "../components/AuthenticatedLayout";
 import RoleDetails from "../pages/Role/RoleDetails";
 import ManageEmployeesList from "../pages/ManageEmployeesList";
 import ProjectList from "../pages/Projects/ProjectList";
-import AddProject from "../pages/Projects/AddEditProject/AddProject";
 import ViewEditProject from "../pages/Projects/AddEditProject/ViewEditProject";
 
 const Root = () => {
@@ -93,15 +92,7 @@ const Routes = () => {
           }
         />
         <Route
-          path={routes.addProject}
-          element={
-            <AuthenticatedScreens>
-              <AddProject />
-            </AuthenticatedScreens>
-          }
-        />
-        <Route
-          path={routes.viewEditProject}
+          path={`${routes.viewEditProject}/:id`}
           element={
             <AuthenticatedScreens>
               <ViewEditProject />

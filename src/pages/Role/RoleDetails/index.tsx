@@ -1,7 +1,7 @@
-import { TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { setMessage } from "../../../utils/redux/slices/commonSlice";
+import { getTheme, setMessage } from "../../../utils/redux/slices/commonSlice";
 import { useEffect, useState } from "react";
 import {
   fetchAllPermissions,
@@ -12,6 +12,7 @@ import type { AxiosError } from "axios";
 import {
   getErrorMessage,
   groupPermissions,
+  viewEditCTAButtonStyle,
 } from "../../../utils/helperFunctions/commonHelperFunctions";
 import useScreenSize from "../../../utils/customHooks/useScreenSize";
 import PermissionsComponent from "../PermissionsComponent/PermissionsComponent";
@@ -21,6 +22,7 @@ import type { AddEditRoleFormInputs } from "../../../constants/types";
 import ViewDetailsPage from "../../../components/ViewDetailsPage";
 
 const RoleDetails = () => {
+  const theme = useSelector(getTheme);
   const { permissions, role } = useSelector(userDetails);
   const { width } = useScreenSize();
   const { id } = useParams();
@@ -95,6 +97,7 @@ const RoleDetails = () => {
           message: "Role updated successfully",
         })
       );
+      setIsEditMode(false);
       getRoleDetails();
     } catch (e) {
       handleCatch(e);
@@ -102,15 +105,14 @@ const RoleDetails = () => {
   };
   return (
     <ViewDetailsPage
+      header="Role Details"
       isEditPermission={isEditPermission}
       isEditMode={isEditMode}
       setIsEditMode={setIsEditMode}
-      handleCancel={handleCancel}
-      updateRole={updateRole}
     >
       <TextField
-        disabled={!(isEditMode && isEditPermission)}
-        sx={{ width: width > 750 ? "40%" : "100%", mt: "24px", mb: "12px" }}
+        disabled
+        sx={{ width: width > 750 ? "40%" : "100%", mb: "12px" }}
         size="small"
         value={name}
         onChange={(e) => setName(e.target.value)}
@@ -124,6 +126,17 @@ const RoleDetails = () => {
         selectedPermissions={selectedPermissions}
         setSelectedPermissions={setSelectedPermissions}
       />
+
+      {isEditMode && isEditPermission && (
+        <Box sx={viewEditCTAButtonStyle(theme)}>
+          <Button variant="outlined" onClick={handleCancel}>
+            Cancel
+          </Button>
+          <Button variant="contained" onClick={updateRole}>
+            Update
+          </Button>
+        </Box>
+      )}
     </ViewDetailsPage>
   );
 };

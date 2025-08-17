@@ -26,6 +26,8 @@ const ManageEmployeesList = () => {
       field: "role",
       headerName: "Role",
       component: AssignRole,
+      sortable: true,
+      localField: "role.name",
     },
   ];
   const pageConfig = {

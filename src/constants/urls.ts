@@ -1,5 +1,3 @@
-import { updateRoleById } from "../utils/services/roleService";
-
 export const urls = {
   login: "/generate-token",
   myProfile: "/auth/my-profile",
@@ -15,4 +13,7 @@ export const urls = {
   updateRoleByEmpId: (employeeId: string, roleId: string) =>
     `/authenticated/admin/update-role/${employeeId}/${roleId}`,
   getProjectsPage: "/authenticated/projects/page",
+  addProject: "/authenticated/projects",
+  getAllEmployees: "/authenticated/admin/get-employees",
+  getProjectDetailsById: (id: string) => `/authenticated/projects/${id}`,
 };

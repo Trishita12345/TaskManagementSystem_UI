@@ -17,6 +17,7 @@ export interface pageConfigProps {
   detailsRoute: string;
   deletePrivilege: string;
   idColumn: string;
+  noDataHelperText?: string;
 }
 export interface ListPageProps {
   pageConfig: pageConfigProps;
@@ -27,6 +28,7 @@ export interface addConfigProps {
   setAddModalOpen: (val: boolean) => void;
   AddComponent: any;
   headerText: string;
+  handleAddBtnClick: () => void;
 }
 export interface pageBodyProps {
   page: number;
@@ -105,3 +107,30 @@ export type ProjectDetailsType = {
 
   employees: EmployeeSummaryType[];
 };
+
+export type AddEditProjectInputProps = {
+  name: string;
+  details: string;
+  managerId: string;
+  employeeIds: (string | undefined)[];
+};
+
+export interface AddProps {
+  setAddModalOpen: (val: boolean) => void;
+  onSuccess: () => void;
+}
+export interface ListPageCustomCellProps {
+  row: tableColumnProps;
+  item: any;
+  getList: () => void;
+}
+export interface themeType {
+  primary: string;
+  primaryTextColor: string;
+  secondaryColor1: string;
+  secondaryColor2: string;
+  secondaryColor3: string;
+  inputBgColor: string;
+  secondaryContrast: string;
+  opacity: string;
+}

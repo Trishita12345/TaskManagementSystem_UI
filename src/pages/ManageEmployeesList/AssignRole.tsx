@@ -8,7 +8,7 @@ import {
 import { priviledges } from "../../constants/priviledges";
 import type {
   dropdownDataProps,
-  tableColumnProps,
+  ListPageCustomCellProps,
 } from "../../constants/types";
 import {
   fetchRoleOptions,
@@ -21,14 +21,7 @@ import { useState, useEffect } from "react";
 import { getErrorMessage } from "../../utils/helperFunctions/commonHelperFunctions";
 import { setIsLoading, setMessage } from "../../utils/redux/slices/commonSlice";
 
-const AssignRole = ({
-  item,
-  getList,
-}: {
-  row: tableColumnProps;
-  item: any;
-  getList: () => void;
-}) => {
+const AssignRole = ({ item, getList }: ListPageCustomCellProps) => {
   const { permissions, email } = useSelector(userDetails);
   const [roleOptions, setRoleOptions] = useState<dropdownDataProps[]>([]);
   const dispatch = useDispatch();
@@ -94,14 +87,15 @@ const AssignRole = ({
           </MenuItem>
         ))}
       </Select>
-      {email === item.email && (
-        <Typography
-          color={"darkorange"}
-          sx={{ fontStyle: "italic", fontSize: "0.8rem" }}
-        >
-          *You cannot update your own role*
-        </Typography>
-      )}
+      {permissions.includes(priviledges.assign_role) &&
+        email === item.email && (
+          <Typography
+            color={"darkorange"}
+            sx={{ fontStyle: "italic", fontSize: "0.8rem" }}
+          >
+            *You cannot update your own role*
+          </Typography>
+        )}
     </FormControl>
   );
 };

@@ -69,7 +69,9 @@ const ListTableBody = ({
                     <Stack direction="row" spacing={0.5} alignItems="center">
                       <TableSortLabel
                         hideSortIcon={!column?.sortable}
-                        active={sortBy.sortBy === column?.field}
+                        active={
+                          sortBy.sortBy === (column.localField || column.fiel)
+                        }
                         direction={sortBy.direction ? "desc" : "asc"}
                         onClick={() =>
                           handleSort(column.localField || column.field)
@@ -115,7 +117,7 @@ const ListTableBody = ({
                       <TableCell
                         sx={{
                           textAlign: "left",
-                          whiteSpace: "nowrap",
+                          // whiteSpace: "nowrap",
                         }}
                         key={row.field}
                       >
@@ -188,11 +190,12 @@ const ListTableBody = ({
       </TableContainer>
       <TablePagination
         component="div"
-        count={pageResponse.numberOfElements}
+        count={pageResponse.totalElements}
         page={page}
         onPageChange={handleChangePage}
         rowsPerPage={size}
         onRowsPerPageChange={pageSizeChange}
+        rowsPerPageOptions={[5, 10, 25, 50]}
       />
     </>
   );

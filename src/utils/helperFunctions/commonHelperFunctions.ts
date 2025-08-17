@@ -1,4 +1,4 @@
-import type { dropdownDataProps } from "../../constants/types";
+import type { dropdownDataProps, themeType } from "../../constants/types";
 
 export const getNameInitials = (firstName: string, lastName: string) => {
   return `${firstName.substring(0, 1)}${lastName.substring(0, 1)}`;
@@ -34,3 +34,21 @@ export function groupPermissions(data: dropdownDataProps[]) {
     value: value,
   }));
 }
+
+export const viewEditCTAButtonStyle = (theme: themeType) => {
+  return {
+    display: "flex",
+    alignItems: "center",
+    gap: 1,
+    position: "fixed",
+    bottom: 0,
+    left: -2,
+    paddingX: "16px",
+    height: "55px",
+    justifyContent: "end",
+    backgroundColor: theme.secondaryColor2,
+    boxShadow: `0px -11px 14px 1px ${theme.secondaryColor2}20`,
+    borderTop: `1px solid ${theme.secondaryColor3}`,
+    width: "100%",
+  };
+};

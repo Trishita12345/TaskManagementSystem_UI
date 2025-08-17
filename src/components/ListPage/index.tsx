@@ -1,20 +1,11 @@
-import { Add, ClearOutlined } from "@mui/icons-material";
-import {
-  Container,
-  Grid,
-  Typography,
-  Button,
-  TextField,
-  Modal,
-  Box,
-} from "@mui/material";
+import { Add } from "@mui/icons-material";
+import { Container, Grid, Button, TextField, Box } from "@mui/material";
 import strings from "../../constants/strings";
 import { useDispatch, useSelector } from "react-redux";
 import { userDetails } from "../../utils/redux/slices/authenticationSlice";
 import { useEffect, useMemo, useState } from "react";
 import type { AxiosError } from "axios";
 import {
-  getTheme,
   loading,
   setIsLoading,
   setMessage,
@@ -30,16 +21,16 @@ import type {
 import ListTableBody from "./ListTableBody";
 import { getPaginatedList } from "../../utils/services/getListService";
 import PageHeader from "../PageHeader";
+import NoResultsFound from "./NoDataFound";
+import AddModal from "./AddModal";
 
 const ListPage = ({ pageConfig, addConfig }: ListPageProps) => {
-  const theme = useSelector(getTheme);
-  const AddComponent = addConfig?.AddComponent;
   const { permissions } = useSelector(userDetails);
   const isLoading = useSelector(loading);
   const [pageResponse, setPageResponse] = useState<any>({});
   const [query, setQuery] = useState<string>("");
   const [page, setPage] = useState<number>(0);
-  const [size, setSize] = useState<number>(10);
+  const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<sortByProps>({
     sortBy: "",
     direction: true,
@@ -119,101 +110,70 @@ const ListPage = ({ pageConfig, addConfig }: ListPageProps) => {
           },
         }}
       >
-        <Box mt={2} mb={1}>
+        <Box my={2}>
           <PageHeader label={pageConfig.title} />
         </Box>
-        {pageResponse?.content?.length > 0 ? (
+        {pageResponse?.content && (
           <>
-            <Grid
-              container
-              alignItems="center"
-              justifyContent={"space-between"}
-              mb={1}
-            >
-              <Grid item>
-                <TextField
-                  size="small"
-                  placeholder={strings.filterInputText}
-                  variant="outlined"
-                  value={query}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setQuery(e.target.value);
-                    debouncedSearch(e.target.value);
-                  }}
-                />
-              </Grid>
-              <Grid item>
-                {permissions?.includes(pageConfig.addPrivilege) && (
-                  <Button
-                    variant="contained"
-                    onClick={() => addConfig && addConfig.setAddModalOpen(true)}
-                    sx={{ color: "#ffffff", width: "auto" }}
-                    startIcon={<Add />}
-                  >
-                    {pageConfig.addButtonText}
-                  </Button>
-                )}
-              </Grid>
-            </Grid>
+            {pageResponse?.content?.length > 0 ? (
+              <>
+                <Grid
+                  container
+                  alignItems="center"
+                  justifyContent={"space-between"}
+                  mb={1}
+                >
+                  <Grid item>
+                    <TextField
+                      size="small"
+                      placeholder={strings.filterInputText}
+                      variant="outlined"
+                      value={query}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setQuery(e.target.value);
+                        debouncedSearch(e.target.value);
+                      }}
+                    />
+                  </Grid>
+                  <Grid item>
+                    {permissions?.includes(pageConfig.addPrivilege) && (
+                      <Button
+                        variant="contained"
+                        onClick={addConfig?.handleAddBtnClick}
+                        sx={{ color: "#ffffff", width: "auto" }}
+                        startIcon={<Add />}
+                      >
+                        {pageConfig.addButtonText}
+                      </Button>
+                    )}
+                  </Grid>
+                </Grid>
 
-            <ListTableBody
-              pageResponse={pageResponse}
-              pageConfig={pageConfig}
-              usePermissions={permissions}
-              sortBy={sortBy}
-              handleSort={handleSort}
-              page={page}
-              handleChangePage={handleChangePage}
-              size={size}
-              pageSizeChange={pageSizeChange}
-              getList={getList}
-            />
+                <ListTableBody
+                  pageResponse={pageResponse}
+                  pageConfig={pageConfig}
+                  usePermissions={permissions}
+                  sortBy={sortBy}
+                  handleSort={handleSort}
+                  page={page}
+                  handleChangePage={handleChangePage}
+                  size={size}
+                  pageSizeChange={pageSizeChange}
+                  getList={getList}
+                />
+              </>
+            ) : (
+              <NoResultsFound
+                query={query}
+                setQuery={setQuery}
+                addConfig={addConfig}
+                pageConfig={pageConfig}
+              />
+            )}
           </>
-        ) : (
-          <Typography
-            sx={{
-              p: 2,
-              mt: 5,
-              borderRadius: 1,
-            }}
-            variant="h6"
-          >
-            {strings.no_data_available}
-          </Typography>
         )}
         {addConfig && addConfig.addModalOpen && (
-          <Modal open={addConfig.addModalOpen}>
-            <Box
-              sx={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                width: 400,
-                bgcolor: theme.secondaryColor2,
-                boxShadow: 24,
-                p: "24px 20px",
-              }}
-            >
-              <Box
-                display={"flex"}
-                justifyContent={"space-between"}
-                alignItems={"center"}
-              >
-                <Typography variant="h5" fontWeight={600}>
-                  {addConfig.headerText}
-                </Typography>
-                <ClearOutlined
-                  onClick={() => addConfig.setAddModalOpen(false)}
-                  sx={{ cursor: "pointer" }}
-                />
-              </Box>
-              <AddComponent
-                setAddModalOpen={addConfig.setAddModalOpen}
-                onSuccess={getList}
-              />
-            </Box>
-          </Modal>
+          <AddModal addConfig={addConfig} getList={getList} />
         )}
         {/* {openModal && deleteModal} */}
       </Container>

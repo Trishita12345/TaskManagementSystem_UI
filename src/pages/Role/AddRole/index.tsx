@@ -5,15 +5,11 @@ import { useDispatch } from "react-redux";
 import Loader from "../../../components/Loader";
 import { getErrorMessage } from "../../../utils/helperFunctions/commonHelperFunctions";
 import { setMessage } from "../../../utils/redux/slices/commonSlice";
-import type { AddRoleFormInputs } from "../../../constants/types";
+import type { AddProps, AddRoleFormInputs } from "../../../constants/types";
 import { addRole } from "../../../utils/services/roleService";
 import { routes } from "../../../constants/routes";
 import { Link } from "react-router-dom";
 
-interface AddProps {
-  setAddModalOpen: (val: boolean) => void;
-  onSuccess: () => void;
-}
 const AddRole = ({ setAddModalOpen, onSuccess }: AddProps) => {
   const {
     register,
@@ -32,7 +28,7 @@ const AddRole = ({ setAddModalOpen, onSuccess }: AddProps) => {
         setMessage({
           display: true,
           severity: "success",
-          duration: 5000,
+          duration: 3000,
           message: (
             <Typography>
               Role Added Successfully.{" "}
@@ -71,7 +67,6 @@ const AddRole = ({ setAddModalOpen, onSuccess }: AddProps) => {
           display: "flex",
           flexDirection: "column",
           gap: 2,
-          mt: 4,
         }}
       >
         <TextField
