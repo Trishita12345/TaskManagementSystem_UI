@@ -1,9 +1,8 @@
 import { Add } from "@mui/icons-material";
-import { Container, Grid, Button, TextField, Box } from "@mui/material";
-import strings from "../../constants/strings";
+import { Container, Grid, Button, Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { userDetails } from "../../utils/redux/slices/authenticationSlice";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import type { AxiosError } from "axios";
 import {
   loading,
@@ -12,7 +11,6 @@ import {
 } from "../../utils/redux/slices/commonSlice";
 import Loader from "../Loader";
 import { getErrorMessage } from "../../utils/helperFunctions/commonHelperFunctions";
-import { debounce } from "lodash-es";
 import type {
   pageBodyProps,
   ListPageProps,
@@ -23,6 +21,7 @@ import { getPaginatedList } from "../../utils/services/getListService";
 import PageHeader from "../PageHeader";
 import NoResultsFound from "./NoDataFound";
 import AddModal from "./AddModal";
+import FilterInput from "../FilterInput";
 
 const ListPage = ({ pageConfig, addConfig }: ListPageProps) => {
   const { permissions } = useSelector(userDetails);
@@ -88,16 +87,6 @@ const ListPage = ({ pageConfig, addConfig }: ListPageProps) => {
     getList(query);
   }, [page, size, sortBy]);
 
-  const debouncedSearch = useMemo(
-    () => debounce((value: string) => getList(value), 500),
-    []
-  );
-
-  useEffect(() => {
-    return () => {
-      debouncedSearch.cancel(); // clean up on unmount
-    };
-  }, [debouncedSearch]);
   return (
     <>
       {isLoading && <Loader />}
@@ -124,15 +113,10 @@ const ListPage = ({ pageConfig, addConfig }: ListPageProps) => {
                   mb={1}
                 >
                   <Grid item>
-                    <TextField
-                      size="small"
-                      placeholder={strings.filterInputText}
-                      variant="outlined"
-                      value={query}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setQuery(e.target.value);
-                        debouncedSearch(e.target.value);
-                      }}
+                    <FilterInput
+                      query={query}
+                      setQuery={setQuery}
+                      filterFunc={getList}
                     />
                   </Grid>
                   <Grid item>

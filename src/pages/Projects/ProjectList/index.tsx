@@ -14,16 +14,15 @@ import { Link, Typography } from "@mui/material";
 import type { ListPageCustomCellProps } from "../../../constants/types";
 import { getDateDiff } from "../../../utils/helperFunctions/commonHelperFunctions";
 import { useNavigate } from "react-router-dom";
-import {
-  getTheme,
-  setIsSidebarOpen,
-} from "../../../utils/redux/slices/commonSlice";
-import ProjectBreadcrumbs from "../../../components/ProjectBreadcrumbs";
+import { setIsSidebarOpen } from "../../../utils/redux/slices/commonSlice";
+import FullNameComponent from "../../../components/FullNameComponent";
 
 const Manager = ({ item }: ListPageCustomCellProps) => (
-  <Typography>
-    {item.manager.firstName + " " + item.manager.lastName}
-  </Typography>
+  <FullNameComponent
+    firstName={item.manager.firstName}
+    lastName={item.manager.lastName}
+    profileImage={item.manager.profileImage}
+  />
 );
 
 const LastUpdate = ({ item }: ListPageCustomCellProps) => (
@@ -36,7 +35,6 @@ const LastUpdate = ({ item }: ListPageCustomCellProps) => (
   </Typography>
 );
 const ProjectList = () => {
-  const theme = useSelector(getTheme);
   const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
   const { permissions } = useSelector(userDetails);
   const dispatch = useDispatch();

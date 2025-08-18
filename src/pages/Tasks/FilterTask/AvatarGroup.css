@@ -3,15 +3,12 @@
   height: 35px;
   /* left: 100px; */
 }
-.avatar-wrapper-border {
-  border: 2px solid var(--primary-text-color);
-}
 .avatar-wrapper {
   position: absolute;
   cursor: pointer;
   border-radius: 50%;
-  width: 34px !important;
-  height: 34px !important;
+  width: 39px !important;
+  height: 39px !important;
 }
 
 .avatar-wrapper:hover .avatar {
@@ -30,24 +27,10 @@
 
 .popover {
   position: absolute;
-  background-color: var(--popup-bg-color);
   padding: 4px 0px;
   border-radius: 2px;
   left: 105%;
   top: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   width: max-content;
-}
-
-.popover.show {
-  display: block;
-}
-.popover-checkbox-checked {
-  background-color: var(--primary-color-opacityS);
-}
-.popover-checkbox-checked:hover {
-  background-color: var(--primary-color-opacityM);
-}
-.popover-checkbox:hover {
-  background-color: var(--secondary-bg-color);
 }

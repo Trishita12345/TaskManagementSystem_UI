@@ -1,13 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
+import type { dropdownDataProps } from "../../../constants/types";
 
-const initialState = {
+interface appState {
+  statusList: dropdownDataProps[];
+  tasks: any[];
+  taskFilterQuery: string;
+  empIdsForFilter: any[];
+}
+
+const initialState: appState = {
   statusList: [],
-  employeeList: [],
-  tasksWithoutFilter: [],
   tasks: [],
-  taskById: {},
-  selectedIdForView: null,
-  taskFilterString: "",
+  taskFilterQuery: "",
   empIdsForFilter: [],
 };
 
@@ -18,23 +22,11 @@ const taskSlice = createSlice({
     setStatusList(state, action) {
       state.statusList = action.payload;
     },
-    setEmployeeList(state, action) {
-      state.employeeList = action.payload;
-    },
-    setTasksWithoutFilter(state, action) {
-      state.tasksWithoutFilter = action.payload;
-    },
     setTasks(state, action) {
       state.tasks = action.payload;
     },
-    setTaskById(state, action) {
-      state.taskById = action.payload;
-    },
-    setSelectedIdForView(state, action) {
-      state.selectedIdForView = action.payload;
-    },
-    setTaskFilterString(state, action) {
-      state.taskFilterString = action.payload;
+    setTaskFilterQuery(state, action) {
+      state.taskFilterQuery = action.payload;
     },
     setEmpIdsForFilter(state, action) {
       if (state.empIdsForFilter.includes(action.payload)) {
@@ -49,12 +41,8 @@ const taskSlice = createSlice({
       state.empIdsForFilter = [action.payload];
     },
     setClearFilter(state) {
-      state.taskFilterString = "";
+      state.taskFilterQuery = "";
       state.empIdsForFilter = [];
-    },
-    setTaskInitState(state) {
-      state.taskById = {};
-      state.selectedIdForView = null;
     },
   },
 });
@@ -62,14 +50,17 @@ const taskSlice = createSlice({
 export const {
   setTasks,
   setStatusList,
-  setTaskById,
-  setSelectedIdForView,
-  setTaskInitState,
-  setTaskFilterString,
-  setEmployeeList,
   setEmpIdsForFilter,
   setOnlyCurrentEmpIdForFilter,
   setClearFilter,
-  setTasksWithoutFilter,
+  setTaskFilterQuery,
 } = taskSlice.actions;
 export default taskSlice.reducer;
+
+export const statuses = (state: { taskSlice: appState }) =>
+  state.taskSlice.statusList;
+export const selectedEmployeeIds = (state: { taskSlice: appState }) =>
+  state.taskSlice.empIdsForFilter;
+export const taskQuery = (state: { taskSlice: appState }) =>
+  state.taskSlice.taskFilterQuery;
+export const tasks = (state: { taskSlice: appState }) => state.taskSlice.tasks;

@@ -2,15 +2,24 @@ import { Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import { blueGrey } from "@mui/material/colors";
 
+interface CustomAvatarTypes {
+  text: string;
+  avatarImage?: string;
+  onClick?: (e: any) => void;
+  className?: string;
+  style?: any;
+  id?: string;
+}
 const CustomAvatar = ({
   text,
-  avatarImage = null,
+  avatarImage,
   onClick = () => {},
   className = "",
   style,
-}: any) => {
+  id = "",
+}: CustomAvatarTypes) => {
   return (
-    <div onClick={onClick} className={className} style={style}>
+    <div id={id} onClick={onClick} className={className} style={style}>
       {avatarImage ? (
         <Avatar alt="" src={avatarImage} />
       ) : (

@@ -1,25 +1,39 @@
-import FilterInput from "./FilterInput";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AvatarGroup from "./AvatarGroup";
 import strings from "../../../constants/strings";
 import useScreenSize from "../../../utils/customHooks/useScreenSize";
 import { Button, Typography } from "@mui/material";
 import { getTheme } from "../../../utils/redux/slices/commonSlice";
+import FilterInput from "../../../components/FilterInput";
+import {
+  selectedEmployeeIds,
+  setClearFilter,
+  setEmpIdsForFilter,
+  setOnlyCurrentEmpIdForFilter,
+  setTaskFilterQuery,
+  taskQuery,
+} from "../../../utils/redux/slices/taskSlice";
+import { userDetails } from "../../../utils/redux/slices/authenticationSlice";
 
-const FilterTask = ({
-  handleFilterInputChange,
-  handleSelectUser,
-  onClear,
-  selectCurrentUserForFilter,
-}: any) => {
+const FilterTask = ({}: any) => {
   const theme = useSelector(getTheme);
+  const { empId } = useSelector(userDetails);
   const { width } = useScreenSize();
-  const taskFilterString = useSelector(
-    (state: any) => state.taskSlice.taskFilterString
-  );
-  const empIdsForFilter = useSelector(
-    (state: any) => state.taskSlice.empIdsForFilter
-  );
+  const query = useSelector(taskQuery);
+  const empIdsForFilter = useSelector(selectedEmployeeIds);
+  const dispatch = useDispatch();
+
+  const handleSelectUser = (empId: string) => {
+    dispatch(setEmpIdsForFilter(empId));
+  };
+
+  const selectCurrentUserForFilter = () => {
+    dispatch(setOnlyCurrentEmpIdForFilter(empId));
+  };
+
+  const onClear = () => {
+    dispatch(setClearFilter());
+  };
 
   return (
     <div
@@ -30,7 +44,13 @@ const FilterTask = ({
         flexDirection: width > 700 ? "row" : "column",
       }}
     >
-      <FilterInput handleFilterInputChange={handleFilterInputChange} />
+      <FilterInput
+        query={query}
+        setQuery={(val: string) => dispatch(setTaskFilterQuery(val))}
+        filterFunc={(val: string) => {
+          console.log(val);
+        }}
+      />
       <div style={{ width: "190px" }}>
         <AvatarGroup handleSelectUser={handleSelectUser} />
       </div>
@@ -46,7 +66,7 @@ const FilterTask = ({
           <Typography>{strings.onlyMyIssues}</Typography>
         </Button>
         <Typography color={theme.primary}>|</Typography>
-        {taskFilterString !== "" || empIdsForFilter.length > 0 ? (
+        {query !== "" || empIdsForFilter.length > 0 ? (
           <Button onClick={onClear}>
             <Typography>{strings.clearAll}</Typography>
           </Button>

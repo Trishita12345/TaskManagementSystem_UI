@@ -1,21 +1,25 @@
+import FullNameComponent from "../../components/FullNameComponent";
 import ListPage from "../../components/ListPage";
 import strings from "../../constants/strings";
+import type { ListPageCustomCellProps } from "../../constants/types";
 import { urls } from "../../constants/urls";
 import AssignRole from "./AssignRole";
 
 const ManageEmployeesList = () => {
+  const Name = ({ item }: ListPageCustomCellProps) => (
+    <FullNameComponent
+      firstName={item.firstName}
+      lastName={item.lastName}
+      profileImage={item.profileImage}
+    />
+  );
   const tableColumn = [
     {
       field: "firstName",
-      headerName: "First Name",
+      headerName: "Name",
       sortable: true,
       localField: "firstname",
-    },
-    {
-      field: "lastName",
-      headerName: "Last Name",
-      sortable: true,
-      localField: "lastname",
+      component: Name,
     },
     {
       field: "email",

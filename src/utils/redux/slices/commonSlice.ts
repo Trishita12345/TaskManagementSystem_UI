@@ -63,7 +63,7 @@ const commonSlice = createSlice({
           secondaryColor3: "#a5a3a3ff",
           inputBgColor: "#a5a3a3ff",
           secondaryContrast: "#ffffff",
-          opacity: "90",
+          opacity: "95",
         };
       } else {
         //light mode

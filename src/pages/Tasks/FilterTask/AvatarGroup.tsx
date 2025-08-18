@@ -1,25 +1,26 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import Avatar from "../../../components/CustomAvatar";
+import CustomAvatar from "../../../components/CustomAvatar";
 import "./AvatarGroup.css";
 import { getNameInitials } from "../../../utils/helperFunctions/commonHelperFunctions";
 import PopOverContent from "./PopOverContent";
-import { Tooltip } from "@mui/material";
+import { Popover, Tooltip } from "@mui/material";
+import { selectedEmployeeIds } from "../../../utils/redux/slices/taskSlice";
+import { selectedProjectDetails } from "../../../utils/redux/slices/authenticationSlice";
+import type { EmployeeSummaryType } from "../../../constants/types";
+import { getTheme } from "../../../utils/redux/slices/commonSlice";
 
 const AvatarGroup = ({ handleSelectUser }: any) => {
-  const [togglePopover, setTogglePopover] = useState(false);
+  const theme = useSelector(getTheme);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [className, setClassName] = useState("");
-  const employeeList = useSelector(
-    (state: any) => state.taskSlice.employeeList
-  );
-  const empIdsForFilter = useSelector(
-    (state: any) => state.taskSlice.empIdsForFilter
-  );
+  const { employees } = useSelector(selectedProjectDetails);
+  const empIdsForFilter = useSelector(selectedEmployeeIds);
   const getStyle = () => {
-    const temp = employeeList.slice(5, employeeList.length);
+    const temp = employees.slice(4, employees.length);
     let val = "";
     for (let i = 0; i < temp.length; i++) {
-      if (empIdsForFilter.includes(temp[i].id)) {
+      if (empIdsForFilter.includes(temp[i].employeeId)) {
         val = "avatar-wrapper-border";
         break;
       }
@@ -29,26 +30,31 @@ const AvatarGroup = ({ handleSelectUser }: any) => {
 
   useEffect(() => {
     getStyle();
-  }, [employeeList, empIdsForFilter]);
+  }, [employees, empIdsForFilter]);
 
+  const a = (empId: string) =>
+    empIdsForFilter.includes(empId)
+      ? { border: `2px solid ${theme.primary}` }
+      : {};
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
   return (
     <div className="avatar-group">
-      {employeeList.slice(0, 5).map((emp: any, index: number) => (
+      {employees.slice(0, 4).map((emp: EmployeeSummaryType, index: number) => (
         <div
-          key={emp.id}
-          className={`avatar-wrapper ${
-            empIdsForFilter.includes(emp.id) ? "avatar-wrapper-border" : ""
-          }`}
+          key={emp.employeeId}
+          className="avatar-wrapper"
           style={{
+            ...a(emp.employeeId),
             left: `${index * 30}px`,
-            zIndex: employeeList.length - index,
+            zIndex: employees.length - index,
           }}
         >
           <Tooltip title={`${emp.firstName} ${emp.lastName}`}>
-            <Avatar
+            <CustomAvatar
               text={getNameInitials(emp.firstName, emp.lastName)}
-              avatarImage={emp.avatarImage}
-              onClick={() => handleSelectUser(emp.id)}
+              avatarImage={emp.profileImage}
+              onClick={() => handleSelectUser(emp.employeeId)}
             />
           </Tooltip>
         </div>
@@ -56,22 +62,36 @@ const AvatarGroup = ({ handleSelectUser }: any) => {
       <div
         className={`avatar-wrapper ${className}`}
         style={{
-          left: `${5 * 30}px`,
-          zIndex: employeeList.length - 5,
+          left: `${4 * 30}px`,
+          zIndex: employees.length - 4,
         }}
       >
         <div className="popover-container">
-          <Avatar
-            text={`+${employeeList.length - 5}`}
-            onClick={() => setTogglePopover((prev) => !prev)}
+          <CustomAvatar
+            id={id}
+            text={`+${employees.length - 4}`}
+            onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+              setAnchorEl(event.currentTarget);
+            }}
           />
-          {togglePopover && (
-            <div className="popover">
-              {employeeList.slice(5, employeeList.length).map((e: any) => (
-                <PopOverContent data={e} onCheck={handleSelectUser} />
-              ))}
-            </div>
-          )}
+          <Popover
+            id={id}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={() => setAnchorEl(null)}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            transformOrigin={{
+              vertical: "center",
+              horizontal: "left",
+            }}
+          >
+            {employees.slice(4, employees.length).map((e: any) => (
+              <PopOverContent data={e} onCheck={handleSelectUser} />
+            ))}
+          </Popover>
         </div>
       </div>
     </div>
