@@ -20,7 +20,7 @@ export const sidebarItemsList = [
     id: 2,
     name: strings.projectSetting,
     icon: faGear,
-    route: routes.projectSettings,
+    route: `${routes.viewEditProject}`,
     priviledge: priviledges.view_project,
   },
   {

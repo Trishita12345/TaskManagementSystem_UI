@@ -8,10 +8,12 @@ import {
 import React, { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import Loader from "../../../components/Loader";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setIsAuthenticated,
+  setSelectedProject,
   setUserDetails,
+  userDetails,
 } from "../../../utils/redux/slices/authenticationSlice";
 import { setMessage } from "../../../utils/redux/slices/commonSlice";
 import { useNavigate } from "react-router-dom";
@@ -31,6 +33,7 @@ const LoginForm: React.FC = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { empId } = useSelector(userDetails);
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -38,6 +41,9 @@ const LoginForm: React.FC = () => {
     try {
       await login(formData);
       const { data } = await getProfile();
+      if (empId !== data.empId) {
+        dispatch(setSelectedProject({}));
+      }
       dispatch(setIsAuthenticated());
       dispatch(setUserDetails(data));
       navigate(routes.myBoard);

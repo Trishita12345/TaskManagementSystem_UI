@@ -105,7 +105,7 @@ const ListPage = ({ pageConfig, addConfig }: ListPageProps) => {
         maxWidth={false}
         sx={{
           "&.MuiContainer-root": {
-            pl: 1,
+            pl: 0,
             pr: 0,
           },
         }}

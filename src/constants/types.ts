@@ -134,3 +134,27 @@ export interface themeType {
   secondaryContrast: string;
   opacity: string;
 }
+
+export interface Employee {
+  employeeId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  profileImage: string | null;
+  role: {
+    roleId: string;
+    name: string;
+  };
+}
+
+export interface ProjectDetails {
+  projectId: string;
+  name: string;
+  details: string;
+  createdAt: string; // ISO timestamp
+  updatedAt: string; // ISO timestamp
+  manager: Employee;
+  createdBy: Employee;
+  updatedBy: Employee;
+  employees: Employee[];
+}

@@ -18,7 +18,7 @@ const ViewDetailsPage = ({
 }: ViewDetailsPageProps) => {
   const { height } = useScreenSize();
   return (
-    <Box m={1.5} height={`${height - 85}px`} sx={{ overflow: "scroll" }}>
+    <Box my={1.5} height={`${height - 85}px`} sx={{ overflow: "scroll" }}>
       <PageHeader
         label={header}
         showBackIcon

@@ -52,3 +52,32 @@ export const viewEditCTAButtonStyle = (theme: themeType) => {
     width: "100%",
   };
 };
+
+export function getDateDiff(targetDate: string | Date): string {
+  const now: Date = new Date();
+  const target: Date = new Date(targetDate);
+
+  let diffInMs: number = target.getTime() - now.getTime();
+
+  const isPast: boolean = diffInMs < 0;
+  diffInMs = Math.abs(diffInMs);
+
+  const days: number = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+  diffInMs -= days * 1000 * 60 * 60 * 24;
+
+  const hours: number = Math.floor(diffInMs / (1000 * 60 * 60));
+  diffInMs -= hours * 1000 * 60 * 60;
+
+  const minutes: number = Math.floor(diffInMs / (1000 * 60));
+
+  let str = "";
+  if (days > 0) {
+    str = `${days} days`;
+  } else if (hours > 0) {
+    str = `${hours} hours`;
+  }
+  if (minutes > 0) {
+    str = `${minutes} minutes`;
+  }
+  return isPast ? `${str} ago` : `${str} left`;
+}

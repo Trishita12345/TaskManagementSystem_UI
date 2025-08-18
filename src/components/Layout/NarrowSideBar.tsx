@@ -11,10 +11,13 @@ import { logoutUser } from "../../utils/helperFunctions/authHelperFunctions";
 import LogoIcon from "../../components/Logo/LogoIcon";
 import { Box } from "@mui/material";
 import { Logout } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import { routes } from "../../constants/routes";
 
 const NarrowSideBar = () => {
   const theme = useSelector(getTheme);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { firstname, lastname, profileImage } = useSelector(userDetails);
   const handleLogout = () => {
     logoutUser();
@@ -31,10 +34,13 @@ const NarrowSideBar = () => {
           justifyContent: "space-between",
         }}
       >
-        <Box pl={1.2} mb={2} sx={{ cursor: "pointer" }}>
-          <Box mb={2}>
-            <LogoIcon color={"white"} size={"25px"} />
-          </Box>
+        <Box
+          id={"logo"}
+          pl={1.2}
+          sx={{ cursor: "pointer" }}
+          onClick={() => navigate(routes.projectList)}
+        >
+          <LogoIcon color={"white"} size={"25px"} />
         </Box>
         <Box
           sx={{ cursor: "pointer" }}

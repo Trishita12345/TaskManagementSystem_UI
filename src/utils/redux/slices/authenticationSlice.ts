@@ -23,9 +23,7 @@ interface AppState {
 const initialState = {
   isAuthenticated: Cookies.get("access") ? true : false,
   userDetails: JSON.parse(fetchFromStorage("userDetails") ?? "{}"),
-  selectedProject: JSON.parse(
-    fetchFromStorage("selectedProject") ?? "{}" //"projectId": "1"
-  ),
+  selectedProject: JSON.parse(fetchFromStorage("selectedProject") ?? "{}"),
 };
 const authenticationSlice = createSlice({
   name: "common",

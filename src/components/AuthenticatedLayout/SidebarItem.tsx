@@ -3,7 +3,12 @@ import { useSelector } from "react-redux";
 import { getTheme } from "../../utils/redux/slices/commonSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
-import { userDetails } from "../../utils/redux/slices/authenticationSlice";
+import {
+  selectedProjectDetails,
+  userDetails,
+} from "../../utils/redux/slices/authenticationSlice";
+import { routes } from "../../constants/routes";
+import { useEffect, useState } from "react";
 
 type propType = {
   item: {
@@ -16,12 +21,22 @@ type propType = {
 };
 
 const SideBarItem = ({ item }: propType) => {
+  const selectedProject = useSelector(selectedProjectDetails);
   let location = useLocation();
   let navigate = useNavigate();
   const theme = useSelector(getTheme);
   const { permissions } = useSelector(userDetails);
+  const [route, setRoute] = useState<string>("");
+
+  useEffect(() => {
+    if (item.route === routes.viewEditProject) {
+      setRoute(`${routes.viewEditProject}/${selectedProject?.projectId}`);
+    } else {
+      setRoute(item.route);
+    }
+  }, [item, selectedProject]);
   const sx =
-    location.pathname === item.route
+    location.pathname === route
       ? {
           backgroundColor: theme.secondaryColor3,
         }
@@ -29,7 +44,13 @@ const SideBarItem = ({ item }: propType) => {
   return (
     <>
       {permissions.includes(item.priviledge) ? (
-        <Box id="sidebar-item" sx={sx} onClick={() => navigate(item.route)}>
+        <Box
+          id="sidebar-item"
+          sx={sx}
+          onClick={() => {
+            navigate(route);
+          }}
+        >
           <div
             id="sidebar-text"
             style={{

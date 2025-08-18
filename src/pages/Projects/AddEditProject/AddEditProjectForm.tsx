@@ -18,7 +18,10 @@ import type {
   AddEditProjectInputProps,
   dropdownDataProps,
 } from "../../../constants/types";
-import { addProject } from "../../../utils/services/projectService";
+import {
+  addProject,
+  updateProject,
+} from "../../../utils/services/projectService";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getTheme,
@@ -54,7 +57,7 @@ const schema = yup.object({
 interface AddEditProjectFormProps {
   onSuccess: () => void;
   disabled?: boolean;
-  pageResponse?: any;
+  pageResponse?: AddEditProjectInputProps;
   setIsEditMode?: (e: boolean) => void;
 }
 export default function AddEditProjectForm({
@@ -90,10 +93,8 @@ export default function AddEditProjectForm({
   const { id } = useParams();
 
   useEffect(() => {
-    if (id && pageResponse.hasOwnProperty("name")) reset(pageResponse);
+    if (id && pageResponse) reset(pageResponse);
   }, [id, pageResponse]);
-
-  console.log(pageResponse);
 
   const getEmployeeList = async () => {
     try {
@@ -124,29 +125,38 @@ export default function AddEditProjectForm({
   const onSubmit = async (formData: AddEditProjectInputProps) => {
     try {
       if (id) {
+        await updateProject(id, { ...formData });
+        dispatch(
+          setMessage({
+            display: true,
+            severity: "success",
+            duration: 3000,
+            message: <Typography>Project Updated Successfully.</Typography>,
+          })
+        );
         setIsEditMode && setIsEditMode(false);
       } else {
         const { data } = await addProject({ ...formData });
+        reset();
         dispatch(
           setMessage({
             display: true,
             severity: "success",
             duration: 3000,
             message: (
-              <Typography>
-                Project Added Successfully.{" "}
+              <>
+                <Typography>Project Added Successfully. </Typography>
                 <Link to={`${routes.viewEditProject}/${data.roleId}`}>
                   <Typography sx={{ display: "inline" }} fontWeight={600}>
-                    Click here
+                    {` Click here `}
                   </Typography>
-                </Link>{" "}
-                {`to view details`}
-              </Typography>
+                </Link>
+                <Typography>to view details</Typography>
+              </>
             ),
           })
         );
       }
-      reset();
       onSuccess();
     } catch (e) {
       const err = e as AxiosError<{ message: string }>;

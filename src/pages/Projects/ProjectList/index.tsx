@@ -4,25 +4,65 @@ import { priviledges } from "../../../constants/priviledges";
 import { urls } from "../../../constants/urls";
 import { routes } from "../../../constants/routes";
 import AddProject from "../AddEditProject/AddProject";
-import { useSelector } from "react-redux";
-import { userDetails } from "../../../utils/redux/slices/authenticationSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setSelectedProject,
+  userDetails,
+} from "../../../utils/redux/slices/authenticationSlice";
 import NotAuthorized from "../../NotAuthorized";
-import { Typography } from "@mui/material";
+import { Link, Typography } from "@mui/material";
 import type { ListPageCustomCellProps } from "../../../constants/types";
+import { getDateDiff } from "../../../utils/helperFunctions/commonHelperFunctions";
+import { useNavigate } from "react-router-dom";
+import {
+  getTheme,
+  setIsSidebarOpen,
+} from "../../../utils/redux/slices/commonSlice";
+import ProjectBreadcrumbs from "../../../components/ProjectBreadcrumbs";
 
+const Manager = ({ item }: ListPageCustomCellProps) => (
+  <Typography>
+    {item.manager.firstName + " " + item.manager.lastName}
+  </Typography>
+);
+
+const LastUpdate = ({ item }: ListPageCustomCellProps) => (
+  <Typography>
+    {`${
+      item.createdAt === item.updatedAt ? "Created " : "updated"
+    } ${getDateDiff(item.updatedAt)} by ${item.updatedBy.firstName} ${
+      item.updatedBy.lastName
+    }`}
+  </Typography>
+);
 const ProjectList = () => {
+  const theme = useSelector(getTheme);
   const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
   const { permissions } = useSelector(userDetails);
-  const A = ({ item }: ListPageCustomCellProps) => (
-    <Typography>
-      {item.manager.firstName + " " + item.manager.lastName}
-    </Typography>
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const ProjectName = ({ item }: ListPageCustomCellProps) => (
+    <Link
+      underline="hover"
+      onClick={() => selectProject(item)}
+      sx={{ fontWeight: 600, fontSize: "14px" }}
+    >
+      {item.name}
+    </Link>
   );
+  const selectProject = (item: any) => {
+    dispatch(setSelectedProject(item));
+    dispatch(setIsSidebarOpen(true));
+    navigate(routes.myBoard);
+  };
+
   const tableColumn = [
     {
       field: "name",
       headerName: "Project Name",
       sortable: true,
+      component: ProjectName,
     },
     {
       field: "details",
@@ -30,9 +70,15 @@ const ProjectList = () => {
     },
     {
       field: "manager",
-      headerName: "Manager",
+      headerName: "Managed By",
       sortable: true,
-      component: A,
+      component: Manager,
+    },
+    {
+      field: "updatedAt",
+      headerName: "Last Update",
+      sortable: true,
+      component: LastUpdate,
     },
   ];
   const pageConfig = {
@@ -58,7 +104,9 @@ const ProjectList = () => {
   return (
     <>
       {permissions.includes(pageConfig.viewPriviledge) ? (
-        <ListPage pageConfig={pageConfig} addConfig={addConfig} />
+        <>
+          <ListPage pageConfig={pageConfig} addConfig={addConfig} />
+        </>
       ) : (
         <NotAuthorized />
       )}

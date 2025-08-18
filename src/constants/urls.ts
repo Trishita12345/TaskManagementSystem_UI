@@ -15,5 +15,5 @@ export const urls = {
   getProjectsPage: "/authenticated/projects/page",
   addProject: "/authenticated/projects",
   getAllEmployees: "/authenticated/admin/get-employees",
-  getProjectDetailsById: (id: string) => `/authenticated/projects/${id}`,
+  projectById: (id: string) => `/authenticated/projects/${id}`,
 };

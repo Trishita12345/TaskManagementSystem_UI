@@ -15,5 +15,9 @@ export const addProject = (formData: AddEditProjectInputProps) => {
 };
 
 export const fetchProjectDetails = (id: string) => {
-  return axiosInstance(urls.getProjectDetailsById(id));
+  return axiosInstance(urls.projectById(id));
+};
+
+export const updateProject = (id: string, body: AddEditProjectInputProps) => {
+  return axiosInstance.patch(urls.projectById(id), body);
 };

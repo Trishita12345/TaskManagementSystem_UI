@@ -11,13 +11,9 @@ import {
   setIsSidebarOpen,
   sidebarOpen,
 } from "../../utils/redux/slices/commonSlice";
-import {
-  selectedProjectDetails,
-  setSelectedProject,
-} from "../../utils/redux/slices/authenticationSlice";
+import { selectedProjectDetails } from "../../utils/redux/slices/authenticationSlice";
 import { routes } from "../../constants/routes";
 import { useNavigate } from "react-router-dom";
-import { fetchSelectedProject } from "../../utils/services/projectService";
 
 const AuthenticatedLayout = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useDispatch();
@@ -32,15 +28,7 @@ const AuthenticatedLayout = ({ children }: { children: React.ReactNode }) => {
 
   const getSelectedProject = async () => {
     if (!selectedProject.projectId) {
-      try {
-        const { data } = await fetchSelectedProject();
-        if (data.content.length > 0) {
-          dispatch(setSelectedProject(data.content[0]));
-        }
-      } catch (e) {
-      } finally {
-        navigate(routes.projectList);
-      }
+      navigate(routes.projectList);
     }
   };
   useEffect(() => {
@@ -62,6 +50,7 @@ const AuthenticatedLayout = ({ children }: { children: React.ReactNode }) => {
         <div
           style={{
             margin: "8px",
+            paddingLeft: "16px",
             width:
               isSidebarOpen && width > smallDevice
                 ? `${width - 310}px`
