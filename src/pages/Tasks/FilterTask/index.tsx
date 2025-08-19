@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import AvatarGroup from "./AvatarGroup";
 import strings from "../../../constants/strings";
 import useScreenSize from "../../../utils/customHooks/useScreenSize";
-import { Button, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { getTheme } from "../../../utils/redux/slices/commonSlice";
 import FilterInput from "../../../components/FilterInput";
 import {
@@ -13,7 +12,12 @@ import {
   setTaskFilterQuery,
   taskQuery,
 } from "../../../utils/redux/slices/taskSlice";
-import { userDetails } from "../../../utils/redux/slices/authenticationSlice";
+import {
+  selectedProjectDetails,
+  userDetails,
+} from "../../../utils/redux/slices/authenticationSlice";
+import GroupAvatars from "../../../components/GroupAvatars";
+import PopOverContent from "./PopOverContent";
 
 const FilterTask = ({}: any) => {
   const theme = useSelector(getTheme);
@@ -22,10 +26,7 @@ const FilterTask = ({}: any) => {
   const query = useSelector(taskQuery);
   const empIdsForFilter = useSelector(selectedEmployeeIds);
   const dispatch = useDispatch();
-
-  const handleSelectUser = (empId: string) => {
-    dispatch(setEmpIdsForFilter(empId));
-  };
+  const { employees } = useSelector(selectedProjectDetails);
 
   const selectCurrentUserForFilter = () => {
     dispatch(setOnlyCurrentEmpIdForFilter(empId));
@@ -36,8 +37,8 @@ const FilterTask = ({}: any) => {
   };
 
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         display: "flex",
         alignItems: width > 700 ? "center" : "start",
         gap: "12px",
@@ -51,11 +52,16 @@ const FilterTask = ({}: any) => {
           console.log(val);
         }}
       />
-      <div style={{ width: "190px" }}>
-        <AvatarGroup handleSelectUser={handleSelectUser} />
-      </div>
-      <div
-        style={{
+      <GroupAvatars
+        avatars={employees}
+        PopOverContent={PopOverContent}
+        selectedAvatars={empIdsForFilter}
+        handleSelectAvatar={(empId: string) =>
+          dispatch(setEmpIdsForFilter(empId))
+        }
+      />
+      <Box
+        sx={{
           display: "flex",
           alignItems: "center",
           gap: "4px",
@@ -71,8 +77,8 @@ const FilterTask = ({}: any) => {
             <Typography>{strings.clearAll}</Typography>
           </Button>
         ) : null}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

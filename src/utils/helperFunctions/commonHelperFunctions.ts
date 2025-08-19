@@ -1,4 +1,5 @@
 import type { dropdownDataProps, themeType } from "../../constants/types";
+import { intervalToDuration, formatDistanceToNow } from "date-fns";
 
 export const getNameInitials = (firstName: string, lastName: string) => {
   return `${firstName.substring(0, 1)}${lastName.substring(0, 1)}`;
@@ -52,32 +53,29 @@ export const viewEditCTAButtonStyle = (theme: themeType) => {
     width: "100%",
   };
 };
-
 export function getDateDiff(targetDate: string | Date): string {
-  const now: Date = new Date();
-  const target: Date = new Date(targetDate);
+  const target = new Date(targetDate);
+  const now = new Date();
 
-  let diffInMs: number = target.getTime() - now.getTime();
+  // Past or future check
+  const isPast = target.getTime() < now.getTime();
 
-  const isPast: boolean = diffInMs < 0;
-  diffInMs = Math.abs(diffInMs);
-
-  const days: number = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-  diffInMs -= days * 1000 * 60 * 60 * 24;
-
-  const hours: number = Math.floor(diffInMs / (1000 * 60 * 60));
-  diffInMs -= hours * 1000 * 60 * 60;
-
-  const minutes: number = Math.floor(diffInMs / (1000 * 60));
+  // Detailed breakdown
+  const duration = intervalToDuration({ start: now, end: target });
 
   let str = "";
-  if (days > 0) {
-    str = `${days} days`;
-  } else if (hours > 0) {
-    str = `${hours} hours`;
-  }
-  if (minutes > 0) {
-    str = `${minutes} minutes`;
-  }
+  if (duration.days) {
+    const days = Math.abs(duration.days);
+    str = `${days} day${days > 1 ? "s" : ""}`;
+  } else if (duration.hours) {
+    const hours = Math.abs(duration.hours);
+    str = `${hours} hour${hours > 1 ? "s" : ""}`;
+  } else if (duration.minutes) {
+    const minutes = Math.abs(duration.minutes);
+    str = `${minutes} minute${minutes > 1 ? "s" : ""}`;
+  } else if (duration.seconds) {
+    const seconds = Math.abs(duration.seconds);
+    str = `${seconds} minute${seconds > 1 ? "s" : ""}`;
+  } else return "just now";
   return isPast ? `${str} ago` : `${str} left`;
 }

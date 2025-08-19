@@ -52,7 +52,7 @@ const NarrowSideBar = () => {
           <CustomAvatar
             text={getNameInitials(firstname, lastname)}
             avatarImage={profileImage}
-            onClick={() => {}}
+            // onClick={() => {}}
           />
           <ThemeToggleSwitch />
           <Logout onClick={handleLogout} />

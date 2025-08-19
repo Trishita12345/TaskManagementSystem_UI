@@ -1,21 +1,27 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Avatar from "../../../components/CustomAvatar";
 import { getNameInitials } from "../../../utils/helperFunctions/commonHelperFunctions";
 import type { EmployeeSummaryType } from "../../../constants/types";
 import { getTheme } from "../../../utils/redux/slices/commonSlice";
 import { Box, Checkbox, FormControlLabel } from "@mui/material";
+import { selectedProjectDetails } from "../../../utils/redux/slices/authenticationSlice";
+import { setEmpIdsForFilter } from "../../../utils/redux/slices/taskSlice";
+import CustomAvatar from "../../../components/CustomAvatar";
+import { colors } from "../../../constants/data";
 
-interface PopOverContent {
+interface PopOverContentItems {
   data: EmployeeSummaryType;
-  onCheck: (empId: string) => void;
+  index: number;
 }
-const PopOverContent = ({ data, onCheck }: PopOverContent) => {
+const PopOverContentItems = ({ data, index }: PopOverContentItems) => {
+  const dispatch = useDispatch();
   const theme = useSelector(getTheme);
   const [isChecked, setIsChecked] = useState(false);
   const empIdsForFilter = useSelector(
     (state: any) => state.taskSlice.empIdsForFilter
   );
+
   useEffect(() => {
     setIsChecked(empIdsForFilter.includes(data.employeeId) ? true : false);
   }, []);
@@ -36,21 +42,35 @@ const PopOverContent = ({ data, onCheck }: PopOverContent) => {
             checked={isChecked}
             onChange={() => {
               setIsChecked((prev) => !prev);
-              onCheck(data.employeeId);
+              dispatch(setEmpIdsForFilter(data.employeeId));
             }}
           />
         }
         label={
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <Avatar
+            <CustomAvatar
               text={getNameInitials(data.firstName, data.lastName)}
               avatarImage={data.profileImage}
+              bgColor={colors[index % colors.length]}
             />
             <div>{`${data.firstName} ${data.lastName}`}</div>
           </div>
         }
       />
     </Box>
+  );
+};
+
+const PopOverContent = () => {
+  const { employees } = useSelector(selectedProjectDetails);
+  return (
+    <>
+      {employees
+        .slice(4, employees.length)
+        .map((e: EmployeeSummaryType, index: number) => (
+          <PopOverContentItems data={e} key={e.employeeId} index={index} />
+        ))}
+    </>
   );
 };
 

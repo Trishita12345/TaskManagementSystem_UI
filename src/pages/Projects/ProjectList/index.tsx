@@ -27,9 +27,7 @@ const Manager = ({ item }: ListPageCustomCellProps) => (
 
 const LastUpdate = ({ item }: ListPageCustomCellProps) => (
   <Typography>
-    {`${
-      item.createdAt === item.updatedAt ? "Created " : "updated"
-    } ${getDateDiff(item.updatedAt)} by ${item.updatedBy.firstName} ${
+    {`${getDateDiff(item.updatedAt)} by ${item.updatedBy.firstName} ${
       item.updatedBy.lastName
     }`}
   </Typography>
@@ -63,10 +61,6 @@ const ProjectList = () => {
       component: ProjectName,
     },
     {
-      field: "details",
-      headerName: "Details",
-    },
-    {
       field: "manager",
       headerName: "Managed By",
       sortable: true,
@@ -76,6 +70,7 @@ const ProjectList = () => {
       field: "updatedAt",
       headerName: "Last Update",
       sortable: true,
+      // dataType: "date",
       component: LastUpdate,
     },
   ];

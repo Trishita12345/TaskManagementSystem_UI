@@ -33,7 +33,7 @@
   background: rgba(0, 0, 0, 0.066);
   justify-content: center;
   align-items: center;
-  z-index: 10000;
+  z-index: 1;
 }
 #sidebar-over {
   display: none;

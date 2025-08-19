@@ -4,6 +4,7 @@ export interface tableColumnProps {
   textAlign?: "left" | "right";
   localField?: string;
   sortable?: boolean;
+  dataType?: "string" | "number" | "date";
   component?: any;
 }
 export interface pageConfigProps {

@@ -11,7 +11,7 @@ const RoleList = () => {
   const tableColumn = [
     {
       field: "name",
-      headerName: "Role Name",
+      headerName: "Name",
       sortable: true,
     },
   ];

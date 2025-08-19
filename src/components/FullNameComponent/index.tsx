@@ -1,5 +1,5 @@
-import { Person } from "@mui/icons-material";
-import { Avatar, Box, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import CustomAvatar from "../CustomAvatar";
 
 interface FullNameComponentProps {
   firstName: string;
@@ -13,9 +13,7 @@ const FullNameComponent = ({
 }: FullNameComponentProps) => {
   return (
     <Box display={"flex"} alignItems={"center"} gap={1}>
-      <Avatar sx={{ height: 28, width: 28 }}>
-        {profileImage ? <img src={profileImage} alt="" /> : <Person />}
-      </Avatar>
+      <CustomAvatar avatarImage={profileImage} height={28} width={28} />
       <Typography>{firstName + " " + lastName}</Typography>
     </Box>
   );

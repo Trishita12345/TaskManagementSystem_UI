@@ -39,16 +39,18 @@ const ListTableBody = ({
   return (
     <>
       <TableContainer component={Paper}>
-        <Table stickyHeader>
-          <TableHead
-            sx={{
-              ".MuiTableCell-root": {
-                backgroundColor: `${theme.primary}${theme.opacity}`,
-                height: "58px",
-                borderRadius: 0,
-              },
-            }}
-          >
+        <Table
+          stickyHeader
+          sx={{
+            ".MuiTableCell-root": {
+              // backgroundColor: `${theme.primary}${theme.opacity}`,
+              // height: "58px",
+              borderRadius: 0,
+              paddingY: 1.2,
+            },
+          }}
+        >
+          <TableHead>
             <TableRow>
               {pageConfig.tableColumn.map((column: any) => (
                 <TableCell

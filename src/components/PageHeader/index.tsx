@@ -1,4 +1,4 @@
-import { ClearOutlined, Edit } from "@mui/icons-material";
+import { ClearOutlined, EditSharp } from "@mui/icons-material";
 import { Box, Divider, IconButton, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -32,7 +32,7 @@ const PageHeader = ({
               onClick={() => setIsEditMode((prev: boolean) => !prev)}
               color="primary"
             >
-              <Edit />
+              <EditSharp />
             </IconButton>
           )}
         </Box>
