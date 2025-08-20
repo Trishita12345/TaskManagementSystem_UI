@@ -145,13 +145,11 @@ export default function AddEditProjectForm({
             duration: 3000,
             message: (
               <>
-                <Typography>Project Added Successfully. </Typography>
-                <Link to={`${routes.viewEditProject}/${data.roleId}`}>
-                  <Typography sx={{ display: "inline" }} fontWeight={600}>
-                    {` Click here `}
-                  </Typography>
+                <span>Project Added Successfully. </span>
+                <Link to={`${routes.viewEditProject}/${"data.roleId"}`}>
+                  <span style={{ fontWeight: 600 }}>Click here</span>
                 </Link>
-                <Typography>to view details</Typography>
+                <span>to view details</span>
               </>
             ),
           })

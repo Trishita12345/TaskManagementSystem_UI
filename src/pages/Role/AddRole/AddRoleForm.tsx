@@ -5,12 +5,12 @@ import { useDispatch } from "react-redux";
 import Loader from "../../../components/Loader";
 import { getErrorMessage } from "../../../utils/helperFunctions/commonHelperFunctions";
 import { setMessage } from "../../../utils/redux/slices/commonSlice";
-import type { AddProps, AddRoleFormInputs } from "../../../constants/types";
+import type { AddRoleFormInputs } from "../../../constants/types";
 import { addRole } from "../../../utils/services/roleService";
 import { routes } from "../../../constants/routes";
 import { Link } from "react-router-dom";
 
-const AddRole = ({ setAddModalOpen, onSuccess }: AddProps) => {
+const AddRoleForm = ({ onSuccess }: { onSuccess: () => void }) => {
   const {
     register,
     handleSubmit,
@@ -42,7 +42,6 @@ const AddRole = ({ setAddModalOpen, onSuccess }: AddProps) => {
           ),
         })
       );
-      setAddModalOpen(false);
       onSuccess();
     } catch (e) {
       const err = e as AxiosError<{ message: string }>;
@@ -111,4 +110,4 @@ const AddRole = ({ setAddModalOpen, onSuccess }: AddProps) => {
   );
 };
 
-export default AddRole;
+export default AddRoleForm;

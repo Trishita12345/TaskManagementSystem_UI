@@ -2,15 +2,15 @@ import { Box, Typography, Button } from "@mui/material";
 import SearchOffIcon from "@mui/icons-material/SearchOff";
 import { useSelector } from "react-redux";
 import { userDetails } from "../../utils/redux/slices/authenticationSlice";
-import type { addConfigProps, pageConfigProps } from "../../constants/types";
+import type { pageConfigProps } from "../../constants/types";
 import { useSearchParams } from "react-router-dom";
 
 interface NoResultsFoundProps {
-  addConfig: addConfigProps | undefined;
+  handleAddBtnClick: any;
   pageConfig: pageConfigProps;
 }
 export default function NoResultsFound({
-  addConfig,
+  handleAddBtnClick,
   pageConfig,
 }: NoResultsFoundProps) {
   const { permissions } = useSelector(userDetails);
@@ -26,11 +26,7 @@ export default function NoResultsFound({
 
   const getText = () => {
     if (query) return "Try searching again by clearing filter.";
-    else if (
-      query === "" &&
-      permissions.includes(pageConfig.addPrivilege) &&
-      addConfig
-    )
+    else if (query === "" && permissions.includes(pageConfig.addPrivilege))
       return "Try creating a new data";
     else return "Please contact with admin for more details";
   };
@@ -68,17 +64,11 @@ export default function NoResultsFound({
           Clear Filter
         </Button>
       )}
-      {query === "" &&
-        permissions.includes(pageConfig.addPrivilege) &&
-        addConfig && (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={addConfig?.handleAddBtnClick}
-          >
-            {pageConfig.addButtonText}
-          </Button>
-        )}
+      {query === "" && permissions.includes(pageConfig.addPrivilege) && (
+        <Button variant="contained" color="primary" onClick={handleAddBtnClick}>
+          {pageConfig.addButtonText}
+        </Button>
+      )}
     </Box>
   );
 }

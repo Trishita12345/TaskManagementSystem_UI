@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Button, Popover, Box, Typography, IconButton } from "@mui/material";
 import { KeyboardArrowRight, SwapVert } from "@mui/icons-material";
-import useScreenSize from "../../../utils/customHooks/useScreenSize";
+import useScreenSize from "../../utils/customHooks/useScreenSize";
 import { useSearchParams } from "react-router-dom";
 
 const directionLabels: Record<

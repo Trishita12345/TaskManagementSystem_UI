@@ -4,15 +4,14 @@
 4. var css remove
 5. outlined btn in dark theme
 6. my profile + update profile
-7. add project if no project exists first screen
+
 8. login page logo text type animation + login page checkbox keep me logged in
 
 9. Hydration error
-10. tooltip not coming in avatar group
-11. custom avatar color
-12. clear filter not working
-13. list page sort + q param
-14 dataType: "date",
-sortby btn label
+
+
+
+13. avatar hover popover
+14  sortby btn label
 
 

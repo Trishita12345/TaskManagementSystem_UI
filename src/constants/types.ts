@@ -9,7 +9,6 @@ export interface tableColumnProps {
 }
 export interface pageConfigProps {
   title: string;
-  listPageUrl: string;
   addPrivilege: string;
   addButtonText: string;
   tableColumn: tableColumnProps[];
@@ -22,8 +21,9 @@ export interface pageConfigProps {
 }
 export interface ListPageProps {
   pageConfig: pageConfigProps;
-  addConfig?: addConfigProps;
   pageResponse: any;
+  handleAddBtnClick?: any;
+  addComponent?: any;
 }
 export interface addConfigProps {
   addModalOpen: boolean;
@@ -108,11 +108,6 @@ export type AddEditProjectInputProps = {
   managerId: string;
   employeeIds: (string | undefined)[];
 };
-
-export interface AddProps {
-  setAddModalOpen: (val: boolean) => void;
-  onSuccess: () => void;
-}
 export interface ListPageCustomCellProps {
   row: tableColumnProps;
   item: any;

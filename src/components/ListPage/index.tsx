@@ -20,7 +20,12 @@ import useScreenSize from "../../utils/customHooks/useScreenSize";
 import SortByButton from "./SortByButton";
 import { useSearchParams } from "react-router-dom";
 
-const ListPage = ({ pageConfig, addConfig, pageResponse }: ListPageProps) => {
+const ListPage = ({
+  pageConfig,
+  handleAddBtnClick,
+  pageResponse,
+  addComponent,
+}: ListPageProps) => {
   const { width } = useScreenSize();
   const { permissions } = useSelector(userDetails);
   const isLoading = useSelector(loading);
@@ -79,24 +84,25 @@ const ListPage = ({ pageConfig, addConfig, pageResponse }: ListPageProps) => {
           <Grid item>
             <Grid container gap={width > 600 ? 3 : 0}>
               <SortByButton sortByConfig={sortByCofig} />
-              {permissions?.includes(pageConfig.addPrivilege) && (
-                <>
-                  {width > 600 ? (
-                    <Button
-                      variant="contained"
-                      onClick={addConfig?.handleAddBtnClick}
-                      sx={{ color: "#ffffff", width: "auto" }}
-                      startIcon={<Add />}
-                    >
-                      {pageConfig.addButtonText}
-                    </Button>
-                  ) : (
-                    <IconButton onClick={addConfig?.handleAddBtnClick}>
-                      <AddOutlined color="primary" />
-                    </IconButton>
-                  )}
-                </>
-              )}
+              {permissions?.includes(pageConfig.addPrivilege) &&
+                handleAddBtnClick && (
+                  <>
+                    {width > 600 ? (
+                      <Button
+                        variant="contained"
+                        onClick={handleAddBtnClick}
+                        sx={{ color: "#ffffff", width: "auto" }}
+                        startIcon={<Add />}
+                      >
+                        {pageConfig.addButtonText}
+                      </Button>
+                    ) : (
+                      <IconButton onClick={handleAddBtnClick}>
+                        <AddOutlined color="primary" />
+                      </IconButton>
+                    )}
+                  </>
+                )}
             </Grid>
           </Grid>
         </Grid>
@@ -117,12 +123,12 @@ const ListPage = ({ pageConfig, addConfig, pageResponse }: ListPageProps) => {
             />
           </>
         ) : (
-          <NoResultsFound addConfig={addConfig} pageConfig={pageConfig} />
+          <NoResultsFound
+            handleAddBtnClick={handleAddBtnClick}
+            pageConfig={pageConfig}
+          />
         )}
-        {/* {addConfig && addConfig.addModalOpen && (
-          <AddModal addConfig={addConfig} getList={getList} />
-        )} */}
-        {/* {openModal && deleteModal} */}
+        {addComponent && <>{addComponent}</>}
       </Container>
     </>
   );

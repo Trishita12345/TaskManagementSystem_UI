@@ -3,7 +3,6 @@ import ListPage from "../../../components/ListPage";
 import { priviledges } from "../../../constants/priviledges";
 import { urls } from "../../../constants/urls";
 import { routes } from "../../../constants/routes";
-import AddProject from "../AddEditProject/AddProject";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setSelectedProject,
@@ -12,7 +11,6 @@ import {
 import NotAuthorized from "../../NotAuthorized";
 import { Link, Typography } from "@mui/material";
 import type {
-  addConfigProps,
   ListPageCustomCellProps,
   pageBodyProps,
   pageConfigProps,
@@ -31,6 +29,8 @@ import {
 import FullNameComponent from "../../../components/FullNameComponent";
 import { getPaginatedList } from "../../../utils/services/getListService";
 import type { AxiosError } from "axios";
+import AddEditProjectForm from "../AddEditProject/AddEditProjectForm";
+import AddModal from "../../../components/AddModal";
 
 const Manager = ({ item }: ListPageCustomCellProps) => (
   <FullNameComponent
@@ -75,7 +75,7 @@ const ProjectList = () => {
       dispatch(setIsLoading(true));
       const { data } = await getPaginatedList(
         query,
-        pageConfig.listPageUrl,
+        urls.getProjectsPage,
         body
       );
       setPageResponse(data);
@@ -134,7 +134,6 @@ const ProjectList = () => {
   ];
   const pageConfig: pageConfigProps = {
     title: "Projects",
-    listPageUrl: urls.getProjectsPage,
     addPrivilege: priviledges.add_project,
     addButtonText: "Create Project",
     tableColumn: tableColumn,
@@ -144,13 +143,6 @@ const ProjectList = () => {
     deletePrivilege: "",
     idColumn: "projectId",
   };
-  const addConfig: addConfigProps = {
-    addModalOpen: addModalOpen,
-    setAddModalOpen: setAddModalOpen,
-    headerText: "Create Project",
-    AddComponent: AddProject,
-    handleAddBtnClick: () => setAddModalOpen(true),
-  };
 
   return (
     <>
@@ -158,8 +150,22 @@ const ProjectList = () => {
         <>
           <ListPage
             pageConfig={pageConfig}
-            addConfig={addConfig}
+            handleAddBtnClick={() => setAddModalOpen(true)}
             pageResponse={pageResponse}
+            addComponent={
+              <AddModal
+                addModalOpen={addModalOpen}
+                setAddModalOpen={setAddModalOpen}
+                headerText={"Create Project"}
+              >
+                <AddEditProjectForm
+                  onSuccess={() => {
+                    setAddModalOpen(false);
+                    getList();
+                  }}
+                />
+              </AddModal>
+            }
           />
         </>
       ) : (
