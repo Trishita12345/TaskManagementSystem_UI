@@ -23,6 +23,7 @@ export interface pageConfigProps {
 export interface ListPageProps {
   pageConfig: pageConfigProps;
   addConfig?: addConfigProps;
+  pageResponse: any;
 }
 export interface addConfigProps {
   addModalOpen: boolean;
@@ -44,14 +45,6 @@ export interface sortByProps {
 export interface ListTableBodyProps {
   pageResponse: any;
   pageConfig: pageConfigProps;
-  usePermissions: string[];
-  sortBy: sortByProps;
-  handleSort: (field: string) => void;
-  page: number;
-  handleChangePage: (_event: unknown, newPage: number) => void;
-  size: number;
-  pageSizeChange: (event: any) => void;
-  getList: (query: string) => void;
 }
 export interface RegisterFormProps {
   email: string;

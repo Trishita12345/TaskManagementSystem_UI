@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import Avatar from "../../../components/CustomAvatar";
 import { getNameInitials } from "../../../utils/helperFunctions/commonHelperFunctions";
 import type { EmployeeSummaryType } from "../../../constants/types";
 import { getTheme } from "../../../utils/redux/slices/commonSlice";

@@ -3,20 +3,27 @@ import SearchOffIcon from "@mui/icons-material/SearchOff";
 import { useSelector } from "react-redux";
 import { userDetails } from "../../utils/redux/slices/authenticationSlice";
 import type { addConfigProps, pageConfigProps } from "../../constants/types";
+import { useSearchParams } from "react-router-dom";
 
 interface NoResultsFoundProps {
-  query: string;
-  setQuery: (v: string) => void;
   addConfig: addConfigProps | undefined;
   pageConfig: pageConfigProps;
 }
 export default function NoResultsFound({
-  query,
-  setQuery,
   addConfig,
   pageConfig,
 }: NoResultsFoundProps) {
   const { permissions } = useSelector(userDetails);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleSetQuery = (query: string) => {
+    const newParams = new URLSearchParams(searchParams.toString());
+    newParams.set("query", query);
+    setSearchParams(newParams);
+  };
+
+  const query = searchParams.get("query") || "";
+
   const getText = () => {
     if (query) return "Try searching again by clearing filter.";
     else if (
@@ -56,7 +63,7 @@ export default function NoResultsFound({
         <Button
           variant="contained"
           color="primary"
-          onClick={() => setQuery("")}
+          onClick={() => handleSetQuery("")}
         >
           Clear Filter
         </Button>

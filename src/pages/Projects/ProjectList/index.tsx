@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ListPage from "../../../components/ListPage";
 import { priviledges } from "../../../constants/priviledges";
 import { urls } from "../../../constants/urls";
@@ -11,11 +11,26 @@ import {
 } from "../../../utils/redux/slices/authenticationSlice";
 import NotAuthorized from "../../NotAuthorized";
 import { Link, Typography } from "@mui/material";
-import type { ListPageCustomCellProps } from "../../../constants/types";
-import { getDateDiff } from "../../../utils/helperFunctions/commonHelperFunctions";
-import { useNavigate } from "react-router-dom";
-import { setIsSidebarOpen } from "../../../utils/redux/slices/commonSlice";
+import type {
+  addConfigProps,
+  ListPageCustomCellProps,
+  pageBodyProps,
+  pageConfigProps,
+  tableColumnProps,
+} from "../../../constants/types";
+import {
+  getDateDiff,
+  getErrorMessage,
+} from "../../../utils/helperFunctions/commonHelperFunctions";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import {
+  setIsLoading,
+  setIsSidebarOpen,
+  setMessage,
+} from "../../../utils/redux/slices/commonSlice";
 import FullNameComponent from "../../../components/FullNameComponent";
+import { getPaginatedList } from "../../../utils/services/getListService";
+import type { AxiosError } from "axios";
 
 const Manager = ({ item }: ListPageCustomCellProps) => (
   <FullNameComponent
@@ -34,9 +49,52 @@ const LastUpdate = ({ item }: ListPageCustomCellProps) => (
 );
 const ProjectList = () => {
   const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
+  const [pageResponse, setPageResponse] = useState<any>({});
   const { permissions } = useSelector(userDetails);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const page = searchParams.get("page") || "0";
+  const size = searchParams.get("size") || "10";
+  const sortBy = searchParams.get("sortby") || "";
+  const direction = searchParams.get("dir") || "desc";
+  const query = searchParams.get("query") || "";
+
+  const getList = async () => {
+    let body: pageBodyProps = {
+      page: page,
+      size: size,
+      direction: direction,
+    } as any;
+
+    if (sortBy !== "") {
+      body = { ...body, sortBy: sortBy };
+    }
+    try {
+      dispatch(setIsLoading(true));
+      const { data } = await getPaginatedList(
+        query,
+        pageConfig.listPageUrl,
+        body
+      );
+      setPageResponse(data);
+    } catch (e) {
+      const err = e as AxiosError<{ message: string }>;
+      dispatch(
+        setMessage({
+          display: true,
+          severity: "error",
+          message: getErrorMessage(err),
+        })
+      );
+    } finally {
+      dispatch(setIsLoading(false));
+    }
+  };
+  useEffect(() => {
+    getList();
+  }, [page, size, sortBy, direction, query]);
 
   const ProjectName = ({ item }: ListPageCustomCellProps) => (
     <Link
@@ -53,7 +111,7 @@ const ProjectList = () => {
     navigate(routes.myBoard);
   };
 
-  const tableColumn = [
+  const tableColumn: tableColumnProps[] = [
     {
       field: "name",
       headerName: "Project Name",
@@ -70,11 +128,11 @@ const ProjectList = () => {
       field: "updatedAt",
       headerName: "Last Update",
       sortable: true,
-      // dataType: "date",
+      dataType: "date",
       component: LastUpdate,
     },
   ];
-  const pageConfig = {
+  const pageConfig: pageConfigProps = {
     title: "Projects",
     listPageUrl: urls.getProjectsPage,
     addPrivilege: priviledges.add_project,
@@ -86,7 +144,7 @@ const ProjectList = () => {
     deletePrivilege: "",
     idColumn: "projectId",
   };
-  const addConfig = {
+  const addConfig: addConfigProps = {
     addModalOpen: addModalOpen,
     setAddModalOpen: setAddModalOpen,
     headerText: "Create Project",
@@ -98,7 +156,11 @@ const ProjectList = () => {
     <>
       {permissions.includes(pageConfig.viewPriviledge) ? (
         <>
-          <ListPage pageConfig={pageConfig} addConfig={addConfig} />
+          <ListPage
+            pageConfig={pageConfig}
+            addConfig={addConfig}
+            pageResponse={pageResponse}
+          />
         </>
       ) : (
         <NotAuthorized />

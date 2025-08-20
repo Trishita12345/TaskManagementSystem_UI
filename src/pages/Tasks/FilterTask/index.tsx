@@ -9,7 +9,6 @@ import {
   setClearFilter,
   setEmpIdsForFilter,
   setOnlyCurrentEmpIdForFilter,
-  setTaskFilterQuery,
   taskQuery,
 } from "../../../utils/redux/slices/taskSlice";
 import {
@@ -45,13 +44,7 @@ const FilterTask = ({}: any) => {
         flexDirection: width > 700 ? "row" : "column",
       }}
     >
-      <FilterInput
-        query={query}
-        setQuery={(val: string) => dispatch(setTaskFilterQuery(val))}
-        filterFunc={(val: string) => {
-          console.log(val);
-        }}
-      />
+      <FilterInput />
       <GroupAvatars
         avatars={employees}
         PopOverContent={PopOverContent}

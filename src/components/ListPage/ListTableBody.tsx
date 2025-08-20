@@ -11,7 +11,6 @@ import {
   Typography,
   TableBody,
   Box,
-  TablePagination,
 } from "@mui/material";
 import strings from "../../constants/strings";
 import { useSelector } from "react-redux";
@@ -21,19 +20,10 @@ import type {
   ListTableBodyProps,
   tableColumnProps,
 } from "../../constants/types";
+import { userDetails } from "../../utils/redux/slices/authenticationSlice";
 
-const ListTableBody = ({
-  pageResponse,
-  pageConfig,
-  usePermissions,
-  sortBy,
-  handleSort,
-  page,
-  handleChangePage,
-  size,
-  pageSizeChange,
-  getList,
-}: ListTableBodyProps) => {
+const ListTableBody = ({ pageResponse, pageConfig }: ListTableBodyProps) => {
+  const { permissions } = useSelector(userDetails);
   const theme = useSelector(getTheme);
   const navigate = useNavigate();
   return (
@@ -43,8 +33,6 @@ const ListTableBody = ({
           stickyHeader
           sx={{
             ".MuiTableCell-root": {
-              // backgroundColor: `${theme.primary}${theme.opacity}`,
-              // height: "58px",
               borderRadius: 0,
               paddingY: 1.2,
             },
@@ -69,16 +57,7 @@ const ListTableBody = ({
                     alignItems="center"
                   >
                     <Stack direction="row" spacing={0.5} alignItems="center">
-                      <TableSortLabel
-                        hideSortIcon={!column?.sortable}
-                        active={
-                          sortBy.sortBy === (column.localField || column.fiel)
-                        }
-                        direction={sortBy.direction ? "desc" : "asc"}
-                        onClick={() =>
-                          handleSort(column.localField || column.field)
-                        }
-                      >
+                      <TableSortLabel hideSortIcon={true}>
                         <Stack
                           direction="row"
                           alignItems="center"
@@ -124,11 +103,7 @@ const ListTableBody = ({
                         key={row.field}
                       >
                         {row.component ? (
-                          <row.component
-                            row={row}
-                            item={item}
-                            getList={getList}
-                          />
+                          <row.component row={row} item={item} />
                         ) : (
                           <Typography>{item[row["field"]]}</Typography>
                         )}
@@ -151,9 +126,7 @@ const ListTableBody = ({
                           direction="row"
                           spacing={2}
                         >
-                          {usePermissions?.includes(
-                            pageConfig.viewPriviledge
-                          ) && (
+                          {permissions?.includes(pageConfig.viewPriviledge) && (
                             <Box
                               onClick={() =>
                                 navigate(
@@ -170,7 +143,7 @@ const ListTableBody = ({
                               />
                             </Box>
                           )}
-                          {usePermissions?.includes(
+                          {permissions?.includes(
                             pageConfig.deletePrivilege
                           ) && (
                             <Box sx={{ p: 0, pr: 2 }} onClick={() => {}}>
@@ -190,15 +163,6 @@ const ListTableBody = ({
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        component="div"
-        count={pageResponse.totalElements}
-        page={page}
-        onPageChange={handleChangePage}
-        rowsPerPage={size}
-        onRowsPerPageChange={pageSizeChange}
-        rowsPerPageOptions={[5, 10, 25, 50]}
-      />
     </>
   );
 };

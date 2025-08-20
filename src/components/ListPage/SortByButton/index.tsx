@@ -2,6 +2,7 @@ import * as React from "react";
 import { Button, Popover, Box, Typography, IconButton } from "@mui/material";
 import { KeyboardArrowRight, SwapVert } from "@mui/icons-material";
 import useScreenSize from "../../../utils/customHooks/useScreenSize";
+import { useSearchParams } from "react-router-dom";
 
 const directionLabels: Record<
   SortConfig["dataType"],
@@ -19,12 +20,9 @@ interface SortConfig {
 }
 interface SortByButton {
   sortByConfig: SortConfig[];
-  setSortBy: (e: { sortBy: string; direction: boolean }) => void;
 }
-export default function SortByButton({
-  sortByConfig,
-  setSortBy,
-}: SortByButton) {
+export default function SortByButton({ sortByConfig }: SortByButton) {
+  const [searchParams, setSearchParams] = useSearchParams();
   const { width } = useScreenSize();
   const [anchorEl1, setAnchorEl1] = React.useState<HTMLElement | null>(null);
   const [anchorEl2, setAnchorEl2] = React.useState<HTMLElement | null>(null);
@@ -43,8 +41,11 @@ export default function SortByButton({
     setAnchorEl2(null);
   };
 
-  const handleSort = (direction: boolean) => {
-    setSortBy({ sortBy: selectedField, direction: direction });
+  const handleSortBy = (direction: boolean) => {
+    const newParams = new URLSearchParams(searchParams.toString());
+    newParams.set("sortby", selectedField);
+    newParams.set("dir", `${direction ? "desc" : "asc"}`);
+    setSearchParams(newParams);
     handleClose1();
     setSelectedField("");
   };
@@ -120,42 +121,6 @@ export default function SortByButton({
         }}
       >
         <Box py={1}>
-          {/* <Button
-            onClick={() => handleSort(false)}
-            sx={{ textTransform: "capitalize", display: "block" }}
-          >
-            <Box
-              minWidth={"150px"}
-              pl={1}
-              display={"flex"}
-              justifyContent={"space-between"}
-              alignItems={"center"}
-            >
-              <Typography>
-                {`${
-                  sortByCofig.find((s) => s.field === selectedField)?.label
-                }: asc`}
-              </Typography>
-            </Box>
-          </Button>
-          <Button
-            onClick={() => handleSort(true)}
-            sx={{ textTransform: "capitalize", display: "block" }}
-          >
-            <Box
-              minWidth={"150px"}
-              pl={1}
-              display={"flex"}
-              justifyContent={"space-between"}
-              alignItems={"center"}
-            >
-              <Typography>
-                {`${
-                  sortByCofig.find((s) => s.field === selectedField)?.label
-                }: desc`}
-              </Typography>
-            </Box>
-          </Button> */}
           {["asc", "desc"].map((dir) => {
             const selected = sortByConfig.find(
               (s) => s.field === selectedField
@@ -164,7 +129,7 @@ export default function SortByButton({
             return (
               <Button
                 key={dir}
-                onClick={() => handleSort(dir === "desc")}
+                onClick={() => handleSortBy(dir === "desc")}
                 sx={{ textTransform: "capitalize", display: "block" }}
               >
                 <Box

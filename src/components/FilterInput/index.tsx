@@ -1,16 +1,27 @@
-import { TextField } from "@mui/material";
+import { IconButton, InputAdornment, TextField } from "@mui/material";
 import strings from "../../constants/strings";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { debounce } from "lodash-es";
+import { useSearchParams } from "react-router-dom";
+import { HighlightOff } from "@mui/icons-material";
 
-interface FilterInputProps {
-  filterFunc: (value: string) => void;
-  query: string;
-  setQuery: (value: string) => void;
-}
-const FilterInput = ({ filterFunc, query, setQuery }: FilterInputProps) => {
+const FilterInput = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get("query") || "";
+  const [localQuery, setLocalQuery] = useState<string>("");
+
+  useEffect(() => {
+    setLocalQuery(query);
+  }, [query]);
+
+  const handleSetQuery = (query: string) => {
+    const newParams = new URLSearchParams(searchParams.toString());
+    newParams.set("query", query);
+    setSearchParams(newParams);
+  };
+
   const debouncedSearch = useMemo(
-    () => debounce((value: string) => filterFunc(value), 500),
+    () => debounce((value: string) => handleSetQuery(value), 500),
     []
   );
 
@@ -24,10 +35,23 @@ const FilterInput = ({ filterFunc, query, setQuery }: FilterInputProps) => {
       size="small"
       placeholder={strings.filterInputText}
       variant="outlined"
-      value={query}
+      value={localQuery}
       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-        setQuery(e.target.value);
+        setLocalQuery(e.target.value);
         debouncedSearch(e.target.value);
+      }}
+      InputProps={{
+        endAdornment: (
+          <>
+            {query ? (
+              <InputAdornment position="end">
+                <IconButton onClick={() => handleSetQuery("")} edge="end">
+                  <HighlightOff fontSize="small" />
+                </IconButton>
+              </InputAdornment>
+            ) : null}
+          </>
+        ),
       }}
     />
   );
