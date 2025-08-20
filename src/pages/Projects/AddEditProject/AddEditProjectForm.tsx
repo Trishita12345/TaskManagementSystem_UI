@@ -146,7 +146,7 @@ export default function AddEditProjectForm({
             message: (
               <>
                 <span>Project Added Successfully. </span>
-                <Link to={`${routes.viewEditProject}/${"data.roleId"}`}>
+                <Link to={`${routes.viewEditProject}/${data.roleId}`}>
                   <span style={{ fontWeight: 600 }}>Click here</span>
                 </Link>
                 <span>to view details</span>
