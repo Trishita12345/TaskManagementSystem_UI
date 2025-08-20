@@ -102,11 +102,7 @@ const ListTableBody = ({ pageResponse, pageConfig }: ListTableBodyProps) => {
                         }}
                         key={row.field}
                       >
-                        {row.component ? (
-                          <row.component row={row} item={item} />
-                        ) : (
-                          <Typography>{item[row["field"]]}</Typography>
-                        )}
+                        <Typography>{item[row["field"]]}</Typography>
                       </TableCell>
                     ))}
                     {!pageConfig.hideActionText && (

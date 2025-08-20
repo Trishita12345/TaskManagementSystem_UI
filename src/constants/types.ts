@@ -5,7 +5,6 @@ export interface tableColumnProps {
   localField?: string;
   sortable?: boolean;
   dataType?: "string" | "number" | "date";
-  component?: any;
 }
 export interface pageConfigProps {
   title: string;

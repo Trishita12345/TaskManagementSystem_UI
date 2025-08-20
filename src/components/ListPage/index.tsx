@@ -32,7 +32,7 @@ const ListPage = ({
   const [searchParams, setSearchParams] = useSearchParams();
 
   const page = searchParams.get("page") || "0";
-  const size = searchParams.get("size") || "10";
+  const size = searchParams.get("size") || "5";
 
   const handleChangePage = (_event: unknown, newPage: number) => {
     const newParams = new URLSearchParams(searchParams.toString());

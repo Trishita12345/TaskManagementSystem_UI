@@ -56,7 +56,7 @@ const ProjectList = () => {
   const [searchParams] = useSearchParams();
 
   const page = searchParams.get("page") || "0";
-  const size = searchParams.get("size") || "10";
+  const size = searchParams.get("size") || "5";
   const sortBy = searchParams.get("sortby") || "";
   const direction = searchParams.get("dir") || "desc";
   const query = searchParams.get("query") || "";

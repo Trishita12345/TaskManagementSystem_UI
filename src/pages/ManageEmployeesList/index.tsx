@@ -4,26 +4,50 @@ import { useSearchParams } from "react-router-dom";
 import FullNameComponent from "../../components/FullNameComponent";
 import ListPage from "../../components/ListPage";
 import strings from "../../constants/strings";
-import type {
-  ListPageCustomCellProps,
-  pageBodyProps,
-} from "../../constants/types";
+import type { dropdownDataProps, pageBodyProps } from "../../constants/types";
 import { urls } from "../../constants/urls";
 import { getErrorMessage } from "../../utils/helperFunctions/commonHelperFunctions";
 import { setIsLoading, setMessage } from "../../utils/redux/slices/commonSlice";
 import { getPaginatedList } from "../../utils/services/getListService";
 import AssignRole from "./AssignRole";
 import { useDispatch } from "react-redux";
+import { fetchRoleOptions } from "../../utils/services/roleService";
 
 const ManageEmployeesList = () => {
   const dispatch = useDispatch();
+  const [roleOptions, setRoleOptions] = useState<dropdownDataProps[]>([]);
   const [pageResponse, setPageResponse] = useState<any>({});
   const [searchParams] = useSearchParams();
   const page = searchParams.get("page") || "0";
-  const size = searchParams.get("size") || "10";
+  const size = searchParams.get("size") || "5";
   const sortBy = searchParams.get("sortby") || "";
   const direction = searchParams.get("dir") || "desc";
   const query = searchParams.get("query") || "";
+
+  const handleCatch = (err: AxiosError<{ message: string }>) => {
+    dispatch(
+      setMessage({
+        display: true,
+        severity: "error",
+        message: getErrorMessage(err),
+      })
+    );
+  };
+
+  const getRoleOptions = async () => {
+    try {
+      dispatch(setIsLoading(true));
+      const { data } = await fetchRoleOptions();
+      setRoleOptions(data);
+    } catch (e: any) {
+      handleCatch(e);
+    } finally {
+      dispatch(setIsLoading(false));
+    }
+  };
+  useEffect(() => {
+    getRoleOptions();
+  }, []);
 
   const getList = async () => {
     let body: pageBodyProps = {
@@ -42,38 +66,43 @@ const ManageEmployeesList = () => {
         urls.getEmployessPage,
         body
       );
-      setPageResponse(data);
-    } catch (e) {
-      const err = e as AxiosError<{ message: string }>;
-      dispatch(
-        setMessage({
-          display: true,
-          severity: "error",
-          message: getErrorMessage(err),
-        })
-      );
+      const modifiedData = {
+        ...data,
+        content: data.content.map((item: any) => ({
+          ...item,
+          name: (
+            <FullNameComponent
+              firstName={item.firstName}
+              lastName={item.lastName}
+              profileImage={item.profileImage}
+            />
+          ),
+          role: (
+            <AssignRole
+              item={item}
+              roleOptions={roleOptions}
+              getList={getList}
+            />
+          ),
+        })),
+      };
+      setPageResponse(modifiedData);
+    } catch (e: any) {
+      handleCatch(e);
     } finally {
       dispatch(setIsLoading(false));
     }
   };
   useEffect(() => {
-    getList();
-  }, [page, size, sortBy, direction, query]);
+    if (roleOptions.length > 0) getList();
+  }, [roleOptions, page, size, sortBy, direction, query]);
 
-  const Name = ({ item }: ListPageCustomCellProps) => (
-    <FullNameComponent
-      firstName={item.firstName}
-      lastName={item.lastName}
-      profileImage={item.profileImage}
-    />
-  );
   const tableColumn = [
     {
-      field: "firstName",
+      field: "name",
       headerName: "Name",
       sortable: true,
       localField: "firstname",
-      component: Name,
     },
     {
       field: "email",
@@ -83,7 +112,6 @@ const ManageEmployeesList = () => {
     {
       field: "role",
       headerName: "Role",
-      component: AssignRole,
       sortable: true,
       localField: "role.name",
     },
