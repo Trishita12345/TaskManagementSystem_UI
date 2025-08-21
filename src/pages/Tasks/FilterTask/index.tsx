@@ -20,7 +20,7 @@ import PopOverContent from "./PopOverContent";
 
 const FilterTask = ({}: any) => {
   const theme = useSelector(getTheme);
-  const { empId } = useSelector(userDetails);
+  const { employeeId } = useSelector(userDetails);
   const { width } = useScreenSize();
   const query = useSelector(taskQuery);
   const empIdsForFilter = useSelector(selectedEmployeeIds);
@@ -28,7 +28,7 @@ const FilterTask = ({}: any) => {
   const { employees } = useSelector(selectedProjectDetails);
 
   const selectCurrentUserForFilter = () => {
-    dispatch(setOnlyCurrentEmpIdForFilter(empId));
+    dispatch(setOnlyCurrentEmpIdForFilter(employeeId));
   };
 
   const onClear = () => {

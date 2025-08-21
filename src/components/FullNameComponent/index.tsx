@@ -1,20 +1,23 @@
 import { Box, Typography } from "@mui/material";
-import CustomAvatar from "../CustomAvatar";
+import CustomEmployeeAvatar from "../CustomEmployeeAvatar";
+import type { EmployeeSummaryType } from "../../constants/types";
 
-interface FullNameComponentProps {
-  firstName: string;
-  lastName: string;
-  profileImage: string;
-}
 const FullNameComponent = ({
-  firstName,
-  lastName,
-  profileImage,
-}: FullNameComponentProps) => {
+  employeeDetails,
+}: {
+  employeeDetails: EmployeeSummaryType;
+}) => {
   return (
     <Box display={"flex"} alignItems={"center"} gap={1}>
-      <CustomAvatar avatarImage={profileImage} height={28} width={28} />
-      <Typography>{firstName + " " + lastName}</Typography>
+      <CustomEmployeeAvatar
+        height={28}
+        width={28}
+        employeeDetails={employeeDetails}
+        showInitial={false}
+      />
+      <Typography>
+        {employeeDetails?.firstName + " " + employeeDetails?.lastName}
+      </Typography>
     </Box>
   );
 };

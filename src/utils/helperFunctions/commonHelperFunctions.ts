@@ -1,8 +1,11 @@
 import type { dropdownDataProps, themeType } from "../../constants/types";
-import { intervalToDuration, formatDistanceToNow } from "date-fns";
+import { intervalToDuration } from "date-fns";
 
 export const getNameInitials = (firstName: string, lastName: string) => {
-  return `${firstName.substring(0, 1)}${lastName.substring(0, 1)}`;
+  return `${firstName.substring(0, 1)}${lastName.substring(
+    0,
+    1
+  )}`.toUpperCase();
 };
 export const createPageUrl = (query: string, listPageUrl: string) => {
   return query !== "" ? `${listPageUrl}?query=${query}` : listPageUrl;

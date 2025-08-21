@@ -1,12 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getNameInitials } from "../../utils/helperFunctions/commonHelperFunctions";
 import { getTheme } from "../../utils/redux/slices/commonSlice";
 import {
   setIsAuthenticated,
   userDetails,
 } from "../../utils/redux/slices/authenticationSlice";
 import ThemeToggleSwitch from "../ThemeToggleSwich";
-import CustomAvatar from "../CustomAvatar";
+import CustomEmployeeAvatar from "../CustomEmployeeAvatar";
 import { logoutUser } from "../../utils/helperFunctions/authHelperFunctions";
 import LogoIcon from "../Logo/LogoIcon";
 import { Box } from "@mui/material";
@@ -15,7 +14,7 @@ import { Logout } from "@mui/icons-material";
 const NarrowSideBar = () => {
   const theme = useSelector(getTheme);
   const dispatch = useDispatch();
-  const { firstname, lastname, profileImage } = useSelector(userDetails);
+  const { permissions, ...empDetails } = useSelector(userDetails);
   const handleLogout = () => {
     logoutUser();
     dispatch(setIsAuthenticated());
@@ -43,10 +42,9 @@ const NarrowSideBar = () => {
           alignItems={"center"}
           gap={2}
         >
-          <CustomAvatar
-            text={getNameInitials(firstname, lastname)}
-            avatarImage={profileImage}
-            onClick={() => {}}
+          <CustomEmployeeAvatar
+            employeeDetails={empDetails}
+            onTooltipClick={() => {}}
           />
           <ThemeToggleSwitch />
           <Logout onClick={handleLogout} />

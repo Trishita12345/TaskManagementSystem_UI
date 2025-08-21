@@ -26,7 +26,17 @@ export default function SortByButton({ sortByConfig }: SortByButton) {
   const { width } = useScreenSize();
   const [anchorEl1, setAnchorEl1] = React.useState<HTMLElement | null>(null);
   const [anchorEl2, setAnchorEl2] = React.useState<HTMLElement | null>(null);
+  const [selected, setSelected] = React.useState<SortConfig | null>(null);
   const [selectedField, setSelectedField] = React.useState<string>("");
+
+  const sortby = searchParams.get("sortby") || "";
+  const direction = searchParams.get("dir") || "desc";
+
+  React.useEffect(() => {
+    const item =
+      sortByConfig.find((item: SortConfig) => item.field === sortby) || null;
+    setSelected(item);
+  }, [sortby]);
 
   // list page sort by button
   const handleSortButtonClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -43,11 +53,13 @@ export default function SortByButton({ sortByConfig }: SortByButton) {
 
   const handleSortBy = (direction: boolean) => {
     const newParams = new URLSearchParams(searchParams.toString());
-    newParams.set("sortby", selectedField);
-    newParams.set("dir", `${direction ? "desc" : "asc"}`);
-    setSearchParams(newParams);
-    handleClose1();
-    setSelectedField("");
+    if (selectedField) {
+      newParams.set("sortby", selectedField);
+      newParams.set("dir", `${direction ? "desc" : "asc"}`);
+      setSearchParams(newParams);
+      handleClose1();
+      setSelectedField("");
+    }
   };
 
   const open1 = Boolean(anchorEl1);
@@ -59,8 +71,13 @@ export default function SortByButton({ sortByConfig }: SortByButton) {
         <Button
           onClick={handleSortButtonClick}
           startIcon={<SwapVert fontSize="large" />}
+          sx={{ textTransform: "capitalize" }}
         >
-          Sort By
+          {selected
+            ? `${selected.label}: ${
+                directionLabels[selected.dataType][direction as "asc" | "desc"]
+              }`
+            : "Sort By"}
         </Button>
       ) : (
         <IconButton onClick={handleSortButtonClick}>
@@ -122,10 +139,10 @@ export default function SortByButton({ sortByConfig }: SortByButton) {
       >
         <Box py={1}>
           {["asc", "desc"].map((dir) => {
-            const selected = sortByConfig.find(
+            const selectedData = sortByConfig.find(
               (s) => s.field === selectedField
             );
-            if (!selected) return null;
+            if (!selectedData) return null;
             return (
               <Button
                 key={dir}
@@ -140,8 +157,10 @@ export default function SortByButton({ sortByConfig }: SortByButton) {
                   alignItems={"center"}
                 >
                   <Typography>
-                    {`${selected.label}: ${
-                      directionLabels[selected.dataType][dir as "asc" | "desc"]
+                    {`${selectedData.label}: ${
+                      directionLabels[selectedData.dataType][
+                        dir as "asc" | "desc"
+                      ]
                     }`}
                   </Typography>
                 </Box>

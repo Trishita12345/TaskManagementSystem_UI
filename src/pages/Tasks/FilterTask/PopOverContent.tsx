@@ -6,7 +6,7 @@ import { getTheme } from "../../../utils/redux/slices/commonSlice";
 import { Box, Checkbox, FormControlLabel } from "@mui/material";
 import { selectedProjectDetails } from "../../../utils/redux/slices/authenticationSlice";
 import { setEmpIdsForFilter } from "../../../utils/redux/slices/taskSlice";
-import CustomAvatar from "../../../components/CustomAvatar";
+import CustomEmployeeAvatar from "../../../components/CustomEmployeeAvatar";
 import { colors } from "../../../constants/data";
 
 interface PopOverContentItems {
@@ -47,9 +47,8 @@ const PopOverContentItems = ({ data, index }: PopOverContentItems) => {
         }
         label={
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <CustomAvatar
-              text={getNameInitials(data.firstName, data.lastName)}
-              avatarImage={data.profileImage}
+            <CustomEmployeeAvatar
+              employeeDetails={data}
               bgColor={colors[index % colors.length]}
             />
             <div>{`${data.firstName} ${data.lastName}`}</div>

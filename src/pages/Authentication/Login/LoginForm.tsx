@@ -33,7 +33,7 @@ const LoginForm: React.FC = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { empId } = useSelector(userDetails);
+  const { employeeId } = useSelector(userDetails);
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -41,7 +41,7 @@ const LoginForm: React.FC = () => {
     try {
       await login(formData);
       const { data } = await getProfile();
-      if (empId !== data.empId) {
+      if (employeeId !== data.employeeId) {
         dispatch(setSelectedProject({}));
       }
       dispatch(setIsAuthenticated());

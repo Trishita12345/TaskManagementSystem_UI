@@ -14,7 +14,12 @@ import type { AxiosError } from "axios";
 import { getErrorMessage } from "../../utils/helperFunctions/commonHelperFunctions";
 import { setIsLoading, setMessage } from "../../utils/redux/slices/commonSlice";
 
-const AssignRole = ({ item, roleOptions, getList }: any) => {
+interface AssignRole {
+  item: any;
+  roleOptions: dropdownDataProps[];
+  getList: () => void;
+}
+const AssignRole = ({ item, roleOptions, getList }: AssignRole) => {
   const { permissions, email } = useSelector(userDetails);
   const dispatch = useDispatch();
   const handleCatch = (err: AxiosError<{ message: string }>) => {

@@ -82,7 +82,7 @@ export type EmployeeSummaryType = {
   profileImage: string;
   role: {
     roleId: string;
-    roleName: string;
+    name: string;
   };
 };
 
@@ -107,11 +107,6 @@ export type AddEditProjectInputProps = {
   managerId: string;
   employeeIds: (string | undefined)[];
 };
-export interface ListPageCustomCellProps {
-  row: tableColumnProps;
-  item: any;
-  getList: () => void;
-}
 export interface themeType {
   primary: string;
   primaryTextColor: string;

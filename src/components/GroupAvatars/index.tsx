@@ -2,11 +2,11 @@ import * as React from "react";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Popover from "@mui/material/Popover";
 import type { EmployeeSummaryType } from "../../constants/types";
-import CustomAvatar from "../CustomAvatar";
+import CustomEmployeeAvatar from "../CustomEmployeeAvatar";
 import { useSelector } from "react-redux";
 import { getTheme } from "../../utils/redux/slices/commonSlice";
-import { getNameInitials } from "../../utils/helperFunctions/commonHelperFunctions";
 import { colors } from "../../constants/data";
+import { Avatar } from "@mui/material";
 
 interface GroupAvatarsProps {
   avatars: EmployeeSummaryType[];
@@ -48,38 +48,35 @@ export default function GroupAvatars({
       <AvatarGroup
         max={5}
         renderSurplus={(surplus) => (
-          <>
-            <CustomAvatar
-              onClick={handleExtraClick}
-              text={`+${surplus}`}
-              sx={{
-                cursor: "pointer",
-                ...(isSurplusAvatarSelected() && {
-                  border: `2.5px solid ${theme.primary} !important`,
-                  zIndex: 1, // bring it to the top
-                }),
-                transition: "all 0.2s ease-in-out",
-              }}
-            />
-          </>
+          <Avatar
+            onClick={handleExtraClick}
+            sx={{
+              height: 35,
+              width: 35,
+              cursor: "pointer",
+              ...(isSurplusAvatarSelected() && {
+                border: `2.5px solid ${theme.primary} !important`,
+                zIndex: 1, // bring it to the top
+              }),
+              transition: "all 0.2s ease-in-out",
+            }}
+          >{`+${surplus}`}</Avatar>
         )}
       >
         {avatars?.map((a, index) => {
           return (
-            <CustomAvatar
+            <CustomEmployeeAvatar
               key={a.employeeId}
-              tooltipText={`${a.firstName} ${a.lastName}(${a.email})`}
-              avatarImage={a.profileImage}
-              text={getNameInitials(a.firstName, a.lastName)}
+              employeeDetails={a}
               onClick={() => handleSelectAvatar(a.employeeId)}
               bgColor={colors[index % colors.length]}
               sx={{
-                cursor: "pointer",
                 ...(isAvatarSelected(a.employeeId) && {
                   border: `2.5px solid ${theme.primary} !important`,
                   zIndex: 1,
                 }),
                 transition: "all 0.2s ease-in-out",
+                cursor: "pointer",
               }}
             />
           );

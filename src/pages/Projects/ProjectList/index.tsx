@@ -11,7 +11,6 @@ import {
 import NotAuthorized from "../../NotAuthorized";
 import { Link, Typography } from "@mui/material";
 import type {
-  ListPageCustomCellProps,
   pageBodyProps,
   pageConfigProps,
   tableColumnProps,
@@ -32,21 +31,6 @@ import type { AxiosError } from "axios";
 import AddEditProjectForm from "../AddEditProject/AddEditProjectForm";
 import AddModal from "../../../components/AddModal";
 
-const Manager = ({ item }: ListPageCustomCellProps) => (
-  <FullNameComponent
-    firstName={item.manager.firstName}
-    lastName={item.manager.lastName}
-    profileImage={item.manager.profileImage}
-  />
-);
-
-const LastUpdate = ({ item }: ListPageCustomCellProps) => (
-  <Typography>
-    {`${getDateDiff(item.updatedAt)} by ${item.updatedBy.firstName} ${
-      item.updatedBy.lastName
-    }`}
-  </Typography>
-);
 const ProjectList = () => {
   const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
   const [pageResponse, setPageResponse] = useState<any>({});
@@ -78,7 +62,30 @@ const ProjectList = () => {
         urls.getProjectsPage,
         body
       );
-      setPageResponse(data);
+      const modifiedData = {
+        ...data,
+        content: data.content.map((item: any) => ({
+          ...item,
+          manager: <FullNameComponent employeeDetails={item.manager} />,
+          name: (
+            <Link
+              underline="hover"
+              onClick={() => selectProject(item)}
+              sx={{ fontWeight: 600, fontSize: "14px" }}
+            >
+              {item.name}
+            </Link>
+          ),
+          updatedAt: (
+            <Typography>
+              {`${getDateDiff(item.updatedAt)} by ${item.updatedBy.firstName} ${
+                item.updatedBy.lastName
+              }`}
+            </Typography>
+          ),
+        })),
+      };
+      setPageResponse(modifiedData);
     } catch (e) {
       const err = e as AxiosError<{ message: string }>;
       dispatch(
@@ -96,15 +103,6 @@ const ProjectList = () => {
     getList();
   }, [page, size, sortBy, direction, query]);
 
-  const ProjectName = ({ item }: ListPageCustomCellProps) => (
-    <Link
-      underline="hover"
-      onClick={() => selectProject(item)}
-      sx={{ fontWeight: 600, fontSize: "14px" }}
-    >
-      {item.name}
-    </Link>
-  );
   const selectProject = (item: any) => {
     dispatch(setSelectedProject(item));
     dispatch(setIsSidebarOpen(true));
@@ -116,20 +114,17 @@ const ProjectList = () => {
       field: "name",
       headerName: "Project Name",
       sortable: true,
-      component: ProjectName,
     },
     {
       field: "manager",
       headerName: "Managed By",
       sortable: true,
-      component: Manager,
     },
     {
       field: "updatedAt",
       headerName: "Last Update",
       sortable: true,
       dataType: "date",
-      component: LastUpdate,
     },
   ];
   const pageConfig: pageConfigProps = {

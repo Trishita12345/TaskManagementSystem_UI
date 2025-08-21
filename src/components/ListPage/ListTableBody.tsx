@@ -15,7 +15,7 @@ import {
 import strings from "../../constants/strings";
 import { useSelector } from "react-redux";
 import { getTheme } from "../../utils/redux/slices/commonSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import type {
   ListTableBodyProps,
   tableColumnProps,
@@ -26,6 +26,10 @@ const ListTableBody = ({ pageResponse, pageConfig }: ListTableBodyProps) => {
   const { permissions } = useSelector(userDetails);
   const theme = useSelector(getTheme);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const sortby = searchParams.get("sortby") || "";
+  const dir = searchParams.get("dir") || "desc";
   return (
     <>
       <TableContainer component={Paper}>
@@ -57,7 +61,14 @@ const ListTableBody = ({ pageResponse, pageConfig }: ListTableBodyProps) => {
                     alignItems="center"
                   >
                     <Stack direction="row" spacing={0.5} alignItems="center">
-                      <TableSortLabel hideSortIcon={true}>
+                      <TableSortLabel
+                        sx={{ cursor: "default" }}
+                        hideSortIcon={!column.sortable}
+                        active={
+                          sortby === (column?.localField || column?.field)
+                        }
+                        direction={dir as "desc" | "asc"}
+                      >
                         <Stack
                           direction="row"
                           alignItems="center"

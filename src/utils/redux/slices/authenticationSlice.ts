@@ -4,20 +4,27 @@ import {
   saveToStorage,
 } from "../../helperFunctions/storageHelperFunctions";
 import Cookies from "js-cookie";
-import type { ProjectDetailsType } from "../../../constants/types";
+import type {
+  EmployeeSummaryType,
+  ProjectDetailsType,
+} from "../../../constants/types";
 
+interface userDetails extends EmployeeSummaryType {
+  permissions: string[];
+}
 interface AppState {
   isAuthenticated: boolean;
   selectedProject: ProjectDetailsType;
-  userDetails: {
-    empId: string;
-    firstname: string;
-    lastname: string;
-    email: string;
-    profileImage: string;
-    role: { roleId: string; name: string };
-    permissions: string[];
-  };
+  userDetails: userDetails;
+  // {
+  //   empId: string;
+  //   firstname: string;
+  //   lastname: string;
+  //   email: string;
+  //   profileImage: string;
+  //   role: { roleId: string; name: string };
+  //   permissions: string[];
+  // };
 }
 
 const initialState = {
