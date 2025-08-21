@@ -29,7 +29,7 @@ const EmployeeTooltipContent = ({
 }) => {
   const theme = useSelector(getTheme);
   return (
-    <Card sx={{ width: 400, border: "1px solid #1976d2", minHeight: "200px" }}>
+    <Card sx={{ width: 400, minHeight: "200px" }}>
       <Box
         sx={{
           backgroundColor: theme.primary,
