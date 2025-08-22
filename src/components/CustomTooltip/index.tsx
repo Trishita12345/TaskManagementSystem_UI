@@ -1,28 +1,31 @@
 import { Tooltip } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-const CustomTooltip = styled(({ className, ...props }: any) => (
-  <Tooltip
-    {...props}
-    classes={{ popper: className }}
-    PopperProps={{
-      modifiers: [
-        {
-          name: "offset",
-          options: {
-            offset: [0, 0], // remove Popper spacing
+const CustomTooltip = styled(
+  ({ className, disableInteractive, ...props }: any) => (
+    <Tooltip
+      {...props}
+      disableInteractive={disableInteractive}
+      classes={{ popper: className }}
+      PopperProps={{
+        modifiers: [
+          {
+            name: "offset",
+            options: {
+              offset: [0, 0], // remove Popper spacing
+            },
           },
-        },
-        {
-          name: "preventOverflow",
-          options: {
-            padding: 0, // remove viewport padding
+          {
+            name: "preventOverflow",
+            options: {
+              padding: 0, // remove viewport padding
+            },
           },
-        },
-      ],
-    }}
-  />
-))(() => ({
+        ],
+      }}
+    />
+  )
+)(() => ({
   [`&.MuiTooltip-popper`]: {
     zIndex: 9999, // <-- raise above dialogs/other elements
   },

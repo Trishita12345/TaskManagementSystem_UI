@@ -33,8 +33,8 @@ const schema = yup.object().shape({
     .string()
     .required("Task Name is required")
     .max(200, "Task Name must be at most 200 characters"),
-  priority: yup.string().required("Priority is required"),
-  type: yup.string().required("Type is required"),
+  priority: yup.string().default("P0").required("Priority is required"),
+  type: yup.string().default("STORY").required("Type is required"),
   assignedTo: yup.string().nullable().default("unassigned"),
   startDate: yup.date().nullable().typeError("Invalid date").default(null),
   endDate: yup
@@ -76,7 +76,7 @@ export default function AddTaskForm({
   const assigneeList = getEmployeesWithDefalult(employees).map(
     (a: EmployeeSummaryType) => ({
       value: a.employeeId,
-      label: <FullNameComponent employeeDetails={a} />,
+      label: <FullNameComponent employeeDetails={a} showTooltip={false} />,
     })
   );
   const prioritiesList = priorities.map((p: dropdownDataProps) => ({
@@ -156,6 +156,7 @@ export default function AddTaskForm({
                   select
                   fullWidth
                   label="Priority"
+                  defaultValue={"P0"}
                   error={!!errors.priority}
                   helperText={errors.priority?.message}
                 >
@@ -181,6 +182,7 @@ export default function AddTaskForm({
                   select
                   fullWidth
                   label="Type"
+                  defaultValue={"STORY"}
                   error={!!errors.type}
                   helperText={errors.type?.message}
                 >

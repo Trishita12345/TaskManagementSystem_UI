@@ -46,6 +46,7 @@ import AddTaskForm from "./AddTask/AddTaskForm.tsx";
 import type { TaskSummary } from "../../constants/types.ts";
 import FullNameComponent from "../../components/FullNameComponent/index.tsx";
 import { Link as RouterLink } from "react-router-dom";
+import KanbanBoard from "./KanbanBoard.tsx";
 
 const Tasks = () => {
   const theme = useSelector(getTheme);
@@ -145,7 +146,8 @@ const Tasks = () => {
         <FilterTask />
         <AddTaskButton onAdd={() => setAddModalOpen(true)} />
       </Box>
-      <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <KanbanBoard />
+      {/* <TableContainer component={Paper} sx={{ width: "100%" }}>
         <Table sx={{ width: "100%" }}>
           <TableHead>
             <TableRow>
@@ -172,7 +174,7 @@ const Tasks = () => {
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer> */}
       <AddModal
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}

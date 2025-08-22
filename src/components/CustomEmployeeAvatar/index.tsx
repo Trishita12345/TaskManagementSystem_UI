@@ -33,6 +33,7 @@ const CustomEmployeeAvatar = ({
   return (
     <CustomTooltip
       placement="right"
+      disableInteractive={!onTooltipClick}
       title={
         <>
           {showTooltip ? (

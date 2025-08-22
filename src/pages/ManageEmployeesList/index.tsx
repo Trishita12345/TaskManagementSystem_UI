@@ -70,7 +70,9 @@ const ManageEmployeesList = () => {
         ...data,
         content: data.content.map((item: any) => ({
           ...item,
-          name: <FullNameComponent employeeDetails={item} />,
+          name: (
+            <FullNameComponent employeeDetails={item} showTooltip={false} />
+          ),
           role: (
             <AssignRole
               item={item}
