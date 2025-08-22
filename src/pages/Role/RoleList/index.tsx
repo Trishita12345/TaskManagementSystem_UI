@@ -13,7 +13,7 @@ import {
   setIsLoading,
   setMessage,
 } from "../../../utils/redux/slices/commonSlice";
-import { getPaginatedList } from "../../../utils/services/getListService";
+import { getPaginatedList } from "../../../utils/services/commonService";
 import AddModal from "../../../components/AddModal";
 import AddRoleForm from "../AddRole/AddRoleForm";
 

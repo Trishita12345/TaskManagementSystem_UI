@@ -5,7 +5,7 @@ import type { EmployeeSummaryType } from "../../constants/types";
 import CustomEmployeeAvatar from "../CustomEmployeeAvatar";
 import { useSelector } from "react-redux";
 import { getTheme } from "../../utils/redux/slices/commonSlice";
-import { colors } from "../../constants/data";
+import { colors } from "../../constants/colors";
 import { Avatar } from "@mui/material";
 
 interface GroupAvatarsProps {
@@ -66,6 +66,7 @@ export default function GroupAvatars({
         {avatars?.map((a, index) => {
           return (
             <CustomEmployeeAvatar
+              showInitial={a.firstName !== "Unassigned"}
               key={a.employeeId}
               employeeDetails={a}
               onClick={() => handleSelectAvatar(a.employeeId)}

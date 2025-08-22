@@ -2,7 +2,7 @@ import "./authenticatedLayout.css";
 import Sidebar from "./Sidebar";
 import useScreenSize from "../../utils/customHooks/useScreenSize";
 import { useEffect } from "react";
-import { smallDevice } from "../../constants/data";
+import { smallDevice } from "../../constants/colors";
 import NarrowSideBar from "./NarrowSideBar";
 import { Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";

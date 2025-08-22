@@ -8,7 +8,7 @@ import type { dropdownDataProps, pageBodyProps } from "../../constants/types";
 import { urls } from "../../constants/urls";
 import { getErrorMessage } from "../../utils/helperFunctions/commonHelperFunctions";
 import { setIsLoading, setMessage } from "../../utils/redux/slices/commonSlice";
-import { getPaginatedList } from "../../utils/services/getListService";
+import { getPaginatedList } from "../../utils/services/commonService";
 import AssignRole from "./AssignRole";
 import { useDispatch } from "react-redux";
 import { fetchRoleOptions } from "../../utils/services/roleService";

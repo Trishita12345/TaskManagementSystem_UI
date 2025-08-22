@@ -8,7 +8,7 @@ import {
   Chip,
 } from "@mui/material";
 import { getNameInitials } from "../../utils/helperFunctions/commonHelperFunctions";
-import { Edit } from "@mui/icons-material";
+import { Edit, Person } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { getTheme } from "../../utils/redux/slices/commonSlice";
 
@@ -19,6 +19,7 @@ const EmployeeTooltipContent = ({
   role,
   profileImage,
   onTooltipClick,
+  showInitial = true,
 }: {
   firstName: string;
   lastName: string;
@@ -26,6 +27,7 @@ const EmployeeTooltipContent = ({
   role: string;
   profileImage: string;
   onTooltipClick?: () => void;
+  showInitial?: boolean;
 }) => {
   const theme = useSelector(getTheme);
   return (
@@ -49,27 +51,40 @@ const EmployeeTooltipContent = ({
           }}
           src={profileImage}
         >
-          <Typography variant="h3">
-            {getNameInitials(firstName, lastName)}
-          </Typography>
+          {showInitial ? (
+            <Typography variant="h3">
+              {getNameInitials(firstName, lastName)}
+            </Typography>
+          ) : (
+            <Person sx={{ fontSize: "100px" }} />
+          )}
         </Avatar>
-        <Box sx={{ position: "absolute", top: 40, left: 160, pl: "8px" }}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: firstName !== "Unassigned" ? 40 : 60,
+            left: 160,
+            pl: "8px",
+          }}
+        >
           <Typography variant="subtitle1">{`${firstName} ${lastName}`}</Typography>
           <Typography variant="body2">{email}</Typography>
         </Box>
       </Box>
       <CardContent sx={{ position: "relative", pt: 1 }}>
-        <Chip
-          sx={{
-            position: "absolute",
-            left: 160,
-            pl: "8px",
-            borderRadius: 0,
-            px: 0,
-            color: theme.primary,
-          }}
-          label={<Typography variant="body1">{role}</Typography>}
-        ></Chip>
+        {role && (
+          <Chip
+            sx={{
+              position: "absolute",
+              left: 160,
+              pl: "8px",
+              borderRadius: 0,
+              px: 0,
+              color: theme.primary,
+            }}
+            label={<Typography variant="body1">{role}</Typography>}
+          ></Chip>
+        )}
         {onTooltipClick && (
           <Button
             sx={{ position: "absolute", left: 160, top: 50, pl: "8px" }}

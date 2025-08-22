@@ -9,7 +9,6 @@ import {
   setClearFilter,
   setEmpIdsForFilter,
   setOnlyCurrentEmpIdForFilter,
-  taskQuery,
 } from "../../../utils/redux/slices/taskSlice";
 import {
   selectedProjectDetails,
@@ -17,21 +16,27 @@ import {
 } from "../../../utils/redux/slices/authenticationSlice";
 import GroupAvatars from "../../../components/GroupAvatars";
 import PopOverContent from "./PopOverContent";
+import { useSearchParams } from "react-router-dom";
+import { getEmployeesWithDefalult } from "../../../utils/helperFunctions/commonHelperFunctions";
 
 const FilterTask = ({}: any) => {
   const theme = useSelector(getTheme);
   const { employeeId } = useSelector(userDetails);
   const { width } = useScreenSize();
-  const query = useSelector(taskQuery);
   const empIdsForFilter = useSelector(selectedEmployeeIds);
   const dispatch = useDispatch();
   const { employees } = useSelector(selectedProjectDetails);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get("query") || "";
 
   const selectCurrentUserForFilter = () => {
     dispatch(setOnlyCurrentEmpIdForFilter(employeeId));
   };
 
   const onClear = () => {
+    const newParams = new URLSearchParams(searchParams.toString());
+    newParams.set("query", "");
+    setSearchParams(newParams);
     dispatch(setClearFilter());
   };
 
@@ -46,7 +51,7 @@ const FilterTask = ({}: any) => {
     >
       <FilterInput />
       <GroupAvatars
-        avatars={employees}
+        avatars={getEmployeesWithDefalult(employees)}
         PopOverContent={PopOverContent}
         selectedAvatars={empIdsForFilter}
         handleSelectAvatar={(empId: string) =>

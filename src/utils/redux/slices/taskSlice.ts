@@ -1,18 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { dropdownDataProps } from "../../../constants/types";
+import {
+  fetchFromStorage,
+  saveToStorage,
+} from "../../helperFunctions/storageHelperFunctions";
 
 interface appState {
   statusList: dropdownDataProps[];
+  priorityList: dropdownDataProps[];
+  taskTypeList: dropdownDataProps[];
   tasks: any[];
-  taskFilterQuery: string;
-  empIdsForFilter: any[];
+  empIdsForFilter: string[];
 }
 
 const initialState: appState = {
   statusList: [],
+  priorityList: [],
+  taskTypeList: [],
   tasks: [],
-  taskFilterQuery: "",
-  empIdsForFilter: [],
+  empIdsForFilter: JSON.parse(fetchFromStorage("empIdsForFilter") ?? "[]"),
 };
 
 const taskSlice = createSlice({
@@ -22,26 +28,31 @@ const taskSlice = createSlice({
     setStatusList(state, action) {
       state.statusList = action.payload;
     },
+    setPriorityList(state, action) {
+      state.priorityList = action.payload;
+    },
+    setTaskTypeList(state, action) {
+      state.taskTypeList = action.payload;
+    },
     setTasks(state, action) {
       state.tasks = action.payload;
     },
-    setTaskFilterQuery(state, action) {
-      state.taskFilterQuery = action.payload;
-    },
     setEmpIdsForFilter(state, action) {
+      let filteredList;
       if (state.empIdsForFilter.includes(action.payload)) {
-        state.empIdsForFilter = state.empIdsForFilter.filter(
+        filteredList = state.empIdsForFilter.filter(
           (s) => s !== action.payload
         );
       } else {
-        state.empIdsForFilter = [...state.empIdsForFilter, action.payload];
+        filteredList = [...state.empIdsForFilter, action.payload];
       }
+      state.empIdsForFilter = filteredList;
+      saveToStorage("empIdsForFilter", JSON.stringify(filteredList));
     },
     setOnlyCurrentEmpIdForFilter(state, action) {
       state.empIdsForFilter = [action.payload];
     },
     setClearFilter(state) {
-      state.taskFilterQuery = "";
       state.empIdsForFilter = [];
     },
   },
@@ -53,7 +64,8 @@ export const {
   setEmpIdsForFilter,
   setOnlyCurrentEmpIdForFilter,
   setClearFilter,
-  setTaskFilterQuery,
+  setPriorityList,
+  setTaskTypeList,
 } = taskSlice.actions;
 export default taskSlice.reducer;
 
@@ -61,6 +73,8 @@ export const statuses = (state: { taskSlice: appState }) =>
   state.taskSlice.statusList;
 export const selectedEmployeeIds = (state: { taskSlice: appState }) =>
   state.taskSlice.empIdsForFilter;
-export const taskQuery = (state: { taskSlice: appState }) =>
-  state.taskSlice.taskFilterQuery;
+export const priorityList = (state: { taskSlice: appState }) =>
+  state.taskSlice.priorityList;
+export const taskTypeList = (state: { taskSlice: appState }) =>
+  state.taskSlice.taskTypeList;
 export const tasks = (state: { taskSlice: appState }) => state.taskSlice.tasks;

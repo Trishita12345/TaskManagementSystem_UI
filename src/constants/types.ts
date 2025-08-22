@@ -64,7 +64,7 @@ export interface AddEditRoleFormInputs extends AddRoleFormInputs {
   permissions: string[];
 }
 export interface dropdownDataProps {
-  label: string;
+  label: any;
   value: string;
 }
 export interface PermissionsComponentProps {
@@ -140,4 +140,32 @@ export interface ProjectDetails {
   createdBy: Employee;
   updatedBy: Employee;
   employees: Employee[];
+}
+export interface AddTaskFormValues {
+  taskName: string;
+  priority: string;
+  type: string;
+  assignedTo: string | null;
+  startDate: Date | null;
+  endDate: Date | null;
+  status: string;
+}
+
+export interface TaskSummary {
+  taskId: string;
+  taskName: string;
+  priority: string;
+  status: string;
+  type: string;
+  assignedTo: {
+    employeeId: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    profileImage: string;
+    role: {
+      roleId: string;
+      name: string;
+    };
+  };
 }

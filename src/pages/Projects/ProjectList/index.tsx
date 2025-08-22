@@ -26,7 +26,7 @@ import {
   setMessage,
 } from "../../../utils/redux/slices/commonSlice";
 import FullNameComponent from "../../../components/FullNameComponent";
-import { getPaginatedList } from "../../../utils/services/getListService";
+import { getPaginatedList } from "../../../utils/services/commonService";
 import type { AxiosError } from "axios";
 import AddEditProjectForm from "../AddEditProject/AddEditProjectForm";
 import AddModal from "../../../components/AddModal";

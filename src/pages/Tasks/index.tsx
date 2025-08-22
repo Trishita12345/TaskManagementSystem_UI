@@ -1,41 +1,107 @@
-import { useEffect } from "react";
-import { statusData, TaskData } from "../../constants/data.js";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setStatusList, setTasks } from "../../utils/redux/slices/taskSlice.ts";
+import {
+  selectedEmployeeIds,
+  setPriorityList,
+  setStatusList,
+  setTasks,
+  setTaskTypeList,
+  tasks,
+} from "../../utils/redux/slices/taskSlice.ts";
 import Loader from "../../components/Loader/index.js";
-import { getTheme, loading } from "../../utils/redux/slices/commonSlice.js";
+import {
+  getTheme,
+  loading,
+  setIsLoading,
+  setMessage,
+} from "../../utils/redux/slices/commonSlice.js";
 import FilterTask from "./FilterTask/index.js";
 import useScreenSize from "../../utils/customHooks/useScreenSize.js";
-import { Box, Link } from "@mui/material";
+import {
+  Box,
+  Link,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 import AddTaskButton from "./AddTask/AddTaskButton/index.js";
 import ProjectBreadcrumbs from "../../components/ProjectBreadcrumbs/index.tsx";
 import { routes } from "../../constants/routes.ts";
 import { selectedProjectDetails } from "../../utils/redux/slices/authenticationSlice.ts";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import {
+  fetchAllPriorities,
+  fetchAllStatuses,
+  fetchAllTasks,
+  fetchAllTaskTypes,
+} from "../../utils/services/taskService.ts";
+import { getErrorMessage } from "../../utils/helperFunctions/commonHelperFunctions.ts";
+import type { AxiosError } from "axios";
+import AddModal from "../../components/AddModal/index.tsx";
+import AddTaskForm from "./AddTask/AddTaskForm.tsx";
+import type { TaskSummary } from "../../constants/types.ts";
+import FullNameComponent from "../../components/FullNameComponent/index.tsx";
+import { Link as RouterLink } from "react-router-dom";
 
 const Tasks = () => {
   const theme = useSelector(getTheme);
   const { name, projectId } = useSelector(selectedProjectDetails);
+  const selectedEmpIds = useSelector(selectedEmployeeIds);
+  const taskList = useSelector(tasks);
   const navigate = useNavigate();
   const { width } = useScreenSize();
   const dispatch = useDispatch();
   const isLoading = useSelector(loading);
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("query") || "";
 
-  const getStatuses = () => {
-    dispatch(setStatusList(statusData));
+  const [isMetaDataLoaded, setIsMetaDataLoaded] = useState<boolean>(false);
+  const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
+  console.log(selectedEmpIds);
+  const handleCatch = (err: AxiosError<{ message: string }>) => {
+    dispatch(
+      setMessage({
+        display: true,
+        severity: "error",
+        message: getErrorMessage(err),
+      })
+    );
   };
-
-  const getTasks = () => {
-    dispatch(setTasks(TaskData));
-  };
-
-  const onAdd = () => {};
 
   useEffect(() => {
-    //TODO: promise.all
-    getTasks();
-    getStatuses();
+    const fetchData = async () => {
+      try {
+        dispatch(setIsLoading(true));
+        const [taskTypes, priorityTypes, statuses] = await Promise.all([
+          fetchAllTaskTypes(),
+          fetchAllPriorities(),
+          fetchAllStatuses(),
+        ]);
+        dispatch(setStatusList(statuses.data));
+        dispatch(setPriorityList(priorityTypes.data));
+        dispatch(setTaskTypeList(taskTypes.data));
+        setIsMetaDataLoaded(true);
+      } catch (e: any) {
+        handleCatch(e);
+      } finally {
+        dispatch(setIsLoading(false));
+      }
+    };
+
+    fetchData();
   }, []);
+
+  const getTasks = async () => {
+    const { data } = await fetchAllTasks(projectId, query, selectedEmpIds);
+    dispatch(setTasks(data));
+  };
+  useEffect(() => {
+    if (isMetaDataLoaded) getTasks();
+  }, [query, selectedEmpIds, isMetaDataLoaded]);
 
   const breadcrumbs = [
     <Link
@@ -77,8 +143,43 @@ const Tasks = () => {
         }}
       >
         <FilterTask />
-        <AddTaskButton onAdd={onAdd} />
+        <AddTaskButton onAdd={() => setAddModalOpen(true)} />
       </Box>
+      <TableContainer component={Paper} sx={{ width: "100%" }}>
+        <Table sx={{ width: "100%" }}>
+          <TableHead>
+            <TableRow>
+              <TableCell>Task Name</TableCell>
+              <TableCell>Priority</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Type</TableCell>
+              <TableCell>Assigned To</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {taskList.map((task: TaskSummary) => (
+              <TableRow key={task.taskId}>
+                <TableCell>
+                  <RouterLink to={task.taskId}>{task.taskName}</RouterLink>
+                </TableCell>
+                <TableCell>{task.priority}</TableCell>
+                <TableCell>{task.status}</TableCell>
+                <TableCell>{task.type}</TableCell>
+                <TableCell>
+                  <FullNameComponent employeeDetails={task.assignedTo} />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <AddModal
+        addModalOpen={addModalOpen}
+        setAddModalOpen={setAddModalOpen}
+        headerText={"Create Issue"}
+      >
+        <AddTaskForm setAddModalOpen={setAddModalOpen} />
+      </AddModal>
     </>
   );
 };

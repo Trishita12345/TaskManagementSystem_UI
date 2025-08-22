@@ -4,6 +4,8 @@ import Routes from "./routes/index.js";
 import { BrowserRouter as Router } from "react-router-dom";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { getTheme, isDark } from "./utils/redux/slices/commonSlice.js";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 function App() {
   const isDarkMode = useSelector(isDark);
@@ -20,12 +22,14 @@ function App() {
   });
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline /> {/* resets styles for consistency */}
-      <Router>
-        <Routes />
-      </Router>
-    </ThemeProvider>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline /> {/* resets styles for consistency */}
+        <Router>
+          <Routes />
+        </Router>
+      </ThemeProvider>
+    </LocalizationProvider>
   );
 }
 

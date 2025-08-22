@@ -10,6 +10,7 @@ import { logoutUser } from "../../utils/helperFunctions/authHelperFunctions";
 import LogoIcon from "../Logo/LogoIcon";
 import { Box } from "@mui/material";
 import { Logout } from "@mui/icons-material";
+import { setEmpIdsForFilter } from "../../utils/redux/slices/taskSlice";
 
 const NarrowSideBar = () => {
   const theme = useSelector(getTheme);
@@ -18,6 +19,7 @@ const NarrowSideBar = () => {
   const handleLogout = () => {
     logoutUser();
     dispatch(setIsAuthenticated());
+    dispatch(setEmpIdsForFilter([]));
   };
   return (
     <Box bgcolor={theme.primary} id="narrow-sidebar">

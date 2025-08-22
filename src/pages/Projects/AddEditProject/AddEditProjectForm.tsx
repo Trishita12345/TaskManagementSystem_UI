@@ -302,7 +302,8 @@ export default function AddEditProjectForm({
         {/*Add Mode */}
         {!id && (
           <Grid container sx={{ mt: "16px" }} spacing={1}>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={0} md={0} lg={8}></Grid>
+            <Grid item xs={12} md={6} lg={2}>
               <Button
                 fullWidth
                 type="button"
@@ -314,7 +315,7 @@ export default function AddEditProjectForm({
                 Reset
               </Button>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={6} lg={2}>
               <Button
                 fullWidth
                 type="submit"

@@ -16,6 +16,7 @@ interface CustomEmployeeAvatarTypes {
   width?: number;
   bgColor?: string;
   onTooltipClick?: () => void;
+  showTooltip?: boolean;
 }
 const CustomEmployeeAvatar = ({
   showInitial = true,
@@ -26,20 +27,26 @@ const CustomEmployeeAvatar = ({
   bgColor = blueGrey[300],
   employeeDetails,
   onTooltipClick,
+  showTooltip = true,
 }: CustomEmployeeAvatarTypes) => {
   const { firstName, lastName, email, role, profileImage } = employeeDetails;
   return (
     <CustomTooltip
       placement="right"
       title={
-        <EmployeeTooltipContent
-          firstName={firstName}
-          lastName={lastName}
-          email={email}
-          role={role?.name}
-          profileImage={profileImage}
-          onTooltipClick={onTooltipClick}
-        />
+        <>
+          {showTooltip ? (
+            <EmployeeTooltipContent
+              firstName={firstName}
+              lastName={lastName}
+              email={email}
+              role={role?.name}
+              profileImage={profileImage}
+              onTooltipClick={onTooltipClick}
+              showInitial={firstName !== "Unassigned"}
+            />
+          ) : null}
+        </>
       }
     >
       {profileImage ? (

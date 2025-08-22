@@ -1,5 +1,8 @@
-import zIndex from "@mui/material/styles/zIndex";
-import type { dropdownDataProps, themeType } from "../../constants/types";
+import type {
+  dropdownDataProps,
+  EmployeeSummaryType,
+  themeType,
+} from "../../constants/types";
 import { intervalToDuration } from "date-fns";
 
 export const getNameInitials = (firstName: string, lastName: string) => {
@@ -7,9 +10,6 @@ export const getNameInitials = (firstName: string, lastName: string) => {
     0,
     1
   )}`.toUpperCase();
-};
-export const createPageUrl = (query: string, listPageUrl: string) => {
-  return query !== "" ? `${listPageUrl}?query=${query}` : listPageUrl;
 };
 export const getErrorMessage = (err: any) =>
   err.response?.data.message || err?.message || err;
@@ -84,3 +84,17 @@ export function getDateDiff(targetDate: string | Date): string {
   } else return "just now";
   return isPast ? `${str} ago` : `${str} left`;
 }
+
+export const getEmployeesWithDefalult = (employees: EmployeeSummaryType[]) => {
+  return [
+    {
+      employeeId: "unassigned",
+      firstName: "Unassigned",
+      lastName: "",
+      email: "",
+      profileImage: "",
+      role: { roleId: "", name: "" },
+    },
+    ...employees,
+  ];
+};

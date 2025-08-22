@@ -81,7 +81,8 @@ const AddRoleForm = ({ onSuccess }: { onSuccess: () => void }) => {
           fullWidth
         />
         <Grid container sx={{ mt: "16px" }} spacing={1}>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={0} md={0} lg={8}></Grid>
+          <Grid item xs={12} md={6} lg={2}>
             <Button
               fullWidth
               type="button"
@@ -93,7 +94,7 @@ const AddRoleForm = ({ onSuccess }: { onSuccess: () => void }) => {
               Reset
             </Button>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} lg={2}>
             <Button
               fullWidth
               type="submit"

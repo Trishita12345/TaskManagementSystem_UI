@@ -7,7 +7,7 @@ import { Box, Checkbox, FormControlLabel } from "@mui/material";
 import { selectedProjectDetails } from "../../../utils/redux/slices/authenticationSlice";
 import { setEmpIdsForFilter } from "../../../utils/redux/slices/taskSlice";
 import CustomEmployeeAvatar from "../../../components/CustomEmployeeAvatar";
-import { colors } from "../../../constants/data";
+import { colors } from "../../../constants/colors";
 
 interface PopOverContentItems {
   data: EmployeeSummaryType;

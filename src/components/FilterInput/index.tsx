@@ -40,6 +40,7 @@ const FilterInput = () => {
         setLocalQuery(e.target.value);
         debouncedSearch(e.target.value);
       }}
+      sx={{ width: "200px" }}
       InputProps={{
         endAdornment: (
           <>

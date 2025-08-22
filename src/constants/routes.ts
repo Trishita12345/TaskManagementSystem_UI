@@ -11,4 +11,5 @@ export const routes = {
   employee: "/employee",
   viewEditProject: "/project",
   projectList: "/projects",
+  task: "/task",
 };
