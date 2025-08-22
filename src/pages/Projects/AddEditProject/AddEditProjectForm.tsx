@@ -17,6 +17,7 @@ import Loader from "../../../components/Loader";
 import type {
   AddEditProjectInputProps,
   dropdownDataProps,
+  ProjectDetailsType,
 } from "../../../constants/types";
 import {
   addProject,
@@ -55,7 +56,7 @@ const schema = yup.object({
 });
 
 interface AddEditProjectFormProps {
-  onSuccess: () => void;
+  onSuccess: (data: ProjectDetailsType) => void;
   disabled?: boolean;
   pageResponse?: AddEditProjectInputProps;
   setIsEditMode?: (e: boolean) => void;
@@ -125,7 +126,8 @@ export default function AddEditProjectForm({
   const onSubmit = async (formData: AddEditProjectInputProps) => {
     try {
       if (id) {
-        await updateProject(id, { ...formData });
+        const { data } = await updateProject(id, { ...formData });
+        onSuccess(data);
         dispatch(
           setMessage({
             display: true,
@@ -138,6 +140,7 @@ export default function AddEditProjectForm({
       } else {
         const { data } = await addProject({ ...formData });
         reset();
+        onSuccess(data);
         dispatch(
           setMessage({
             display: true,
@@ -146,8 +149,8 @@ export default function AddEditProjectForm({
             message: (
               <>
                 <span>Project Added Successfully. </span>
-                <Link to={`${routes.viewEditProject}/${data.roleId}`}>
-                  <span style={{ fontWeight: 600 }}>Click here</span>
+                <Link to={`${routes.viewEditProject}/${data.projectId}`}>
+                  <span style={{ fontWeight: 600 }}>Click here&nbsp;</span>
                 </Link>
                 <span>to view details</span>
               </>
@@ -155,7 +158,6 @@ export default function AddEditProjectForm({
           })
         );
       }
-      onSuccess();
     } catch (e) {
       const err = e as AxiosError<{ message: string }>;
       dispatch(

@@ -41,12 +41,12 @@ const LoginForm: React.FC = () => {
     try {
       await login(formData);
       const { data } = await getProfile();
-      if (employeeId !== data.employeeId) {
-        dispatch(setSelectedProject({}));
-      }
       dispatch(setIsAuthenticated());
       dispatch(setUserDetails(data));
-      navigate(routes.myBoard);
+      if (employeeId !== data.employeeId) {
+        dispatch(setSelectedProject({}));
+        navigate(routes.projectList);
+      } else navigate(routes.myBoard);
     } catch (e) {
       const err = e as AxiosError<{ message: string }>;
       dispatch(

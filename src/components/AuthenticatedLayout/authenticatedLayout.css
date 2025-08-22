@@ -21,6 +21,7 @@
   top: 0;
   left: 50px;
   height: 100%;
+  z-index: 2;
 }
 
 #sidebar-overlay {
@@ -33,7 +34,7 @@
   background: rgba(0, 0, 0, 0.066);
   justify-content: center;
   align-items: center;
-  z-index: 1;
+  z-index: 2;
 }
 #sidebar-over {
   display: none;

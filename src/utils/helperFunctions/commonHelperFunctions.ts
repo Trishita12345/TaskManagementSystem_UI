@@ -1,3 +1,4 @@
+import zIndex from "@mui/material/styles/zIndex";
 import type { dropdownDataProps, themeType } from "../../constants/types";
 import { intervalToDuration } from "date-fns";
 
@@ -54,6 +55,7 @@ export const viewEditCTAButtonStyle = (theme: themeType) => {
     boxShadow: `0px -11px 14px 1px ${theme.secondaryColor2}20`,
     borderTop: `1px solid ${theme.secondaryColor3}`,
     width: "100%",
+    zIndex: 1,
   };
 };
 export function getDateDiff(targetDate: string | Date): string {

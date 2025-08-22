@@ -3,7 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import ViewDetailsPage from "../../../components/ViewDetailsPage";
 import { priviledges } from "../../../constants/priviledges";
-import { userDetails } from "../../../utils/redux/slices/authenticationSlice";
+import {
+  selectedProjectDetails,
+  setSelectedProject,
+  userDetails,
+} from "../../../utils/redux/slices/authenticationSlice";
 import AddEditProjectForm from "./AddEditProjectForm";
 import { fetchProjectDetails } from "../../../utils/services/projectService";
 import {
@@ -18,6 +22,7 @@ import type {
   AddEditProjectInputProps,
   EmployeeSummaryType,
   ProjectDetails,
+  ProjectDetailsType,
 } from "../../../constants/types";
 import Loader from "../../../components/Loader";
 import ProjectMetadata from "./ProjectMetadata";
@@ -29,6 +34,7 @@ const ViewEditProject = () => {
   const theme = useSelector(getTheme);
   const isLoading = useSelector(loading);
   const { permissions } = useSelector(userDetails);
+  const selectedProject = useSelector(selectedProjectDetails);
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -46,9 +52,12 @@ const ViewEditProject = () => {
         name: data.name,
         details: data.details,
         managerId: data.manager.employeeId,
-        employeeIds: data.employees.map(
-          (emp: EmployeeSummaryType) => emp.employeeId
-        ),
+        employeeIds: data.employees
+          .filter(
+            (emp: EmployeeSummaryType) =>
+              emp.role.name.toLowerCase() === "employee"
+          )
+          .map((emp: EmployeeSummaryType) => emp.employeeId),
       });
     } catch (e) {
       const err = e as AxiosError<{ message: string }>;
@@ -87,6 +96,18 @@ const ViewEditProject = () => {
     </Link>,
   ];
 
+  const onSuccess = (updatedProject: ProjectDetailsType) => {
+    getProjectDetails();
+    debugger;
+    if (id) {
+      //Edit Mode
+      if (selectedProject.projectId && selectedProject.projectId === id) {
+        // selected project is being modified
+        dispatch(setSelectedProject(updatedProject));
+      }
+    }
+  };
+
   return (
     <>
       {isLoading && <Loader />}
@@ -98,7 +119,7 @@ const ViewEditProject = () => {
         setIsEditMode={setIsEditMode}
       >
         <AddEditProjectForm
-          onSuccess={getProjectDetails}
+          onSuccess={onSuccess}
           disabled={!(isEditMode && isEditPermission)}
           setIsEditMode={setIsEditMode}
           pageResponse={formResponse}

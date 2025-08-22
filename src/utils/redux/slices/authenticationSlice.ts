@@ -16,15 +16,6 @@ interface AppState {
   isAuthenticated: boolean;
   selectedProject: ProjectDetailsType;
   userDetails: userDetails;
-  // {
-  //   empId: string;
-  //   firstname: string;
-  //   lastname: string;
-  //   email: string;
-  //   profileImage: string;
-  //   role: { roleId: string; name: string };
-  //   permissions: string[];
-  // };
 }
 
 const initialState = {
