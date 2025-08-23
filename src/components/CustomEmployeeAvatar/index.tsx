@@ -17,6 +17,7 @@ interface CustomEmployeeAvatarTypes {
   bgColor?: string;
   onTooltipClick?: () => void;
   showTooltip?: boolean;
+  fontSize?: string;
 }
 const CustomEmployeeAvatar = ({
   showInitial = true,
@@ -28,6 +29,7 @@ const CustomEmployeeAvatar = ({
   employeeDetails,
   onTooltipClick,
   showTooltip = true,
+  fontSize = "14px",
 }: CustomEmployeeAvatarTypes) => {
   const { firstName, lastName, email, role, profileImage } = employeeDetails;
   return (
@@ -73,7 +75,7 @@ const CustomEmployeeAvatar = ({
           onClick={onClick}
         >
           {showInitial ? (
-            <Typography fontWeight={600}>
+            <Typography fontWeight={600} fontSize={fontSize}>
               {getNameInitials(firstName, lastName)}
             </Typography>
           ) : (

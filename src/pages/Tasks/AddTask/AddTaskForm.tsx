@@ -14,18 +14,20 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import type {
   AddTaskFormValues,
   dropdownDataProps,
-  EmployeeSummaryType,
 } from "../../../constants/types";
-import FullNameComponent from "../../../components/FullNameComponent";
 import { selectedProjectDetails } from "../../../utils/redux/slices/authenticationSlice";
 import {
   priorityList,
   taskTypeList,
 } from "../../../utils/redux/slices/taskSlice";
-import { getEmployeesWithDefalult } from "../../../utils/helperFunctions/commonHelperFunctions";
 import { addTask } from "../../../utils/services/taskService";
 import { Link } from "react-router-dom";
 import { routes } from "../../../constants/routes";
+import {
+  assigneeList,
+  prioritiesList,
+  typeList,
+} from "../../../utils/helperFunctions/dropdownHelper";
 
 // ✅ Yup validation schema
 const schema = yup.object().shape({
@@ -33,8 +35,8 @@ const schema = yup.object().shape({
     .string()
     .required("Task Name is required")
     .max(200, "Task Name must be at most 200 characters"),
-  priority: yup.string().default("P0").required("Priority is required"),
-  type: yup.string().default("STORY").required("Type is required"),
+  priority: yup.string().default("P1").required("Priority is required"),
+  type: yup.string().default("TASK").required("Type is required"),
   assignedTo: yup.string().nullable().default("unassigned"),
   startDate: yup.date().nullable().typeError("Invalid date").default(null),
   endDate: yup
@@ -48,8 +50,10 @@ const schema = yup.object().shape({
 
 export default function AddTaskForm({
   setAddModalOpen,
+  onSuccess,
 }: {
   setAddModalOpen: (val: boolean) => void;
+  onSuccess: () => void;
 }) {
   const {
     handleSubmit,
@@ -73,26 +77,15 @@ export default function AddTaskForm({
   const types = useSelector(taskTypeList);
   const dispatch = useDispatch();
 
-  const assigneeList = getEmployeesWithDefalult(employees).map(
-    (a: EmployeeSummaryType) => ({
-      value: a.employeeId,
-      label: <FullNameComponent employeeDetails={a} showTooltip={false} />,
-    })
-  );
-  const prioritiesList = priorities.map((p: dropdownDataProps) => ({
-    value: p.value,
-    label: p.label,
-  }));
-  const typeList = types.map((t: dropdownDataProps) => ({
-    value: t.value,
-    label: t.label,
-  }));
-
+  const modfiedAssigneeList = assigneeList(employees);
+  const modfiedPrioritiesList = prioritiesList(priorities);
+  const modfiedTypeList = typeList(types);
   const onSubmit = async (formData: AddTaskFormValues) => {
     try {
       dispatch(setIsLoading(false));
       const { data } = await addTask(projectId, formData);
       setAddModalOpen(false);
+      onSuccess();
       dispatch(
         setMessage({
           display: true,
@@ -156,11 +149,11 @@ export default function AddTaskForm({
                   select
                   fullWidth
                   label="Priority"
-                  defaultValue={"P0"}
+                  defaultValue={"P1"}
                   error={!!errors.priority}
                   helperText={errors.priority?.message}
                 >
-                  {prioritiesList.map((p: dropdownDataProps) => (
+                  {modfiedPrioritiesList.map((p: dropdownDataProps) => (
                     <MenuItem key={p.value} value={p.value}>
                       {p.label}
                     </MenuItem>
@@ -182,11 +175,11 @@ export default function AddTaskForm({
                   select
                   fullWidth
                   label="Type"
-                  defaultValue={"STORY"}
+                  defaultValue={"TASK"}
                   error={!!errors.type}
                   helperText={errors.type?.message}
                 >
-                  {typeList.map((t: dropdownDataProps) => (
+                  {modfiedTypeList.map((t: dropdownDataProps) => (
                     <MenuItem key={t.value} value={t.value}>
                       {t.label}
                     </MenuItem>
@@ -212,7 +205,7 @@ export default function AddTaskForm({
                   error={!!errors.assignedTo}
                   helperText={errors.assignedTo?.message}
                 >
-                  {assigneeList.map((a: any) => (
+                  {modfiedAssigneeList.map((a: any) => (
                     <MenuItem key={a.value} value={a.value}>
                       {a.label}
                     </MenuItem>

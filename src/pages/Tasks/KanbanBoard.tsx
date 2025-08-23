@@ -1,200 +1,267 @@
-import React, { useState } from "react";
 import {
-  closestCenter,
-  closestCorners,
   DndContext,
+  type DragEndEvent,
   DragOverlay,
-  PointerSensor,
-  pointerWithin,
-  rectIntersection,
-  useSensor,
-  useSensors,
+  type DragStartEvent,
+  useDraggable,
+  useDroppable,
 } from "@dnd-kit/core";
-import { arrayMove, SortableContext, useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities"; // Define columns
+import { Card, Typography, Grid, Box, Paper } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getTheme, setMessage } from "../../utils/redux/slices/commonSlice";
+import { statuses, tasks } from "../../utils/redux/slices/taskSlice";
+import type {
+  dropdownDataProps,
+  EmployeeSummaryType,
+  TaskSummary,
+} from "../../constants/types";
+import { selectedProjectDetails } from "../../utils/redux/slices/authenticationSlice";
+import { updateTask } from "../../utils/services/taskService";
+import { getErrorMessage } from "../../utils/helperFunctions/commonHelperFunctions";
+import {
+  PriorityIconMap,
+  TypeIconMap,
+} from "../../utils/helperFunctions/dropdownHelper";
+import CustomEmployeeAvatar from "../../components/CustomEmployeeAvatar";
+import { colors } from "../../constants/colors";
 
-// Define columns
-const columns = ["Todo", "In Progress", "QA", "Done"];
+type StatusValue = "TODO" | "IN_PROGRESS" | "QA" | "DONE";
 
-// Initial data
-const initialTasks: Record<string, string[]> = {
-  Todo: ["Task 1", "Task 2"],
-  "In Progress": ["Task 3"],
-  QA: ["Task 4"],
-  Done: ["Task 5"],
+type BoardData = {
+  [key in StatusValue]: TaskSummary[];
 };
 
-// Sortable Item Component
-function SortableItem({ id }: { id: string }) {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id });
+const Column = ({
+  id,
+  children,
+  statusList,
+  boardData,
+}: {
+  id: string;
+  children: React.ReactNode;
+  statusList: dropdownDataProps[];
+  boardData: BoardData;
+}) => {
+  const theme = useSelector(getTheme);
+  const { setNodeRef } = useDroppable({ id }); // mark this column as a drop zone
 
-  const style: React.CSSProperties = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    padding: "8px 12px",
-    margin: "4px 0",
-    border: "1px solid #ddd",
-    borderRadius: "6px",
-    background: "#fff",
+  return (
+    <Paper
+      ref={setNodeRef}
+      elevation={3}
+      sx={{
+        p: 2,
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        bgcolor: theme.secondaryColor2,
+      }}
+    >
+      <Box pb={1} display={"flex"} alignItems={"center"} gap={1}>
+        <Typography fontWeight="500">
+          {statusList.find((s: dropdownDataProps) => s.value === id)?.label}
+        </Typography>
+        <Typography>|</Typography>
+        <Typography fontWeight="bold">
+          {boardData[id as keyof typeof boardData].length}
+        </Typography>
+      </Box>
+
+      {/* Scrollable area for tasks */}
+      <Box sx={{ flex: 1, overflowY: "auto", minHeight: 400, maxHeight: 500 }}>
+        <Box display="flex" flexDirection="column" gap={1}>
+          {children}
+        </Box>
+      </Box>
+    </Paper>
+  );
+};
+
+// Draggable card representing a task
+const TaskCard = ({ task }: { task: TaskSummary }) => {
+  const theme = useSelector(getTheme);
+  const { employees } = useSelector(selectedProjectDetails);
+  const { taskId, taskName, priority, type, assignedTo } = task;
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: taskId,
+  });
+  const index = employees.findIndex(
+    (e: EmployeeSummaryType) => e.employeeId === assignedTo.employeeId
+  );
+  const sx = {
+    transform: transform
+      ? `translate(${transform.x}px, ${transform.y}px)`
+      : undefined,
     cursor: "grab",
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      {id}
-    </div>
+    <Card
+      ref={setNodeRef}
+      sx={{ ...sx, py: 1, px: 1.5, bgcolor: theme.secondaryColor1 }}
+      {...attributes}
+      {...listeners}
+    >
+      <Box
+        minHeight={"50px"}
+        display={"flex"}
+        flexDirection={"column"}
+        justifyContent={"space-between"}
+      >
+        <Typography variant="body1">{taskName}</Typography>
+        <Grid container justifyContent={"space-between"}>
+          <Grid item>
+            <Grid container gap={1}>
+              <Grid item>{TypeIconMap[type as keyof typeof TypeIconMap]}</Grid>
+              <Grid item>
+                {PriorityIconMap[priority as keyof typeof PriorityIconMap]}
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item>
+            <CustomEmployeeAvatar
+              employeeDetails={assignedTo}
+              height={26}
+              width={26}
+              fontSize={"10px"}
+              bgColor={colors[(index + 1) % colors.length]}
+            />
+          </Grid>
+        </Grid>
+      </Box>
+    </Card>
   );
-}
+};
 
-// Main Kanban Board
-export default function KanbanBoard() {
-  const [tasks, setTasks] = useState(initialTasks);
-  const [activeId, setActiveId] = useState<string | null>(null);
-  const [collisionAlgo, setCollisionAlgo] = useState(() => rectIntersection);
+const KanbanBoard = () => {
+  const { projectId } = useSelector(selectedProjectDetails);
+  const [boardData, setBoardData] = useState<BoardData>({
+    TODO: [],
+    IN_PROGRESS: [],
+    QA: [],
+    DONE: [],
+  });
+  const allTasks = useSelector(tasks);
+  const statusList = useSelector(statuses);
+  const dispatch = useDispatch();
 
-  const sensors = useSensors(useSensor(PointerSensor));
+  useEffect(() => {
+    const boardData: BoardData = {
+      TODO: [],
+      IN_PROGRESS: [],
+      QA: [],
+      DONE: [],
+    };
+    statusList.forEach((s: dropdownDataProps) => {
+      boardData[s.value as StatusValue] = allTasks.filter(
+        (t) => t.status === s.value
+      );
+    });
+    setBoardData(boardData);
+  }, [allTasks]);
 
-  function handleDragStart(event: any) {
-    setActiveId(event.active.id);
-  }
+  const [activeTask, setActiveTask] = useState<TaskSummary | null>(null);
 
-  function handleDragOver(event: any) {
-    const { active, over } = event;
-    if (!over) return;
+  // Called when dragging starts
+  const handleDragStart = (event: DragStartEvent) => {
+    if (boardData) {
+      const { active } = event;
+      const taskId = active.id as string;
+      const task = Object.values(boardData)
+        .flat()
+        .find((t) => t.taskId === taskId);
 
-    const activeContainer = findContainer(active.id);
-    const overContainer = findContainer(over.id);
-
-    if (!activeContainer || !overContainer) return;
-
-    if (activeContainer !== overContainer) {
-      setTasks((prev) => {
-        const activeItems = [...prev[activeContainer]];
-        const overItems = [...prev[overContainer]];
-
-        activeItems.splice(activeItems.indexOf(active.id), 1);
-        overItems.push(active.id);
-
-        return {
-          ...prev,
-          [activeContainer]: activeItems,
-          [overContainer]: overItems,
-        };
-      });
+      if (task) {
+        setActiveTask(task);
+      }
     }
-  }
+  };
 
-  function handleDragEnd(event: any) {
-    const { active, over } = event;
-    if (!over) return;
+  // Called when dragging ends
+  const handleDragEnd = async (event: DragEndEvent) => {
+    if (boardData) {
+      const { active, over } = event;
+      if (!over) return;
 
-    const activeContainer = findContainer(active.id);
-    const overContainer = findContainer(over.id);
+      const taskId = active.id as string;
+      const targetColumn = over.id as string;
+      const sourceColumn = Object.keys(boardData).find((colId) =>
+        boardData[colId as keyof typeof boardData].some(
+          (task) => task.taskId === taskId
+        )
+      );
+      if (!sourceColumn || sourceColumn === targetColumn) return;
 
-    if (!activeContainer || !overContainer) return;
-
-    if (activeContainer === overContainer) {
-      const oldIndex = tasks[activeContainer].indexOf(active.id);
-      const newIndex = tasks[activeContainer].indexOf(over.id);
-
-      setTasks((prev) => ({
+      //update optimistically
+      const task = boardData[sourceColumn as keyof typeof boardData].find(
+        (t) => t.taskId === taskId
+      );
+      setBoardData((prev) => ({
         ...prev,
-        [activeContainer]: arrayMove(prev[activeContainer], oldIndex, newIndex),
+        [sourceColumn]: prev[sourceColumn as keyof typeof prev].filter(
+          (t: TaskSummary) => t.taskId !== taskId
+        ),
+        [targetColumn]: [task, ...prev[targetColumn as keyof typeof prev]],
       }));
-    }
-    setActiveId(null);
-  }
 
-  function findContainer(id: string) {
-    if (columns.includes(id)) return id;
-    return Object.keys(tasks).find((key) => tasks[key].includes(id));
-  }
+      //Actual update
+      try {
+        await updateTask(projectId, taskId, {
+          key: "status",
+          value: targetColumn,
+        });
+        // onSuccess();
+      } catch (error) {
+        setBoardData((prev) => ({
+          ...prev,
+          [targetColumn]: prev[targetColumn as keyof typeof prev].filter(
+            (t: TaskSummary) => t.taskId !== taskId
+          ),
+          [sourceColumn]: [task, ...prev[sourceColumn as keyof typeof prev]],
+        }));
+        dispatch(
+          setMessage({
+            display: true,
+            severity: "error",
+            message: getErrorMessage(error),
+          })
+        );
+      }
+      setActiveTask(null);
+    }
+  };
 
   return (
-    <div style={{ display: "flex", gap: "20px", paddingTop: "10px" }}>
-      <DndContext
-        sensors={sensors}
-        collisionDetection={collisionAlgo}
-        onDragStart={handleDragStart}
-        onDragOver={handleDragOver}
-        onDragEnd={handleDragEnd}
-      >
-        {columns.map((col) => (
-          <div
-            key={col}
-            style={{
-              flex: 1,
-              background: "#f5f5f5",
-              borderRadius: "8px",
-              padding: "12px",
-              minHeight: "300px",
-            }}
-          >
-            <h3>{col}</h3>
-            <SortableContext items={tasks[col]}>
-              {tasks[col].map((task) => (
-                <SortableItem key={task} id={task} />
-              ))}
-            </SortableContext>
-          </div>
-        ))}
+    <>
+      {boardData ? (
+        <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+          <Grid container spacing={2} sx={{ my: 2 }}>
+            {Object.entries(boardData).map(([columnId, tasks]) => (
+              <Grid item xs={12} sm={6} md={3} key={columnId}>
+                <Column
+                  id={columnId as StatusValue}
+                  statusList={statusList}
+                  boardData={boardData}
+                >
+                  {tasks.map((task: TaskSummary) => (
+                    <TaskCard key={task.taskId} task={task} />
+                  ))}
+                </Column>
+              </Grid>
+            ))}
+          </Grid>
 
-        <DragOverlay>
-          {activeId ? (
-            <div
-              style={{
-                padding: "8px 12px",
-                border: "1px solid #ddd",
-                borderRadius: "6px",
-                background: "#eee",
-              }}
-            >
-              {activeId}
-            </div>
-          ) : null}
-        </DragOverlay>
-      </DndContext>
-
-      {/* Collision algorithm selector */}
-      <div style={{ position: "absolute", bottom: 20, left: 20 }}>
-        <h4>Collision detection algorithm</h4>
-        <label>
-          <input
-            type="radio"
-            checked={collisionAlgo === rectIntersection}
-            onChange={() => setCollisionAlgo(rectIntersection)}
-          />
-          Rect Intersection
-        </label>
-        <br />
-        <label>
-          <input
-            type="radio"
-            checked={collisionAlgo === closestCenter}
-            onChange={() => setCollisionAlgo(closestCenter)}
-          />
-          Closest Center
-        </label>
-        <br />
-        <label>
-          <input
-            type="radio"
-            checked={collisionAlgo === closestCorners}
-            onChange={() => setCollisionAlgo(closestCorners)}
-          />
-          Closest Corners
-        </label>
-        <br />
-        <label>
-          <input
-            type="radio"
-            checked={collisionAlgo === pointerWithin}
-            onChange={() => setCollisionAlgo(pointerWithin)}
-          />
-          Pointer Within
-        </label>
-      </div>
-    </div>
+          {/* Floating overlay for active dragged task */}
+          <DragOverlay>
+            {activeTask ? <TaskCard task={activeTask} /> : null}
+          </DragOverlay>
+        </DndContext>
+      ) : (
+        <>shimmerui</>
+      )}
+    </>
   );
-}
+};
+
+export default KanbanBoard;

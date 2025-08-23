@@ -27,3 +27,17 @@ export const fetchAllTasks = (
 export const addTask = (projectId: string, formdata: AddTaskFormValues) => {
   return axiosInstance.post(`/authenticated/tasks/${projectId}`, formdata);
 };
+
+export const updateTask = (
+  projectId: string,
+  taskId: string,
+  body: {
+    key: string;
+    value: string;
+  }
+) => {
+  return axiosInstance.patch(
+    `/authenticated/tasks/${projectId}/${taskId}`,
+    body
+  );
+};
