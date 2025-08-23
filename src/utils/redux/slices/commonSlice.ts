@@ -56,11 +56,11 @@ const commonSlice = createSlice({
       if (action.payload) {
         //dark mode
         theme = {
-          primary: "#73abff",
+          primary: "#0c57c7",
           primaryTextColor: "#ffffff",
           secondaryColor1: "#2b2b2bff",
-          secondaryColor2: "#5e5d5dff",
-          secondaryColor3: "#a5a3a3ff",
+          secondaryColor2: "#1F2022",
+          secondaryColor3: "#35393F",
           inputBgColor: "#a5a3a3ff",
           secondaryContrast: "#ffffff",
           opacity: "95",

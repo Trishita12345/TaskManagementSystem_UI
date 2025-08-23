@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import type { AddTaskFormValues } from "../../constants/types";
 import axiosInstance from "../axios";
 
@@ -17,7 +18,9 @@ export const fetchAllTasks = (
   selectedEmpIds: string[]
 ) => {
   const body = {
-    employeeIDs: selectedEmpIds,
+    employeeIDs: selectedEmpIds.map((s: string) =>
+      s === "unassigned" ? null : s
+    ),
   };
   return axiosInstance.post(
     `/authenticated/tasks/${projectId}/list?query=${query}`,
@@ -25,7 +28,19 @@ export const fetchAllTasks = (
   );
 };
 export const addTask = (projectId: string, formdata: AddTaskFormValues) => {
-  return axiosInstance.post(`/authenticated/tasks/${projectId}`, formdata);
+  let body = {
+    ...formdata,
+    startDate: formdata.startDate
+      ? format(formdata.startDate as Date, "yyyy-MM-dd")
+      : null,
+    endDate: formdata.startDate
+      ? format(formdata.endDate as Date, "yyyy-MM-dd")
+      : null,
+    assignedTo:
+      formdata.assignedTo === "unassigned" ? null : formdata.assignedTo,
+  };
+  console.log(body);
+  return axiosInstance.post(`/authenticated/tasks/${projectId}`, body);
 };
 
 export const updateTask = (

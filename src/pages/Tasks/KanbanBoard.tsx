@@ -18,7 +18,10 @@ import type {
 } from "../../constants/types";
 import { selectedProjectDetails } from "../../utils/redux/slices/authenticationSlice";
 import { updateTask } from "../../utils/services/taskService";
-import { getErrorMessage } from "../../utils/helperFunctions/commonHelperFunctions";
+import {
+  getEmployeesWithDefalult,
+  getErrorMessage,
+} from "../../utils/helperFunctions/commonHelperFunctions";
 import {
   PriorityIconMap,
   TypeIconMap,
@@ -26,7 +29,7 @@ import {
 import CustomEmployeeAvatar from "../../components/CustomEmployeeAvatar";
 import { colors } from "../../constants/colors";
 
-type StatusValue = "TODO" | "IN_PROGRESS" | "QA" | "DONE";
+type StatusValue = "TODO" | "IN_PROGRESS" | "QA" | "COMPLETED";
 
 type BoardData = {
   [key in StatusValue]: TaskSummary[];
@@ -55,7 +58,8 @@ const Column = ({
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        bgcolor: theme.secondaryColor2,
+        backgroundImage: "none",
+        backgroundColor: `${theme.secondaryColor2}`,
       }}
     >
       <Box pb={1} display={"flex"} alignItems={"center"} gap={1}>
@@ -86,7 +90,7 @@ const TaskCard = ({ task }: { task: TaskSummary }) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: taskId,
   });
-  const index = employees.findIndex(
+  const index = getEmployeesWithDefalult(employees).findIndex(
     (e: EmployeeSummaryType) => e.employeeId === assignedTo.employeeId
   );
   const sx = {
@@ -109,7 +113,9 @@ const TaskCard = ({ task }: { task: TaskSummary }) => {
         flexDirection={"column"}
         justifyContent={"space-between"}
       >
-        <Typography variant="body1">{taskName}</Typography>
+        <Typography variant="body1" pb={1}>
+          {taskName}
+        </Typography>
         <Grid container justifyContent={"space-between"}>
           <Grid item>
             <Grid container gap={1}>
@@ -125,7 +131,8 @@ const TaskCard = ({ task }: { task: TaskSummary }) => {
               height={26}
               width={26}
               fontSize={"10px"}
-              bgColor={colors[(index + 1) % colors.length]}
+              bgColor={colors[index % colors.length]}
+              showInitial={assignedTo.firstName !== "Unassigned"}
             />
           </Grid>
         </Grid>
@@ -140,7 +147,7 @@ const KanbanBoard = () => {
     TODO: [],
     IN_PROGRESS: [],
     QA: [],
-    DONE: [],
+    COMPLETED: [],
   });
   const allTasks = useSelector(tasks);
   const statusList = useSelector(statuses);
@@ -151,7 +158,7 @@ const KanbanBoard = () => {
       TODO: [],
       IN_PROGRESS: [],
       QA: [],
-      DONE: [],
+      COMPLETED: [],
     };
     statusList.forEach((s: dropdownDataProps) => {
       boardData[s.value as StatusValue] = allTasks.filter(

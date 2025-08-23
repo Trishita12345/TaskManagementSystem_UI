@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { dropdownDataProps } from "../../../constants/types";
+import type { dropdownDataProps, TaskSummary } from "../../../constants/types";
 import {
   fetchFromStorage,
   saveToStorage,
@@ -9,7 +9,7 @@ interface appState {
   statusList: dropdownDataProps[];
   priorityList: dropdownDataProps[];
   taskTypeList: dropdownDataProps[];
-  tasks: any[];
+  tasks: TaskSummary[];
   empIdsForFilter: string[];
 }
 
@@ -51,9 +51,11 @@ const taskSlice = createSlice({
     },
     setOnlyCurrentEmpIdForFilter(state, action) {
       state.empIdsForFilter = [action.payload];
+      saveToStorage("empIdsForFilter", JSON.stringify(action.payload));
     },
     setClearFilter(state) {
       state.empIdsForFilter = [];
+      saveToStorage("empIdsForFilter", JSON.stringify([]));
     },
   },
 });

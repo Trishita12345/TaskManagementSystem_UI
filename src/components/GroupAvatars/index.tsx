@@ -4,7 +4,7 @@ import Popover from "@mui/material/Popover";
 import type { EmployeeSummaryType } from "../../constants/types";
 import CustomEmployeeAvatar from "../CustomEmployeeAvatar";
 import { useSelector } from "react-redux";
-import { getTheme } from "../../utils/redux/slices/commonSlice";
+import { getTheme, isDark } from "../../utils/redux/slices/commonSlice";
 import { colors } from "../../constants/colors";
 import { Avatar } from "@mui/material";
 
@@ -21,8 +21,8 @@ export default function GroupAvatars({
   handleSelectAvatar,
 }: GroupAvatarsProps) {
   const theme = useSelector(getTheme);
+  const darkTheme = useSelector(isDark);
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
-  console.log(selectedAvatars);
   const handleExtraClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -46,21 +46,35 @@ export default function GroupAvatars({
   return (
     <React.Fragment>
       <AvatarGroup
+        sx={{
+          ".MuiAvatar-root": {
+            border: `2px solid ${darkTheme ? "#2B2B2B" : "#ffffff"}`,
+          },
+        }}
         max={5}
         renderSurplus={(surplus) => (
           <Avatar
             onClick={handleExtraClick}
             sx={{
+              // border
               height: 35,
               width: 35,
               cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "20px",
+              border: `3px solid ${
+                darkTheme ? "#2B2B2B" : "#ffffff"
+              } !important`,
               ...(isSurplusAvatarSelected() && {
                 border: `2.5px solid ${theme.primary} !important`,
-                zIndex: 1, // bring it to the top
+                zIndex: 2, // bring it to the top
               }),
               transition: "all 0.2s ease-in-out",
             }}
           >{`+${surplus}`}</Avatar>
+          // <>`+${surplus}`</>
         )}
       >
         {avatars?.map((a, index) => {

@@ -28,11 +28,15 @@ import {
   fetchAllTasks,
   fetchAllTaskTypes,
 } from "../../utils/services/taskService.ts";
-import { getErrorMessage } from "../../utils/helperFunctions/commonHelperFunctions.ts";
+import {
+  getErrorMessage,
+  unassignedEmployee,
+} from "../../utils/helperFunctions/commonHelperFunctions.ts";
 import type { AxiosError } from "axios";
 import AddModal from "../../components/AddModal/index.tsx";
 import AddTaskForm from "./AddTask/AddTaskForm.tsx";
 import KanbanBoard from "./KanbanBoard.tsx";
+import type { TaskSummary } from "../../constants/types.ts";
 
 const Tasks = () => {
   const theme = useSelector(getTheme);
@@ -84,7 +88,11 @@ const Tasks = () => {
     try {
       withLoading && dispatch(setIsLoading(true));
       const { data } = await fetchAllTasks(projectId, query, selectedEmpIds);
-      dispatch(setTasks(data));
+      const formattedData = data.map((d: TaskSummary) => ({
+        ...d,
+        assignedTo: d.assignedTo === null ? unassignedEmployee : d.assignedTo,
+      }));
+      dispatch(setTasks(formattedData));
     } catch (e: any) {
       handleCatch(e);
     } finally {

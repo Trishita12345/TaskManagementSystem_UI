@@ -6,7 +6,7 @@ import type {
 import { intervalToDuration } from "date-fns";
 
 export const getNameInitials = (firstName: string, lastName: string) => {
-  return `${firstName.substring(0, 1)}${lastName.substring(
+  return `${firstName?.substring(0, 1)}${lastName?.substring(
     0,
     1
   )}`.toUpperCase();
@@ -85,16 +85,14 @@ export function getDateDiff(targetDate: string | Date): string {
   return isPast ? `${str} ago` : `${str} left`;
 }
 
+export const unassignedEmployee = {
+  employeeId: "unassigned",
+  firstName: "Unassigned",
+  lastName: "",
+  email: "",
+  profileImage: "",
+  role: { roleId: "", name: "" },
+};
 export const getEmployeesWithDefalult = (employees: EmployeeSummaryType[]) => {
-  return [
-    {
-      employeeId: "unassigned",
-      firstName: "Unassigned",
-      lastName: "",
-      email: "",
-      profileImage: "",
-      role: { roleId: "", name: "" },
-    },
-    ...employees,
-  ];
+  return [unassignedEmployee, ...employees];
 };
