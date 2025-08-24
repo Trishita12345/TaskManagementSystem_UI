@@ -11,14 +11,17 @@ const PageNotFound = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "100vh",
+        minHeight: "80vh",
         backgroundColor: "primary",
         // background: theme.palette.primary.main,
         // color: theme.palette.primary.contrastText,
         flexDirection: "column",
       }}
     >
-      {/* <img width="50%" src={images.pageNotFound} alt="page not found" /> */}
+      <img
+        style={{ width: "35%" }}
+        src="https://images.unsplash.com/vector-1743473329244-f81d2c2a18f4?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      />
       <Typography fontSize={{ xs: 20, md: 40 }}>
         Opps! Page not found
       </Typography>

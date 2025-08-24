@@ -25,7 +25,7 @@ import type {
   ProjectDetailsType,
 } from "../../../constants/types";
 import Loader from "../../../components/Loader";
-import ProjectMetadata from "./ProjectMetadata";
+import ProjectMetadata from "../../../components/MetaData";
 import ProjectBreadcrumbs from "../../../components/ProjectBreadcrumbs";
 import { routes } from "../../../constants/routes";
 import { Link } from "@mui/material";

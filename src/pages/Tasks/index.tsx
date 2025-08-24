@@ -17,7 +17,7 @@ import {
 import FilterTask from "./FilterTask/index.js";
 import useScreenSize from "../../utils/customHooks/useScreenSize.js";
 import { Box, Link } from "@mui/material";
-import AddTaskButton from "./AddTask/AddTaskButton/index.js";
+import AddTaskButton from "./AddTask/AddTaskButton.js";
 import ProjectBreadcrumbs from "../../components/ProjectBreadcrumbs/index.tsx";
 import { routes } from "../../constants/routes.ts";
 import { selectedProjectDetails } from "../../utils/redux/slices/authenticationSlice.ts";

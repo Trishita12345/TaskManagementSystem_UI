@@ -3,10 +3,13 @@ import {
   type DragEndEvent,
   DragOverlay,
   type DragStartEvent,
+  PointerSensor,
   useDraggable,
   useDroppable,
+  useSensor,
+  useSensors,
 } from "@dnd-kit/core";
-import { Card, Typography, Grid, Box, Paper } from "@mui/material";
+import { Card, Typography, Grid, Box, Paper, Link } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTheme, setMessage } from "../../utils/redux/slices/commonSlice";
@@ -28,6 +31,8 @@ import {
 } from "../../utils/helperFunctions/dropdownHelper";
 import CustomEmployeeAvatar from "../../components/CustomEmployeeAvatar";
 import { colors } from "../../constants/colors";
+import { useNavigate } from "react-router-dom";
+import { routes } from "../../constants/routes";
 
 type StatusValue = "TODO" | "IN_PROGRESS" | "QA" | "COMPLETED";
 
@@ -84,6 +89,7 @@ const Column = ({
 
 // Draggable card representing a task
 const TaskCard = ({ task }: { task: TaskSummary }) => {
+  const navigate = useNavigate();
   const theme = useSelector(getTheme);
   const { employees } = useSelector(selectedProjectDetails);
   const { taskId, taskName, priority, type, assignedTo } = task;
@@ -106,6 +112,7 @@ const TaskCard = ({ task }: { task: TaskSummary }) => {
       sx={{ ...sx, py: 1, px: 1.5, bgcolor: theme.secondaryColor1 }}
       {...attributes}
       {...listeners}
+      onClick={() => navigate(`${routes.task}/${taskId}`)}
     >
       <Box
         minHeight={"50px"}
@@ -113,9 +120,11 @@ const TaskCard = ({ task }: { task: TaskSummary }) => {
         flexDirection={"column"}
         justifyContent={"space-between"}
       >
-        <Typography variant="body1" pb={1}>
-          {taskName}
-        </Typography>
+        <Link underline="hover">
+          <Typography variant="body1" pb={1}>
+            {taskName}
+          </Typography>
+        </Link>
         <Grid container justifyContent={"space-between"}>
           <Grid item>
             <Grid container gap={1}>
@@ -239,10 +248,23 @@ const KanbanBoard = () => {
     }
   };
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        delay: 200, // ms
+        tolerance: 15, // allow slight movement before drag starts
+      },
+    })
+  );
+
   return (
     <>
       {boardData ? (
-        <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+        <DndContext
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+          sensors={sensors}
+        >
           <Grid container spacing={2} sx={{ my: 2 }}>
             {Object.entries(boardData).map(([columnId, tasks]) => (
               <Grid item xs={12} sm={6} md={3} key={columnId}>

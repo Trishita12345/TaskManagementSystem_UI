@@ -18,6 +18,7 @@ import RoleDetails from "../pages/Role/RoleDetails";
 import ManageEmployeesList from "../pages/ManageEmployeesList";
 import ProjectList from "../pages/Projects/ProjectList";
 import ViewEditProject from "../pages/Projects/AddEditProject/ViewEditProject";
+import ViewTask from "../pages/Tasks/ViewTask";
 
 const Root = () => {
   let location = useLocation();
@@ -99,7 +100,14 @@ const Routes = () => {
             </AuthenticatedScreens>
           }
         />
-
+        <Route
+          path={`${routes.task}/:id`}
+          element={
+            <AuthenticatedScreens>
+              <ViewTask />
+            </AuthenticatedScreens>
+          }
+        />
         <Route path="*" element={<PageNotFound />} />
       </Switch>
     </>

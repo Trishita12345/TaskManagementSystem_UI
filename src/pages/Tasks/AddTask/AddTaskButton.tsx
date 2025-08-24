@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
-import strings from "../../../../constants/strings";
+import strings from "../../../constants/strings";
 import { Box, Button } from "@mui/material";
 
 const AddTaskButton = ({ onAdd }: { onAdd: () => void }) => {

@@ -8,7 +8,7 @@ interface MetadataProps {
   updatedAt?: string;
 }
 
-const ProjectMetadata: React.FC<MetadataProps> = ({
+const Metadata: React.FC<MetadataProps> = ({
   createdBy,
   createdAt,
   updatedBy,
@@ -58,4 +58,4 @@ const ProjectMetadata: React.FC<MetadataProps> = ({
   );
 };
 
-export default ProjectMetadata;
+export default Metadata;

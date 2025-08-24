@@ -81,7 +81,7 @@ export function getDateDiff(targetDate: string | Date): string {
   } else if (duration.seconds) {
     const seconds = Math.abs(duration.seconds);
     str = `${seconds} minute${seconds > 1 ? "s" : ""}`;
-  } else return "just now";
+  } else return "Just now";
   return isPast ? `${str} ago` : `${str} left`;
 }
 

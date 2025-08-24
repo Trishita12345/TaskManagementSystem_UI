@@ -56,3 +56,7 @@ export const updateTask = (
     body
   );
 };
+
+export const fetchTaskDetails = (projectId: string, taskId: string) => {
+  return axiosInstance(`/authenticated/tasks/${projectId}/${taskId}`);
+};

@@ -169,3 +169,33 @@ export interface TaskSummary {
     };
   };
 }
+export interface TaskDetails {
+  taskId: string; // UUID -> string
+  taskName: string;
+  taskDescription: string;
+  priority: "P0" | "P1" | "P2" | "P3";
+  status: "TODO" | "IN_PROGRESS" | "QA" | "COMPLETED";
+  type: "STORY" | "TASK" | "BUG" | "ENHANCEMENT";
+  assignedTo: EmployeeSummaryType;
+  managedBy: EmployeeSummaryType;
+  // project?: Project; // Uncomment if needed
+  startDate: string; // LocalDate -> string (YYYY-MM-DD)
+  endDate: string; // LocalDate -> string (YYYY-MM-DD)
+  createdBy: EmployeeSummaryType;
+  updatedBy: EmployeeSummaryType;
+  createdAt: string; // LocalDateTime -> string (ISO format)
+  updatedAt: string; // LocalDateTime -> string (ISO format)
+}
+export interface ViewTaskComponentProps {
+  selectedTask: TaskDetails;
+}
+
+export interface UpdateableTaskComponentProps {
+  selectedTask: TaskDetails;
+  updateTask: (
+    key: string,
+    value: any,
+    setLoading?: (val: boolean) => void,
+    setIsEditMode?: (val: boolean) => void
+  ) => void;
+}
