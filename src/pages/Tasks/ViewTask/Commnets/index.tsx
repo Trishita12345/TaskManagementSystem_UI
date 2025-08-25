@@ -1,30 +1,25 @@
-import { Box, Button, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Tooltip } from "@mui/material";
 import CommentTextbox from "./CommentTextbox";
 import CommentDetails from "./CommentDetails";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchAllComments } from "../../../../utils/services/commentService";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
-  getTheme,
   setIsLoading,
   setMessage,
 } from "../../../../utils/redux/slices/commonSlice";
 import type { AxiosError } from "axios";
 import { getErrorMessage } from "../../../../utils/helperFunctions/commonHelperFunctions";
 import type { PaginatedResponse, Comment } from "../../../../constants/types";
-import {
-  KeyboardArrowDownSharp,
-  KeyboardArrowRightSharp,
-} from "@mui/icons-material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowDownWideShort,
   faArrowUpWideShort,
 } from "@fortawesome/free-solid-svg-icons";
+import CollapseHeading from "../components/CollapseHeading";
 
 export default function Comments() {
-  const theme = useSelector(getTheme);
   const { id } = useParams();
   const dispatch = useDispatch();
   const [allComments, setAllComments] =
@@ -82,25 +77,15 @@ export default function Comments() {
   return (
     <Box mt={2}>
       <Box display={"flex"} justifyContent={"space-between"} mb={2}>
-        <Button
-          sx={{
-            color: theme.secondaryContrast,
-            ":hover": { backgroundColor: "transparent" },
-          }}
-          onClick={() => setCollapsed((prev: boolean) => !prev)}
-          startIcon={
-            collapsed ? <KeyboardArrowRightSharp /> : <KeyboardArrowDownSharp />
-          }
-        >
-          <Typography variant="subtitle1" textTransform={"capitalize"}>
-            Comments
-          </Typography>
-        </Button>
+        <CollapseHeading
+          collapsed={collapsed}
+          setCollapsed={setCollapsed}
+          headingText="Comments"
+        />
         <Tooltip title={direction ? "Newest First" : "Oldest First"} arrow>
           <Button
             onClick={() => setDirection((prev: boolean) => !prev)}
-            variant="outlined"
-            sx={{ minWidth: "10px", px: 1 }}
+            sx={{ minWidth: "10px", px: 1, py: 0.8, height: "fit-content" }}
           >
             <FontAwesomeIcon
               icon={direction ? faArrowDownWideShort : faArrowUpWideShort}

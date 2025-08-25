@@ -133,8 +133,29 @@ const ViewTask = () => {
             selectedTask={selectedTask}
             updateTask={updateSelectedTask}
           />
-          <Grid container gap={8}>
-            <Grid item xs={12} sm={6} md={7} lg={8}>
+          <Grid container gap={3}>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={7}
+              lg={8}
+              sx={{
+                maxHeight: "85vh",
+                overflowY: "scroll",
+                "&::-webkit-scrollbar": {
+                  width: "8px",
+                },
+                "&::-webkit-scrollbar-thumb": {
+                  backgroundColor: "#888",
+                  borderRadius: "4px",
+                },
+                "&::-webkit-scrollbar-thumb:hover": {
+                  backgroundColor: "#555",
+                },
+              }}
+              pr={3}
+            >
               <TaskName
                 selectedTask={selectedTask}
                 updateTask={updateSelectedTask}
