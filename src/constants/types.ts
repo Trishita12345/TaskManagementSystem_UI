@@ -199,3 +199,41 @@ export interface UpdateableTaskComponentProps {
     setIsEditMode?: (val: boolean) => void
   ) => void;
 }
+
+export interface PaginatedResponse<T> {
+  content: T[];
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: {
+      empty: boolean;
+      unsorted: boolean;
+      sorted: boolean;
+    };
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  last: boolean;
+  totalElements: number;
+  totalPages: number;
+  first: boolean;
+  size: number;
+  number: number;
+  sort: {
+    empty: boolean;
+    unsorted: boolean;
+    sorted: boolean;
+  };
+  numberOfElements: number;
+  empty: boolean;
+}
+
+export interface Comment {
+  commentId: string;
+  content: string;
+  createdBy: EmployeeSummaryType;
+  updatedBy: EmployeeSummaryType;
+  createdAt: string; // ISO Date string
+  updatedAt: string; // ISO Date string
+}

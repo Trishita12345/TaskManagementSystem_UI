@@ -1,11 +1,11 @@
-1. Access Token in header
+1. Access Token in header, refresh token working?
 2. "any" type change
 3. login api 403
-4. var css remove
 5. outlined btn in dark theme
-6. my profile + update profile
+6. update profile
 
 8. login page logo text type animation + login page checkbox keep me logged in
+9. login page picture
 
 9. Hydration error
 
@@ -13,6 +13,10 @@
 10. task priviledges
 11. Loader icon change
 
-12. date validation
+12. rich text editor
+13. comment 
+    - sort by from BE
+    - edit comment
+    - write m in commnet textbox
 
 

@@ -2,9 +2,8 @@ import { ClearOutlined, DoneOutlined } from "@mui/icons-material";
 import { Box, Button, CircularProgress } from "@mui/material";
 
 const saveButtonStyle = {
-  minWidth: "40px",
-  paddingLeft: 0,
-  paddingRight: 0,
+  minWidth: "30px",
+  paddingX: 0,
   color: "#a4a4a4ff",
   border: "1px solid #a4a4a4ff",
   backgroundColor: "transparent",
@@ -29,10 +28,10 @@ const EditModeButtonGroup = ({
       <Button
         variant="outlined"
         onClick={onCancel}
-        sx={{ ...saveButtonStyle, marginRight: "12px" }}
+        sx={{ ...saveButtonStyle, marginRight: "8px" }}
         disabled={loading}
       >
-        <ClearOutlined />
+        <ClearOutlined fontSize="small" />
       </Button>
       <Button
         variant="outlined"
@@ -43,7 +42,7 @@ const EditModeButtonGroup = ({
         {loading ? (
           <CircularProgress size={18} color="inherit" />
         ) : (
-          <DoneOutlined />
+          <DoneOutlined fontSize="small" />
         )}
       </Button>
     </Box>

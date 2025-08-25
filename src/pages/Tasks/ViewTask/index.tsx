@@ -38,6 +38,7 @@ import Priority from "./components/Priority";
 import Date from "./components/Date";
 import TaskType from "./components/TaskType";
 import Assignee from "./components/Assignee";
+import Comments from "./Commnets";
 
 const ViewTask = () => {
   const { id } = useParams();
@@ -78,9 +79,9 @@ const ViewTask = () => {
     fetchData();
   }, []);
 
-  const getSelectedTask = async (showLaoding?: boolean) => {
+  const getSelectedTask = async (showLoading?: boolean) => {
     try {
-      showLaoding && dispatch(setIsLoading(true));
+      showLoading && dispatch(setIsLoading(true));
       const { data } = await fetchTaskDetails(projectId, id as string);
       const modifiedData: TaskDetails = {
         ...data,
@@ -142,7 +143,7 @@ const ViewTask = () => {
                 selectedTask={selectedTask}
                 updateTask={updateSelectedTask}
               />
-              <Divider />
+              <Comments />
             </Grid>
             <Grid item xs={12} sm={4} md={4} lg={3}>
               <TaskStatus
@@ -186,15 +187,15 @@ const ViewTask = () => {
                 />
               </Box>
               <Divider sx={{ mb: 2 }} />
-              <TaskDetailsLabelValue
-                label={"Created"}
-                Component={getDateDiff(selectedTask.createdAt)}
-              />
-              <Box sx={{ mb: 1 }}></Box>
-              <TaskDetailsLabelValue
-                label={"Updated"}
-                Component={getDateDiff(selectedTask.updatedAt)}
-              />
+              <Typography
+                fontSize={"0.8rem"}
+                color={"gray"}
+              >{`Created  ${getDateDiff(selectedTask.createdAt)}`}</Typography>
+              <Typography
+                fontSize={"0.8rem"}
+                color={"gray"}
+                mt={0.6}
+              >{`Updated  ${getDateDiff(selectedTask.updatedAt)}`}</Typography>
             </Grid>
           </Grid>
         </>

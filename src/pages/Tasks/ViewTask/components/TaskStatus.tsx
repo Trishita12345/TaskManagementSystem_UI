@@ -36,13 +36,9 @@ const TaskStatus = ({
         endIcon={<ArrowDropDownOutlinedIcon />}
         sx={{
           textTransform: "none",
-          // backgroundColor: theme.secondaryColor3,
-          // color: theme.secondaryContrast,
           fontWeight: "bold",
-          "&:hover": {
-            // backgroundColor: theme.secondaryColor3,
-          },
-          borderRadius: 0,
+          "&:hover": {},
+          borderRadius: 0.5,
         }}
       >
         {statusList.find((s: dropdownDataProps) => s.value === status)?.label}

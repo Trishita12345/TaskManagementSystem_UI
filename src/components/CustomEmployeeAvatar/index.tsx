@@ -26,7 +26,7 @@ const CustomEmployeeAvatar = ({
   sx = {},
   height = 35,
   width = 35,
-  bgColor = blueGrey[300],
+  bgColor = "#061e42ff",
   employeeDetails,
   onTooltipClick,
   showTooltip = true,

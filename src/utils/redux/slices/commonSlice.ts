@@ -57,12 +57,12 @@ const commonSlice = createSlice({
         //dark mode
         theme = {
           primary: "#0c57c7",
-          primaryTextColor: "#ffffff",
+          primaryTextColor: "#e2e2e2ff",
           secondaryColor1: "#2b2b2bff",
           secondaryColor2: "#1F2022",
           secondaryColor3: "#35393F",
           inputBgColor: "#a5a3a3ff",
-          secondaryContrast: "#ffffff",
+          secondaryContrast: "#e2e2e2ff",
           opacity: "95",
         };
       } else {
