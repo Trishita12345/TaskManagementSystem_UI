@@ -2,7 +2,7 @@ import {
   KeyboardArrowRightSharp,
   KeyboardArrowDownSharp,
 } from "@mui/icons-material";
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 
 interface collapseHeading {
   collapsed: boolean;
@@ -22,13 +22,15 @@ const CollapseHeading = ({
       onClick={() => setCollapsed((prev: boolean) => !prev)}
       sx={{ cursor: "pointer" }}
     >
-      <IconButton sx={{ borderRadius: 0, p: 0 }}>
-        {collapsed ? (
-          <KeyboardArrowRightSharp fontSize="small" />
-        ) : (
-          <KeyboardArrowDownSharp fontSize="small" />
-        )}
-      </IconButton>
+      <Tooltip title={collapsed ? "Expand" : "Collapse"}>
+        <IconButton sx={{ borderRadius: 0, p: 0 }}>
+          {collapsed ? (
+            <KeyboardArrowRightSharp fontSize="small" />
+          ) : (
+            <KeyboardArrowDownSharp fontSize="small" />
+          )}
+        </IconButton>
+      </Tooltip>
       <Typography
         variant="subtitle1"
         textTransform={"capitalize"}

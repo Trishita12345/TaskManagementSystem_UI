@@ -38,8 +38,8 @@ export const PriorityIconMap = {
 };
 
 export const TypeIconMap = {
-  STORY: <BookmarkBorderOutlined color="success" />,
-  TASK: <CheckBox color="primary" />,
+  STORY: <BookmarkBorderOutlined color="success" fontSize="small" />,
+  TASK: <CheckBox color="primary" fontSize="small" />,
   BUG: <FontAwesomeIcon icon={faBug} height={"1rem"} color="red" />,
   ENHANCEMENT: (
     <FontAwesomeIcon icon={faMinusSquare} height={"1.3rem"} color="darkgray" />
