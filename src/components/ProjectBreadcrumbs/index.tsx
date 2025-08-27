@@ -9,7 +9,7 @@ export default function ProjectBreadcrumbs({
   breadcrumbs: React.ReactNode[];
 }) {
   return (
-    <Stack spacing={2} mt={2} mb={6}>
+    <Stack spacing={2} mt={2} mb={4}>
       <Breadcrumbs
         separator={<NavigateNextIcon fontSize="small" />}
         aria-label="breadcrumb"

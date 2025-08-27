@@ -84,7 +84,10 @@ export default function Comments() {
         />
         <Tooltip title={direction ? "Newest First" : "Oldest First"} arrow>
           <Button
-            onClick={() => setDirection((prev: boolean) => !prev)}
+            onClick={() => {
+              setDirection((prev: boolean) => !prev);
+              setPage(0);
+            }}
             sx={{ minWidth: "10px", px: 1, py: 0.8, height: "fit-content" }}
           >
             <FontAwesomeIcon

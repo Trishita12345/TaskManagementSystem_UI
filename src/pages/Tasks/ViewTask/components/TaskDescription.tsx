@@ -1,15 +1,19 @@
-import { Box, TextField, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import type { UpdateableTaskComponentProps } from "../../../../constants/types";
 import { useState } from "react";
 import EditModeButtonGroup from "./EditModeButtonGroup";
 import CollapseHeading from "./CollapseHeading";
+import { useSelector } from "react-redux";
+import { getTheme } from "../../../../utils/redux/slices/commonSlice";
+import TextEditor from "../../../../components/TextEditor";
 
 const TaskDescription = ({
   selectedTask,
   updateTask,
 }: UpdateableTaskComponentProps) => {
+  const theme = useSelector(getTheme);
   const [loading, setLoading] = useState<boolean>(false);
-  const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  const [isEditMode, setIsEditMode] = useState<boolean>(true);
   const { taskDescription } = selectedTask;
   const [value, setValue] = useState<string>(taskDescription);
   const [collapsed, setCollapsed] = useState<boolean>(false);
@@ -19,6 +23,7 @@ const TaskDescription = ({
     setIsEditMode(false);
   };
   const onSave = () => {
+    debugger;
     updateTask("taskDescription", value, setLoading, setIsEditMode);
   };
   return (
@@ -31,17 +36,12 @@ const TaskDescription = ({
         />
       </Box>
       {collapsed ? null : (
-        <Box minHeight={"270px"}>
+        <Box minHeight={"270px"} sx={{ overflowY: "auto" }}>
           {isEditMode ? (
             <>
-              <TextField
+              <TextEditor
                 value={value}
-                onChange={(e) => setValue(e.target.value)}
-                fullWidth
-                size="small"
-                multiline
-                minRows={6}
-                maxRows={10}
+                onChange={(value: string) => setValue(value)}
               />
               <EditModeButtonGroup
                 loading={loading}
@@ -50,8 +50,18 @@ const TaskDescription = ({
               />
             </>
           ) : (
-            <Box onClick={() => setIsEditMode(true)}>
-              <Typography>{taskDescription}</Typography>
+            <Box
+              sx={{
+                p: 0.7,
+                borderRadius: 1,
+                ":hover": {
+                  cursor: "pointer",
+                  backgroundColor: theme.secondaryColor2,
+                },
+              }}
+              onClick={() => setIsEditMode(true)}
+            >
+              <div dangerouslySetInnerHTML={{ __html: taskDescription }} />
             </Box>
           )}
         </Box>

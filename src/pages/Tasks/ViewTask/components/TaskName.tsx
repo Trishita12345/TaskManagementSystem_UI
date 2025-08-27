@@ -1,12 +1,15 @@
-import { TextField, Typography } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 import type { UpdateableTaskComponentProps } from "../../../../constants/types";
 import { useState } from "react";
 import EditModeButtonGroup from "./EditModeButtonGroup";
+import { useSelector } from "react-redux";
+import { getTheme } from "../../../../utils/redux/slices/commonSlice";
 
 const TaskName = ({
   selectedTask,
   updateTask,
 }: UpdateableTaskComponentProps) => {
+  const theme = useSelector(getTheme);
   const [loading, setLoading] = useState<boolean>(false);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const { taskName } = selectedTask;
@@ -36,15 +39,25 @@ const TaskName = ({
           />
         </>
       ) : (
-        <Typography
-          variant="h5"
-          fontWeight={600}
-          letterSpacing={0.8}
-          onClick={() => setIsEditMode(true)}
-          sx={{ cursor: "pointer" }}
+        <Box
+          sx={{
+            p: 0.7,
+            borderRadius: 1,
+            ":hover": {
+              backgroundColor: theme.secondaryColor2,
+            },
+          }}
         >
-          {taskName}
-        </Typography>
+          <Typography
+            variant="h5"
+            fontWeight={600}
+            letterSpacing={0.8}
+            onClick={() => setIsEditMode(true)}
+            sx={{ cursor: "pointer" }}
+          >
+            {taskName}
+          </Typography>
+        </Box>
       )}
     </>
   );

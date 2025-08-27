@@ -73,7 +73,7 @@ export default function GroupAvatars({
               }),
               transition: "all 0.2s ease-in-out",
             }}
-          >{`+${surplus}`}</Avatar>
+          >{`+${surplus - 1}`}</Avatar>
           // <>`+${surplus}`</>
         )}
       >
