@@ -26,12 +26,23 @@ import "./textEditor.css";
 import { useSelector } from "react-redux";
 import { selectedProjectDetails } from "../../utils/redux/slices/authenticationSlice";
 import type { EmployeeSummaryType } from "../../constants/types";
+import { getTheme } from "../../utils/redux/slices/commonSlice";
 
 interface TextEditor {
   value: string;
   onChange: (value: string) => void;
+  handleFocus?: () => void;
+  height?: string;
+  ref?: any;
 }
-function TextEditor({ value, onChange }: TextEditor) {
+function TextEditor({
+  value,
+  onChange,
+  handleFocus = () => {},
+  height = "250px",
+  ref,
+}: TextEditor) {
+  const theme = useSelector(getTheme);
   const { employees } = useSelector(selectedProjectDetails);
   const feedDetails = employees.map(
     (emp: EmployeeSummaryType) => `@${emp.firstName} ${emp.lastName}`
@@ -87,6 +98,7 @@ function TextEditor({ value, onChange }: TextEditor) {
       "insertTable",
       "codeBlock",
     ],
+    placeholder: "Type your content here...",
     mention: {
       feeds: [
         {
@@ -102,12 +114,38 @@ function TextEditor({ value, onChange }: TextEditor) {
   };
 
   return (
-    <CKEditor
-      editor={ClassicEditor}
-      data={value}
-      onChange={handleChange}
-      config={editorConfig as any}
-    />
+    <>
+      <div className="my-editor">
+        <CKEditor
+          onReady={(editor) => {
+            if (ref) ref.current = editor;
+          }}
+          editor={ClassicEditor}
+          data={value}
+          onChange={handleChange}
+          onFocus={handleFocus}
+          config={editorConfig as any}
+        />
+      </div>
+      <style>{`
+        .my-editor .ck-editor__editable_inline {
+          min-height: ${height};
+        }
+        .ck-rounded-corners .ck.ck-editor__main > .ck-editor__editable,
+        .ck.ck-editor__main > .ck-editor__editable.ck-rounded-corners {
+          color: ${theme.textEditorColor};
+          background-color: ${theme.textEditorBgColor};
+        }
+        .ck.ck-reset_all,
+        .ck-reset_all *:not(.ck-reset_all-excluded *) {
+          color: ${theme.textEditorColor};
+          background-color: ${theme.textEditorBgColor};
+        }
+        .ck.ck-list__item > .ck-button.ck-on:not(.ck-list-item-button) {
+          color: ${theme.textEditorColor};
+        }
+      `}</style>
+    </>
   );
 }
 

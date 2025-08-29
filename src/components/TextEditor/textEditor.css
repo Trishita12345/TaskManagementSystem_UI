@@ -1,7 +1,10 @@
-.ck-editor__editable {
-  min-height: 250px;
+.mention,
+.ck-content .mention {
+  background: #e9e7e7 !important;
+  color: #1c1c1c !important;
+  padding: 2px 6px;
+  border-radius: 16px;
 }
-
-.ck-editor__editable_inline {
-  min-height: 250px;
+p {
+  margin: 8px 0px;
 }

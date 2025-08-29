@@ -1,11 +1,11 @@
 import { Box } from "@mui/material";
 import type { UpdateableTaskComponentProps } from "../../../../constants/types";
 import { useState } from "react";
-import EditModeButtonGroup from "./EditModeButtonGroup";
 import CollapseHeading from "./CollapseHeading";
 import { useSelector } from "react-redux";
 import { getTheme } from "../../../../utils/redux/slices/commonSlice";
 import TextEditor from "../../../../components/TextEditor";
+import EditModeButtonGroup2 from "./EditModeButtonGroup2";
 
 const TaskDescription = ({
   selectedTask,
@@ -13,7 +13,7 @@ const TaskDescription = ({
 }: UpdateableTaskComponentProps) => {
   const theme = useSelector(getTheme);
   const [loading, setLoading] = useState<boolean>(false);
-  const [isEditMode, setIsEditMode] = useState<boolean>(true);
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const { taskDescription } = selectedTask;
   const [value, setValue] = useState<string>(taskDescription);
   const [collapsed, setCollapsed] = useState<boolean>(false);
@@ -23,7 +23,6 @@ const TaskDescription = ({
     setIsEditMode(false);
   };
   const onSave = () => {
-    debugger;
     updateTask("taskDescription", value, setLoading, setIsEditMode);
   };
   return (
@@ -43,7 +42,7 @@ const TaskDescription = ({
                 value={value}
                 onChange={(value: string) => setValue(value)}
               />
-              <EditModeButtonGroup
+              <EditModeButtonGroup2
                 loading={loading}
                 onCancel={onCancel}
                 onSave={onSave}

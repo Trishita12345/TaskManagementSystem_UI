@@ -141,7 +141,7 @@ const ViewTask = () => {
               md={7}
               lg={8}
               sx={{
-                maxHeight: "85vh",
+                maxHeight: "90vh",
                 overflowY: "scroll",
                 "&::-webkit-scrollbar": {
                   width: "8px",

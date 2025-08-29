@@ -34,6 +34,8 @@ const initialState = {
         secondaryColor3: "#d3d8deff",
         inputBgColor: "#ffffff",
         secondaryContrast: "#000000ff",
+        textEditorBgColor: "#ffffff",
+        textEditorColor: "#000000",
         opacity: "20",
       },
 };
@@ -64,6 +66,8 @@ const commonSlice = createSlice({
           inputBgColor: "#a5a3a3ff",
           secondaryContrast: "#e2e2e2ff",
           opacity: "95",
+          textEditorBgColor: "#000000",
+          textEditorColor: "#ffffff",
         };
       } else {
         //light mode
@@ -76,6 +80,8 @@ const commonSlice = createSlice({
           inputBgColor: "#ffffff",
           secondaryContrast: "#000000ff",
           opacity: "20",
+          textEditorBgColor: "#ffffff",
+          textEditorColor: "#000000",
         };
       }
       state.theme = theme;

@@ -116,6 +116,8 @@ export interface themeType {
   inputBgColor: string;
   secondaryContrast: string;
   opacity: string;
+  textEditorBgColor: string;
+  textEditorColor: string;
 }
 
 export interface Employee {

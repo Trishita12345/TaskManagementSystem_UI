@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getTheme,
@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 import { AxiosError } from "axios";
 import { getErrorMessage } from "../../../../utils/helperFunctions/commonHelperFunctions";
 import { addComment } from "../../../../utils/services/commentService";
+import TextEditor from "../../../../components/TextEditor";
 
 export default function CommentTextbox({
   getAllComments,
@@ -19,7 +20,7 @@ export default function CommentTextbox({
   getAllComments: () => void;
 }) {
   const theme = useSelector(getTheme);
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const editorRef = useRef<any>(null);
   const loggedInUser = useSelector(userDetails);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
@@ -28,13 +29,23 @@ export default function CommentTextbox({
   const dispatch = useDispatch();
 
   // Shortcut: Press "M" to focus the comment box
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key.toLowerCase() !== "m") return;
+
+    const active = document.activeElement;
+    if (
+      active &&
+      (active.tagName === "INPUT" ||
+        active.tagName === "TEXTAREA" ||
+        (active as HTMLElement).isContentEditable)
+    ) {
+      return;
+    }
+    e.preventDefault();
+    // editorRef.current?.focus();
+    editorRef.current?.editing.view.focus();
+  };
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key.toLowerCase() === "m") {
-        e.preventDefault();
-        inputRef.current?.focus();
-      }
-    };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
@@ -64,19 +75,15 @@ export default function CommentTextbox({
     <Box display="flex" flexDirection="column">
       <Box display="flex" alignItems="flex-start" gap={1}>
         <CustomEmployeeAvatar employeeDetails={loggedInUser} />
-        <TextField
-          size="small"
-          inputRef={inputRef}
-          onFocus={() => setIsEditMode(true)}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder="Add a comment..."
-          value={value}
-          multiline
-          fullWidth
-          minRows={1}
-          maxRows={4}
-          variant="outlined"
-        />
+        <Box width={"100%"}>
+          <TextEditor
+            value={value}
+            ref={editorRef}
+            handleFocus={() => setIsEditMode(true)}
+            onChange={(value: string) => setValue(value)}
+            height="60px"
+          />
+        </Box>
       </Box>
       <Box
         display="flex"
@@ -98,6 +105,7 @@ export default function CommentTextbox({
           </span>{" "}
           to comment
         </Typography>
+
         <Box visibility={isEditMode ? "visible" : "hidden"}>
           <EditModeButtonGroup
             loading={isLoading}
