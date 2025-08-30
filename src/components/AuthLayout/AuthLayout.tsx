@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { getTheme } from "../../utils/redux/slices/commonSlice.js";
 import type React from "react";
 import LogoIcon from "../Logo/LogoIcon.js";
+import LandingPageBG from "../LandingPageBG/index.js";
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   const theme = useSelector(getTheme);
@@ -29,9 +30,15 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
         </Box>
       </Grid>
       {screenSizeUpMd && (
-        <Grid item xs={0} md={8} id="right-container" bgcolor={theme.primary}>
+        <Grid
+          item
+          xs={0}
+          md={8}
+          id="right-container"
+          bgcolor={`${theme.primary}${theme.opacity}`}
+        >
           {" "}
-          {/* <img src="https://plus.unsplash.com/premium_photo-1661501701943-bc3742c01830?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8dGFzayUyMG1hbmFnZW1lbnR8ZW58MHx8MHx8fDA%3D" /> */}
+          <LandingPageBG />
         </Grid>
       )}
     </Grid>

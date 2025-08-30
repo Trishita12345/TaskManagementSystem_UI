@@ -60,3 +60,7 @@ export const updateTask = (
 export const fetchTaskDetails = (projectId: string, taskId: string) => {
   return axiosInstance(`/authenticated/tasks/${projectId}/${taskId}`);
 };
+
+export const deleteTaskById = (projectId: string, taskId: string) => {
+  return axiosInstance.delete(`/authenticated/tasks/${projectId}/${taskId}`);
+};

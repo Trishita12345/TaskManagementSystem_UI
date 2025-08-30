@@ -12,4 +12,5 @@ export const routes = {
   viewEditProject: "/project",
   projectList: "/projects",
   task: "/task",
+  termsConditions: "terms-and-conditions",
 };

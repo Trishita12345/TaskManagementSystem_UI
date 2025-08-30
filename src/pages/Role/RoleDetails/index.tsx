@@ -1,7 +1,12 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getTheme, setMessage } from "../../../utils/redux/slices/commonSlice";
+import {
+  getTheme,
+  loading,
+  setIsLoading,
+  setMessage,
+} from "../../../utils/redux/slices/commonSlice";
 import { useEffect, useState } from "react";
 import {
   fetchAllPermissions,
@@ -20,8 +25,10 @@ import { userDetails } from "../../../utils/redux/slices/authenticationSlice";
 import { priviledges } from "../../../constants/priviledges";
 import type { AddEditRoleFormInputs } from "../../../constants/types";
 import ViewDetailsPage from "../../../components/ViewDetailsPage";
+import Loader from "../../../components/Loader";
 
 const RoleDetails = () => {
+  const isLoading = useSelector(loading);
   const theme = useSelector(getTheme);
   const { permissions, role } = useSelector(userDetails);
   const { width } = useScreenSize();
@@ -53,10 +60,13 @@ const RoleDetails = () => {
   useEffect(() => {
     const getPermisions = async () => {
       try {
+        dispatch(setIsLoading(true));
         const { data } = await fetchAllPermissions();
         setPermissionsList(groupPermissions(data));
       } catch (e) {
         handleCatch(e);
+      } finally {
+        dispatch(setIsLoading(false));
       }
     };
 
@@ -65,12 +75,15 @@ const RoleDetails = () => {
 
   const getRoleDetails = async () => {
     try {
+      dispatch(setIsLoading(true));
       const { data } = await fetchRoleDetails(id as string);
       setRoleDetails(data);
       setName(data.name);
       setSelectedPermissions(data.permissions);
     } catch (e) {
       handleCatch(e);
+    } finally {
+      dispatch(setIsLoading(false));
     }
   };
 
@@ -104,40 +117,43 @@ const RoleDetails = () => {
     }
   };
   return (
-    <ViewDetailsPage
-      header="Role Details"
-      isEditPermission={isEditPermission}
-      isEditMode={isEditMode}
-      setIsEditMode={setIsEditMode}
-    >
-      <TextField
-        disabled
-        sx={{ width: width > 750 ? "40%" : "100%", mb: "12px" }}
-        size="small"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        label="Role Name"
-        error={name === ""}
-        helperText={name === "" ? "Role Name is required" : ""}
-      />
-      <PermissionsComponent
-        isDisabled={!(isEditMode && isEditPermission)}
-        permissionsList={permissionsList}
-        selectedPermissions={selectedPermissions}
-        setSelectedPermissions={setSelectedPermissions}
-      />
+    <>
+      {isLoading && <Loader />}
+      <ViewDetailsPage
+        header="Role Details"
+        isEditPermission={isEditPermission}
+        isEditMode={isEditMode}
+        setIsEditMode={setIsEditMode}
+      >
+        <TextField
+          disabled
+          sx={{ width: width > 750 ? "40%" : "100%", mb: "12px" }}
+          size="small"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          label="Role Name"
+          error={name === ""}
+          helperText={name === "" ? "Role Name is required" : ""}
+        />
+        <PermissionsComponent
+          isDisabled={!(isEditMode && isEditPermission)}
+          permissionsList={permissionsList}
+          selectedPermissions={selectedPermissions}
+          setSelectedPermissions={setSelectedPermissions}
+        />
 
-      {isEditMode && isEditPermission && (
-        <Box sx={viewEditCTAButtonStyle(theme)}>
-          <Button variant="outlined" onClick={handleCancel}>
-            Cancel
-          </Button>
-          <Button variant="contained" onClick={updateRole}>
-            Update
-          </Button>
-        </Box>
-      )}
-    </ViewDetailsPage>
+        {isEditMode && isEditPermission && (
+          <Box sx={viewEditCTAButtonStyle(theme)}>
+            <Button variant="outlined" onClick={handleCancel}>
+              Cancel
+            </Button>
+            <Button variant="contained" onClick={updateRole}>
+              Update
+            </Button>
+          </Box>
+        )}
+      </ViewDetailsPage>
+    </>
   );
 };
 

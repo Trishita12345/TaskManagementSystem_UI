@@ -32,14 +32,16 @@ interface TextEditor {
   value: string;
   onChange: (value: string) => void;
   handleFocus?: () => void;
-  height?: string;
+  handleBlur?: () => void;
+  type?: string;
   ref?: any;
 }
 function TextEditor({
   value,
   onChange,
   handleFocus = () => {},
-  height = "250px",
+  handleBlur = () => {},
+  type = "description",
   ref,
 }: TextEditor) {
   const theme = useSelector(getTheme);
@@ -112,10 +114,9 @@ function TextEditor({
       ],
     },
   };
-
   return (
     <>
-      <div className="my-editor">
+      <div className={`my-editor_${type}`}>
         <CKEditor
           onReady={(editor) => {
             if (ref) ref.current = editor;
@@ -124,12 +125,16 @@ function TextEditor({
           data={value}
           onChange={handleChange}
           onFocus={handleFocus}
+          onBlur={handleBlur}
           config={editorConfig as any}
         />
       </div>
       <style>{`
-        .my-editor .ck-editor__editable_inline {
-          min-height: ${height};
+        .my-editor_description .ck-editor__editable {
+          min-height: 250px;
+        }
+        .my-editor_comments .ck-editor__editable {
+          min-height: 60px;
         }
         .ck-rounded-corners .ck.ck-editor__main > .ck-editor__editable,
         .ck.ck-editor__main > .ck-editor__editable.ck-rounded-corners {

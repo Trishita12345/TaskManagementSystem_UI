@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import type { UpdateableTaskComponentProps } from "../../../../constants/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CollapseHeading from "./CollapseHeading";
 import { useSelector } from "react-redux";
 import { getTheme } from "../../../../utils/redux/slices/commonSlice";
@@ -17,11 +17,23 @@ const TaskDescription = ({
   const { taskDescription } = selectedTask;
   const [value, setValue] = useState<string>(taskDescription);
   const [collapsed, setCollapsed] = useState<boolean>(false);
+  const [showActionBtn, setShowActionBtn] = useState<boolean>(false);
 
   const onCancel = () => {
     setValue(taskDescription);
     setIsEditMode(false);
+    if (taskDescription === null || taskDescription === "") {
+      setIsEditMode(true);
+      setShowActionBtn(false);
+    }
   };
+  useEffect(() => {
+    if (taskDescription === null || taskDescription === "") {
+      setIsEditMode(true);
+      setShowActionBtn(false);
+    }
+  }, [taskDescription]);
+
   const onSave = () => {
     updateTask("taskDescription", value, setLoading, setIsEditMode);
   };
@@ -40,13 +52,16 @@ const TaskDescription = ({
             <>
               <TextEditor
                 value={value}
+                handleFocus={() => setShowActionBtn(true)}
                 onChange={(value: string) => setValue(value)}
               />
-              <EditModeButtonGroup2
-                loading={loading}
-                onCancel={onCancel}
-                onSave={onSave}
-              />
+              {showActionBtn && (
+                <EditModeButtonGroup2
+                  loading={loading}
+                  onCancel={onCancel}
+                  onSave={onSave}
+                />
+              )}
             </>
           ) : (
             <Box

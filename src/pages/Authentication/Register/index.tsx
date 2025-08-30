@@ -4,13 +4,14 @@ import RegisterForm from "./RegisterForm.js";
 import { useNavigate } from "react-router-dom";
 import { routes } from "../../../constants/routes.js";
 import strings from "../../../constants/strings.js";
+import TypingText from "../../../components/TypingText/index.js";
 
 const Register = () => {
   const navigate = useNavigate();
   return (
     <AuthLayout>
       <Typography variant="h4" pb={"8px"} fontWeight={600} textAlign={"center"}>
-        {`Welcome to ${strings.logoText}`}
+        Welcome to <TypingText text={strings.logoText} />
       </Typography>
       <Typography color={"grey"} textAlign={"center"}>
         Create your account to manage tasks effortlessly and boost your

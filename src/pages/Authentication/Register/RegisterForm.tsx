@@ -3,7 +3,9 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
+  Link,
   TextField,
+  Typography,
 } from "@mui/material";
 import type { AxiosError } from "axios";
 import React from "react";
@@ -185,7 +187,15 @@ const RegisterForm: React.FC = () => {
                 },
               }}
               control={<Checkbox {...field} checked={field.value} />}
-              label={`I accept the Terms & Conditions and Privacy Policy of ${strings.logoText}`}
+              label={
+                <Typography>
+                  I accept the{" "}
+                  <Link href={routes.termsConditions} underline="hover">
+                    Terms & Conditions
+                  </Link>{" "}
+                  and Privacy Policy of <span>{strings.logoText}</span>
+                </Typography>
+              }
             />
           )}
         />

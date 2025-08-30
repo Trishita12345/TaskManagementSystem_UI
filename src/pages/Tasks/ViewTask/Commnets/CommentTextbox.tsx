@@ -81,7 +81,7 @@ export default function CommentTextbox({
             ref={editorRef}
             handleFocus={() => setIsEditMode(true)}
             onChange={(value: string) => setValue(value)}
-            height="60px"
+            type="comments"
           />
         </Box>
       </Box>

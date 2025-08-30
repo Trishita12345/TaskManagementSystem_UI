@@ -98,7 +98,6 @@ const ViewEditProject = () => {
 
   const onSuccess = (updatedProject: ProjectDetailsType) => {
     getProjectDetails();
-    debugger;
     if (id) {
       //Edit Mode
       if (selectedProject.projectId && selectedProject.projectId === id) {

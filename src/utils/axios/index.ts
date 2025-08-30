@@ -30,6 +30,8 @@ axiosInstance.interceptors.response.use(
       window.location.href = "#/errorPage";
     } else if (error.response && error?.response?.status === 403) {
       throw new Error(strings.notAuthorizedError);
+    } else if (error.response && error?.response?.status === 404) {
+      window.location.href = "/not-found";
     } else {
       return Promise.reject(error);
     }

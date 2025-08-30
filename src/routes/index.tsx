@@ -19,6 +19,7 @@ import ManageEmployeesList from "../pages/ManageEmployeesList";
 import ProjectList from "../pages/Projects/ProjectList";
 import ViewEditProject from "../pages/Projects/AddEditProject/ViewEditProject";
 import ViewTask from "../pages/Tasks/ViewTask";
+import TermsAndConditions from "../pages/TermsAndConditions";
 
 const Root = () => {
   let location = useLocation();
@@ -44,6 +45,7 @@ const Routes = () => {
         <Route path={routes.root} element={<Root />} />
         <Route path={routes.login} element={<Login />} />
         <Route path={routes.register} element={<Register />} />
+        <Route path={routes.termsConditions} element={<TermsAndConditions />} />
         <Route
           path={routes.myBoard}
           element={

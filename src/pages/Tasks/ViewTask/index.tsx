@@ -27,7 +27,7 @@ import {
   setStatusList,
   setTaskTypeList,
 } from "../../../utils/redux/slices/taskSlice";
-import { Box, Divider, Grid, Typography } from "@mui/material";
+import { Box, Button, Divider, Grid, Typography } from "@mui/material";
 import TaskName from "./components/TaskName";
 import TaskDescription from "./components/TaskDescription";
 import TaskBreadCrumps from "./components/TaskBreadCrumps";
@@ -39,6 +39,8 @@ import Date from "./components/Date";
 import TaskType from "./components/TaskType";
 import Assignee from "./components/Assignee";
 import Comments from "./Commnets";
+import DeleteTask from "../DeleteTask";
+import { Share } from "@mui/icons-material";
 
 const ViewTask = () => {
   const { id } = useParams();
@@ -121,6 +123,27 @@ const ViewTask = () => {
     } finally {
       setLoading && setLoading(false);
       setIsEditMode && setIsEditMode(false);
+    }
+  };
+
+  const copyPageUrl = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      dispatch(
+        setMessage({
+          display: true,
+          severity: "success",
+          message: "URL copied to clipboard!",
+        })
+      );
+    } catch (err) {
+      dispatch(
+        setMessage({
+          display: true,
+          severity: "error",
+          message: `Failed to copy: ${err}`,
+        })
+      );
     }
   };
 
@@ -216,7 +239,22 @@ const ViewTask = () => {
                 fontSize={"0.8rem"}
                 color={"gray"}
                 mt={0.6}
-              >{`Updated  ${getDateDiff(selectedTask.updatedAt)}`}</Typography>
+              >{`Updated  ${getDateDiff(
+                selectedTask.updatedAt
+              )}`}</Typography>{" "}
+              <Button
+                variant="outlined"
+                sx={{
+                  textTransform: "capitalize",
+                  mt: 1.5,
+                  p: 0.8,
+                  minWidth: 0,
+                }}
+                onClick={copyPageUrl}
+              >
+                <Share fontSize="small" />
+              </Button>
+              <DeleteTask />
             </Grid>
           </Grid>
         </>
