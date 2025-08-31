@@ -1,3 +1,5 @@
+import type { IconProp } from "@fortawesome/fontawesome-svg-core";
+
 export interface tableColumnProps {
   field: string;
   headerName: string;
@@ -238,4 +240,12 @@ export interface Comment {
   updatedBy: EmployeeSummaryType;
   createdAt: string; // ISO Date string
   updatedAt: string; // ISO Date string
+}
+
+export interface sidebarItemType {
+  id: number;
+  name: string;
+  icon: IconProp;
+  route: string;
+  priviledge: string;
 }

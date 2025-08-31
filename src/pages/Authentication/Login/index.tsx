@@ -1,5 +1,5 @@
 import AuthLayout from "../../../components/AuthLayout/AuthLayout.js";
-import { Button, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import LoginForm from "./LoginForm.js";
 import { useNavigate } from "react-router";
 import { routes } from "../../../constants/routes.js";
@@ -11,22 +11,25 @@ const Login = () => {
 
   return (
     <AuthLayout>
-      <Typography variant="h4" pb={"8px"} fontWeight={600}>
-        Login to <TypingText text={strings.logoText} />
-      </Typography>
+      <Box display={"flex"}>
+        <Typography variant="h4" pb={"8px"} mr={1} fontWeight={600}>
+          Login to
+        </Typography>
+        <TypingText text={strings.logoText} />
+      </Box>
       <Typography color={"grey"} textAlign={"center"}>
         Welcome back! Please enter your details.
       </Typography>
       <LoginForm />
-      <Typography color={"grey"} pt={"8px"} textAlign={"center"}>
-        Don't have an account?
+      <Box color={"grey"} pt={"8px"} textAlign={"center"}>
+        Don't have an account?{" "}
         <Button
           className="link-button"
           onClick={() => navigate(routes.register)}
         >
           Register now
         </Button>
-      </Typography>
+      </Box>
     </AuthLayout>
   );
 };

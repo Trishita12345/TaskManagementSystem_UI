@@ -1,17 +1,19 @@
 import Cookies from "js-cookie";
 import { urls } from "../../constants/urls";
 import axiosInstance from "../axios";
+import { removeFromStorage, saveToStorage } from "./storageHelperFunctions";
 
 export const logoutUser = () => {
-  Cookies.remove("access");
+  removeFromStorage("access");
   Cookies.remove("refresh");
 };
 export const refreshToken = async () => {
   try {
-    axiosInstance.post(urls.refreshToken);
-  } catch {
+    const res = await axiosInstance.post(urls.refreshToken);
+    saveToStorage("access", res.data.access);
+    return res.data.access;
+  } catch (err) {
     logoutUser();
-  } finally {
-    window.location.reload();
+    throw err;
   }
 };

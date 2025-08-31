@@ -3,7 +3,6 @@ import {
   fetchFromStorage,
   saveToStorage,
 } from "../../helperFunctions/storageHelperFunctions";
-import Cookies from "js-cookie";
 import type {
   EmployeeSummaryType,
   ProjectDetailsType,
@@ -19,7 +18,7 @@ interface AppState {
 }
 
 const initialState = {
-  isAuthenticated: Cookies.get("access") ? true : false,
+  isAuthenticated: fetchFromStorage("access") ? true : false,
   userDetails: JSON.parse(fetchFromStorage("userDetails") ?? "{}"),
   selectedProject: JSON.parse(fetchFromStorage("selectedProject") ?? "{}"),
 };
@@ -28,7 +27,7 @@ const authenticationSlice = createSlice({
   initialState,
   reducers: {
     setIsAuthenticated(state) {
-      if (Cookies.get("access")) {
+      if (fetchFromStorage("access")) {
         state.isAuthenticated = true;
       } else {
         state.isAuthenticated = false;

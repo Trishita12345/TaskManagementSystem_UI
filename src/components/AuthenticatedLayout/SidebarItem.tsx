@@ -9,15 +9,10 @@ import {
 } from "../../utils/redux/slices/authenticationSlice";
 import { routes } from "../../constants/routes";
 import { useEffect, useState } from "react";
+import type { sidebarItemType } from "../../constants/types";
 
 type propType = {
-  item: {
-    id: number;
-    name: string;
-    icon: any;
-    route: string;
-    priviledge: string;
-  };
+  item: sidebarItemType;
 };
 
 const SideBarItem = ({ item }: propType) => {

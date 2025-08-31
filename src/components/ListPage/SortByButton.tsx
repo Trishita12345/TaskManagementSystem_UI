@@ -69,6 +69,7 @@ export default function SortByButton({ sortByConfig }: SortByButton) {
     <Box>
       {width > 600 ? (
         <Button
+          variant="outlined"
           onClick={handleSortButtonClick}
           startIcon={<SwapVert fontSize="large" />}
           sx={{ textTransform: "capitalize" }}

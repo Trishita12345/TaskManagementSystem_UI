@@ -6,14 +6,7 @@ import { useSelector } from "react-redux";
 import { getTheme, sidebarOpen } from "../../utils/redux/slices/commonSlice";
 import ProjectCard from "./ProjectCard";
 import { selectedProjectDetails } from "../../utils/redux/slices/authenticationSlice";
-
-type sidebarItemType = {
-  id: number;
-  name: string;
-  icon: any;
-  route: string;
-  priviledge: string;
-};
+import type { sidebarItemType } from "../../constants/types";
 
 const Sidebar = () => {
   const selectedProject = useSelector(selectedProjectDetails);

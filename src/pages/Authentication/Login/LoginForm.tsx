@@ -23,6 +23,7 @@ import { VisibilityOff, Visibility } from "@mui/icons-material";
 import { getErrorMessage } from "../../../utils/helperFunctions/commonHelperFunctions";
 import { getProfile, login } from "../../../utils/services/authService";
 import type { LoginFormInputs } from "../../../constants/types";
+import { saveToStorage } from "../../../utils/helperFunctions/storageHelperFunctions";
 
 const LoginForm: React.FC = () => {
   const {
@@ -39,7 +40,8 @@ const LoginForm: React.FC = () => {
 
   const onSubmit: SubmitHandler<LoginFormInputs> = async (formData) => {
     try {
-      await login(formData);
+      const loginRes = await login(formData);
+      saveToStorage("access", loginRes.data.access);
       const { data } = await getProfile();
       dispatch(setIsAuthenticated());
       dispatch(setUserDetails(data));
