@@ -1,5 +1,4 @@
 import { Box, Typography, Button } from "@mui/material";
-import SearchOffIcon from "@mui/icons-material/SearchOff";
 import { useSelector } from "react-redux";
 import { userDetails } from "../../utils/redux/slices/authenticationSlice";
 import type { pageConfigProps } from "../../constants/types";

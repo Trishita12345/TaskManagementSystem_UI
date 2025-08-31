@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: . # 👈 root of your frontend repo
+      dockerfile: Dockerfile # 👈 your frontend Dockerfile
+    image: task-management-ui:latest
+    container_name: task-management-ui
+    ports:
+      - "3000:80"

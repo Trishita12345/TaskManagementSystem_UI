@@ -1,7 +1,6 @@
 import { Person } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import { blueGrey } from "@mui/material/colors";
 import CustomTooltip from "../CustomTooltip";
 import EmployeeTooltipContent from "../EmployeeTooltipContent";
 import type { EmployeeSummaryType } from "../../constants/types";

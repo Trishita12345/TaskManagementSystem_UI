@@ -6,7 +6,7 @@ type props = {
   size?: string;
 };
 
-const LogoIcon = ({ size, color }: any) => {
+const LogoIcon = ({ size, color }: props) => {
   const theme = useSelector(getTheme);
   const logo_color = color || theme.primary;
   return (

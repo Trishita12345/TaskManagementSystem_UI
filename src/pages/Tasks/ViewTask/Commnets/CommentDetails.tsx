@@ -108,7 +108,7 @@ export default function CommentDetails({
               <TextEditor
                 value={textBoxContent}
                 onChange={(value: string) => setTextBoxContent(value)}
-                height="60px"
+                type="comments"
               />
             </Box>
             <EditModeButtonGroup

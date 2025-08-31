@@ -33,7 +33,8 @@ axiosInstance.interceptors.response.use(
       error.response &&
       error.response.status === 401 &&
       !originalRequest._retry &&
-      originalRequest.url !== urls.login
+      originalRequest.url !== urls.login &&
+      originalRequest.url !== urls.refreshToken
     ) {
       originalRequest._retry = true;
       try {

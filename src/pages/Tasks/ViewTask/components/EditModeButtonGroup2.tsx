@@ -1,10 +1,5 @@
-import { ClearOutlined, DoneOutlined } from "@mui/icons-material";
 import { Box, Button, CircularProgress } from "@mui/material";
 
-const saveButtonStyle = {
-  textTransform: "capitalize",
-  p: 0.6,
-};
 interface EditModeButtonGroup2 {
   loading: boolean;
   onCancel: () => void;
