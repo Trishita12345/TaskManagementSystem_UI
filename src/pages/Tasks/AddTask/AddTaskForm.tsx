@@ -14,6 +14,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import type {
   AddTaskFormValues,
   dropdownDataProps,
+  EmployeeSummaryType,
 } from "../../../constants/types";
 import { selectedProjectDetails } from "../../../utils/redux/slices/authenticationSlice";
 import {
@@ -24,10 +25,12 @@ import { addTask } from "../../../utils/services/taskService";
 import { Link } from "react-router-dom";
 import { routes } from "../../../constants/routes";
 import {
-  assigneeList,
-  prioritiesList,
-  typeList,
+  DropdownLabel,
+  PriorityIconMap,
+  TypeIconMap,
 } from "../../../utils/helperFunctions/dropdownHelper";
+import FullNameComponent from "../../../components/FullNameComponent";
+import { getEmployeesWithDefalult } from "../../../utils/helperFunctions/commonHelperFunctions";
 
 // ✅ Yup validation schema
 const schema = yup.object().shape({
@@ -77,9 +80,6 @@ export default function AddTaskForm({
   const types = useSelector(taskTypeList);
   const dispatch = useDispatch();
 
-  const modfiedAssigneeList = assigneeList(employees);
-  const modfiedPrioritiesList = prioritiesList(priorities);
-  const modfiedTypeList = typeList(types);
   const onSubmit = async (formData: AddTaskFormValues) => {
     try {
       dispatch(setIsLoading(false));
@@ -153,9 +153,12 @@ export default function AddTaskForm({
                   error={!!errors.priority}
                   helperText={errors.priority?.message}
                 >
-                  {modfiedPrioritiesList.map((p: dropdownDataProps) => (
+                  {priorities.map((p: dropdownDataProps) => (
                     <MenuItem key={p.value} value={p.value}>
-                      {p.label}
+                      <DropdownLabel
+                        Icon={<PriorityIconMap priority={p.value} />}
+                        label={p.label}
+                      />
                     </MenuItem>
                   ))}
                 </TextField>
@@ -179,9 +182,12 @@ export default function AddTaskForm({
                   error={!!errors.type}
                   helperText={errors.type?.message}
                 >
-                  {modfiedTypeList.map((t: dropdownDataProps) => (
+                  {types.map((t: dropdownDataProps) => (
                     <MenuItem key={t.value} value={t.value}>
-                      {t.label}
+                      <DropdownLabel
+                        Icon={<TypeIconMap type={t.value} />}
+                        label={t.label}
+                      />
                     </MenuItem>
                   ))}
                 </TextField>
@@ -205,11 +211,16 @@ export default function AddTaskForm({
                   error={!!errors.assignedTo}
                   helperText={errors.assignedTo?.message}
                 >
-                  {modfiedAssigneeList.map((a: any) => (
-                    <MenuItem key={a.value} value={a.value}>
-                      {a.label}
-                    </MenuItem>
-                  ))}
+                  {getEmployeesWithDefalult(employees).map(
+                    (item: EmployeeSummaryType) => (
+                      <MenuItem value={item.employeeId}>
+                        <FullNameComponent
+                          employeeDetails={item}
+                          showTooltip={false}
+                        />
+                      </MenuItem>
+                    )
+                  )}
                 </TextField>
               )}
             />

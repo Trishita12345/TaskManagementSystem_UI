@@ -1,10 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import FullNameComponent from "../../components/FullNameComponent";
-import type {
-  dropdownDataProps,
-  EmployeeSummaryType,
-} from "../../constants/types";
-import { getEmployeesWithDefalult } from "./commonHelperFunctions";
 import {
   BookmarkBorderOutlined,
   CheckBox,
@@ -30,43 +24,34 @@ export const DropdownLabel = ({
     </Box>
   );
 };
-export const PriorityIconMap = {
-  P0: <KeyboardDoubleArrowUp color="error" />,
-  P1: <KeyboardArrowUp color="error" />,
-  P2: <DragHandle color="warning" />,
-  P3: <KeyboardArrowDown color="primary" />,
+export const PriorityIconMap = ({ priority }: { priority: string }) => {
+  switch (priority) {
+    case "P0":
+      return <KeyboardDoubleArrowUp color="error" />;
+    case "P1":
+      return <KeyboardArrowUp color="error" />;
+    case "P2":
+      return <DragHandle color="warning" />;
+    case "P3":
+      return <KeyboardArrowDown color="primary" />;
+  }
 };
 
-export const TypeIconMap = {
-  STORY: <BookmarkBorderOutlined color="success" fontSize="small" />,
-  TASK: <CheckBox color="primary" fontSize="small" />,
-  BUG: <FontAwesomeIcon icon={faBug} height={"1rem"} color="red" />,
-  ENHANCEMENT: (
-    <FontAwesomeIcon icon={faMinusSquare} height={"1.3rem"} color="darkgray" />
-  ),
+export const TypeIconMap = ({ type }: { type: string }) => {
+  switch (type) {
+    case "STORY":
+      return <BookmarkBorderOutlined color="success" fontSize="small" />;
+    case "TASK":
+      return <CheckBox color="primary" fontSize="small" />;
+    case "BUG":
+      return <FontAwesomeIcon icon={faBug} height={"1rem"} color="red" />;
+    case "ENHANCEMENT":
+      return (
+        <FontAwesomeIcon
+          icon={faMinusSquare}
+          height={"1.3rem"}
+          color="darkgray"
+        />
+      );
+  }
 };
-export const assigneeList = (employees: EmployeeSummaryType[]) =>
-  getEmployeesWithDefalult(employees).map((a: EmployeeSummaryType) => ({
-    value: a.employeeId,
-    label: <FullNameComponent employeeDetails={a} showTooltip={false} />,
-  }));
-export const prioritiesList = (priorities: dropdownDataProps[]) =>
-  priorities.map((p: dropdownDataProps) => ({
-    value: p.value,
-    label: (
-      <DropdownLabel
-        Icon={PriorityIconMap[p.value as keyof typeof PriorityIconMap]}
-        label={p.label}
-      />
-    ),
-  }));
-export const typeList = (types: dropdownDataProps[]) =>
-  types.map((t: dropdownDataProps) => ({
-    value: t.value,
-    label: (
-      <DropdownLabel
-        Icon={TypeIconMap[t.value as keyof typeof TypeIconMap]}
-        label={t.label}
-      />
-    ),
-  }));

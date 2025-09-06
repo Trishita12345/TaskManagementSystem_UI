@@ -12,7 +12,7 @@ import type {
 } from "../../../../constants/types";
 import TaskDetailsLabelValue from "./TaskDetailsLabelValue";
 import {
-  typeList,
+  DropdownLabel,
   TypeIconMap,
 } from "../../../../utils/helperFunctions/dropdownHelper";
 import { useSelector } from "react-redux";
@@ -54,8 +54,13 @@ const TaskType = ({
                   );
                 }}
               >
-                {typeList(types).map((item: dropdownDataProps) => (
-                  <MenuItem value={item.value}>{item.label}</MenuItem>
+                {types.map((t: dropdownDataProps) => (
+                  <MenuItem key={t.value} value={t.value}>
+                    <DropdownLabel
+                      Icon={<TypeIconMap type={t.value} />}
+                      label={t.label}
+                    />
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
@@ -67,7 +72,7 @@ const TaskType = ({
               onClick={() => setIsEditMode(true)}
               sx={{ cursor: "pointer" }}
             >
-              {TypeIconMap[type]}
+              <TypeIconMap type={type} />
               <Typography>{type}</Typography>
             </Box>
           )}

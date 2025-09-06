@@ -22,7 +22,7 @@ import ViewTask from "../pages/Tasks/ViewTask";
 import TermsAndConditions from "../pages/TermsAndConditions";
 
 const Root = () => {
-  let location = useLocation();
+  const location = useLocation();
   const isLoggedIn = useSelector(isAuthenticated);
   const { from } = location.state || { from: { pathname: routes.myBoard } };
   return isLoggedIn ? <Navigate to={from} /> : <Navigate to={routes.login} />;

@@ -3,7 +3,6 @@ import {
   Button,
   IconButton,
   Link,
-  ListItemText,
   Menu,
   MenuItem,
   Typography,
@@ -13,8 +12,8 @@ import type {
   UpdateableTaskComponentProps,
 } from "../../../../constants/types";
 import {
+  DropdownLabel,
   TypeIconMap,
-  typeList,
 } from "../../../../utils/helperFunctions/dropdownHelper";
 import { ClearOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
@@ -73,7 +72,7 @@ const TaskBreadCrumps = ({
     >
       <Box display={"flex"} gap={1} alignItems={"center"}>
         <Button onClick={handleClick} sx={{ p: 0, minWidth: "max-content" }}>
-          {TypeIconMap[type]}
+          <TypeIconMap type={type} />
         </Button>
         <Typography>{`Issue-${taskId}`}</Typography>
       </Box>
@@ -97,9 +96,12 @@ const TaskBreadCrumps = ({
           "aria-labelledby": "status-button",
         }}
       >
-        {typeList(types).map((s: dropdownDataProps) => (
-          <MenuItem key={s.value} onClick={() => handleClose(s.value)}>
-            <ListItemText>{s.label}</ListItemText>
+        {types.map((t: dropdownDataProps) => (
+          <MenuItem key={t.value} value={t.value}>
+            <DropdownLabel
+              Icon={TypeIconMap[t.value as keyof typeof TypeIconMap]}
+              label={t.label}
+            />
           </MenuItem>
         ))}
       </Menu>

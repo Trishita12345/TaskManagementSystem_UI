@@ -1,11 +1,10 @@
 version: "3.8"
 
 services:
-  frontend:
-    build:
-      context: . # 👈 root of your frontend repo
-      dockerfile: Dockerfile # 👈 your frontend Dockerfile
-    image: task-management-ui:latest
+  frontend-app:
+    image: trishita1902/task-management-ui:latest
     container_name: task-management-ui
+    environment:
+      - VITE_API_BASE_URL=http://backend-app:8080/
     ports:
-      - "3000:80"
+      - "5173:5173"

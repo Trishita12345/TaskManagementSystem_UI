@@ -128,9 +128,11 @@ const TaskCard = ({ task }: { task: TaskSummary }) => {
         <Grid container justifyContent={"space-between"}>
           <Grid item>
             <Grid container gap={1}>
-              <Grid item>{TypeIconMap[type as keyof typeof TypeIconMap]}</Grid>
               <Grid item>
-                {PriorityIconMap[priority as keyof typeof PriorityIconMap]}
+                <TypeIconMap type={type} />
+              </Grid>
+              <Grid item>
+                <PriorityIconMap priority={priority} />
               </Grid>
             </Grid>
           </Grid>

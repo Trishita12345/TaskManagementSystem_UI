@@ -17,8 +17,8 @@ type propType = {
 
 const SideBarItem = ({ item }: propType) => {
   const selectedProject = useSelector(selectedProjectDetails);
-  let location = useLocation();
-  let navigate = useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
   const theme = useSelector(getTheme);
   const { permissions } = useSelector(userDetails);
   const [route, setRoute] = useState<string>("");

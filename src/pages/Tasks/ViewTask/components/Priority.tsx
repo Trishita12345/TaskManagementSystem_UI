@@ -12,7 +12,7 @@ import type {
 } from "../../../../constants/types";
 import TaskDetailsLabelValue from "./TaskDetailsLabelValue";
 import {
-  prioritiesList,
+  DropdownLabel,
   PriorityIconMap,
 } from "../../../../utils/helperFunctions/dropdownHelper";
 import { useSelector } from "react-redux";
@@ -54,8 +54,13 @@ const Priority = ({
                   );
                 }}
               >
-                {prioritiesList(priorities).map((item: dropdownDataProps) => (
-                  <MenuItem value={item.value}>{item.label}</MenuItem>
+                {priorities.map((p: dropdownDataProps) => (
+                  <MenuItem key={p.value} value={p.value}>
+                    <DropdownLabel
+                      Icon={<PriorityIconMap priority={p.value} />}
+                      label={p.label}
+                    />
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
@@ -67,7 +72,7 @@ const Priority = ({
               onClick={() => setIsEditMode(true)}
               sx={{ cursor: "pointer" }}
             >
-              {PriorityIconMap[priority]}
+              {<PriorityIconMap priority={priority} />}
               <Typography>{priority}</Typography>
             </Box>
           )}

@@ -10,6 +10,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import Loader from "../../../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  selectedProjectDetails,
   setIsAuthenticated,
   setSelectedProject,
   setUserDetails,
@@ -35,6 +36,7 @@ const LoginForm: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { employeeId } = useSelector(userDetails);
+  const selectedProject = useSelector(selectedProjectDetails);
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -45,7 +47,7 @@ const LoginForm: React.FC = () => {
       const { data } = await getProfile();
       dispatch(setIsAuthenticated());
       dispatch(setUserDetails(data));
-      if (employeeId !== data.employeeId) {
+      if (!selectedProject.projectId || employeeId !== data.employeeId) {
         dispatch(setSelectedProject({}));
         navigate(routes.projectList);
       } else navigate(routes.myBoard);

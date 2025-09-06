@@ -28,7 +28,7 @@ export const fetchAllTasks = (
   );
 };
 export const addTask = (projectId: string, formdata: AddTaskFormValues) => {
-  let body = {
+  const body = {
     ...formdata,
     startDate: formdata.startDate
       ? format(formdata.startDate as Date, "yyyy-MM-dd")
