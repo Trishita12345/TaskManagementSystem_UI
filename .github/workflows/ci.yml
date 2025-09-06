@@ -14,3 +14,19 @@ jobs:
 
       - name: Build Frontend Image
         run: docker build -t task-management-ui .
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Tag Image
+        run: |
+          docker tag task-management-ui ${{ secrets.DOCKERHUB_USERNAME }}/task-management-ui:latest
+          docker tag task-management-ui ${{ secrets.DOCKERHUB_USERNAME }}/task-management-ui:${{ github.sha }}
+
+      - name: Push Image
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/task-management-ui:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/task-management-ui:${{ github.sha }}
