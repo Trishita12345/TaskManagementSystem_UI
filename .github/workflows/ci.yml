@@ -1,19 +1,27 @@
-name: build
+name: CI/CD
+
 on:
   push:
     branches: [main, dev]
   pull_request:
     branches: [main, dev]
+
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
 
-      - name: Build Frontend Image
+      - name: Build Backend Image
         run: docker build -t task-management-ui .
+
+  push:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
@@ -21,8 +29,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Tag Image
+      - name: Build and Tag Image
         run: |
+          docker build -t task-management-ui .
           docker tag task-management-ui ${{ secrets.DOCKERHUB_USERNAME }}/task-management-ui:latest
           docker tag task-management-ui ${{ secrets.DOCKERHUB_USERNAME }}/task-management-ui:${{ github.sha }}
 
@@ -30,3 +39,25 @@ jobs:
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/task-management-ui:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/task-management-ui:${{ github.sha }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: push
+    steps:
+      - name: Add SSH key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+      - name: Add EC2 to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to EC2
+        run: |
+          ssh ec2-user@${{ secrets.EC2_HOST }} "
+            cd /home/ec2-user/frontend &&
+            docker compose pull &&
+            docker compose up -d --remove-orphans
+          "
