@@ -31,7 +31,7 @@ jobs:
 
       - name: Build and Tag Image
         run: |
-          docker build -t task-management-ui .
+          docker build --build-arg VITE_API_BASE_URL=http://backend-app:8080 -t task-management-ui .
           docker tag task-management-ui ${{ secrets.DOCKERHUB_USERNAME }}/task-management-ui:latest
           docker tag task-management-ui ${{ secrets.DOCKERHUB_USERNAME }}/task-management-ui:${{ github.sha }}
 
