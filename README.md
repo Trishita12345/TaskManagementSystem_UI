@@ -7,7 +7,8 @@ A full-stack Task Management application designed to help users efficiently orga
 ## 🎥 Demo
 
 🔗 **Watch Demo Video:**
-[https://github.com/Trishita12345/TaskManagementSystem_UI/blob/main/Screen%20Recording%202026-04-24%20at%204.53.27%20PM.mov](https://github.com/Trishita12345/TaskManagementSystem_UI/blob/main/Screen%20Recording%202026-04-24%20at%204.53.27%20PM.mov)
+[Demo](https://github.com/Trishita12345/TaskManagementSystem_UI/blob/main/Screen%20Recording%202026-04-24%20at%204.27.06%E2%80%AFPM.mov), 
+[Swagger UI](https://github.com/Trishita12345/TaskManagementSystem_UI/blob/main/Screen%20Recording%202026-04-24%20at%204.53.27%E2%80%AFPM.mov)
 
 > 📌 Open the link to see the application workflow including task creation, updates, and management.
 
