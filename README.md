@@ -1,69 +1,193 @@
-# React + TypeScript + Vite
+# 📝 Task Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack Task Management application designed to help users efficiently organize, track, and manage their daily tasks. This project follows a clean architecture with a React-based frontend and a robust Spring Boot backend.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🎥 Demo
 
-## Expanding the ESLint configuration
+🔗 **Watch Demo Video:**
+[https://github.com/Trishita12345/TaskManagementSystem_UI/blob/main/Screen%20Recording%202026-04-24%20at%204.53.27%20PM.mov](https://github.com/Trishita12345/TaskManagementSystem_UI/blob/main/Screen%20Recording%202026-04-24%20at%204.53.27%20PM.mov)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+> 📌 Open the link to see the application workflow including task creation, updates, and management.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## 🚀 Features
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+* 🔐 User Authentication (Login / Signup)
+* 📝 Create, Update, Delete Tasks
+* 📌 Task Prioritization & Status Tracking
+* 📅 Deadline / Due Date Management
+* 🔍 Search & Filter Tasks
+* 📊 Organized task view for better productivity
+* 🌐 RESTful API integration
+* 📱 Responsive UI
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+* ⚛️ React.js
+* 🎨 CSS / Bootstrap / Tailwind (update if needed)
+* 🔄 Axios for API calls
+
+### Backend
+
+* ☕ Spring Boot
+* 🌐 REST API (Spring MVC)
+* 🗄️ PostgreSQL
+* 🔐 Spring Security (JWT-based Authentication)
+* 📄 Swagger (API Documentation)
+
+### DevOps & Tools
+
+* 🔄 CI/CD Pipeline (configured)
+* 🐙 Git & GitHub
+* ☁️ AWS (planned deployment)
+
+---
+
+## 📁 Project Structure
+
+```
+TaskManagementSystem_UI/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── services/
+│   └── App.js
+├── public/
+└── package.json
+
+Task-management-backend/
+├── controller/
+├── service/
+├── repository/
+├── model/
+├── config/
+└── application.properties
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## ⚙️ Installation & Setup
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 1️⃣ Clone Repositories
+
+```bash
+git clone https://github.com/Trishita12345/TaskManagementSystem_UI.git
+git clone https://github.com/Trishita12345/Task-management-backend.git
 ```
+
+---
+
+### 2️⃣ Backend Setup (Spring Boot)
+
+```bash
+cd Task-management-backend
+```
+
+Update `application.properties`:
+
+```
+spring.datasource.url=jdbc:postgresql://localhost:5432/your_db
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+```
+
+Run the backend:
+
+```bash
+./mvnw spring-boot:run
+```
+
+or
+
+```bash
+mvn spring-boot:run
+```
+
+---
+
+### 3️⃣ Frontend Setup
+
+```bash
+cd TaskManagementSystem_UI
+npm install
+npm start
+```
+
+---
+
+## 📄 API Documentation (Swagger)
+
+Once the backend is running, access Swagger UI at:
+
+```
+http://localhost:8080/swagger-ui/index.html
+```
+
+> 📌 Use Swagger to explore and test all API endpoints interactively.
+
+---
+
+## 🔗 API Overview
+
+* `POST /api/auth/register` → Register user
+* `POST /api/auth/login` → Authenticate user
+* `GET /api/tasks` → Get all tasks
+* `POST /api/tasks` → Create task
+* `PUT /api/tasks/{id}` → Update task
+* `DELETE /api/tasks/{id}` → Delete task
+
+---
+
+## 🔄 CI/CD Pipeline
+
+* CI/CD pipeline is configured for automated builds and integration.
+* Supports future deployment workflows.
+* Ready for integration with cloud platforms like AWS.
+
+> 🚧 Note: Deployment to AWS is planned but not currently active.
+
+---
+
+## 💡 Key Highlights
+
+* Clean full-stack architecture (React + Spring Boot)
+* Secure authentication with JWT
+* Scalable backend with layered architecture
+* PostgreSQL for reliable data persistence
+* Integrated API documentation using Swagger
+* CI/CD-ready project setup
+
+---
+
+## 🚀 Future Enhancements
+
+* ☁️ AWS Deployment (EC2 / S3 / RDS)
+* 🔔 Notifications & reminders
+* 📊 Dashboard & analytics
+* 👥 Team collaboration features
+* 🌙 Dark mode UI
+
+---
+
+## 👩‍💻 Author
+
+**Trishita**
+🔗 GitHub: [https://github.com/Trishita12345](https://github.com/Trishita12345)
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
